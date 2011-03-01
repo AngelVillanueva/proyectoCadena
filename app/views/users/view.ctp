@@ -27,7 +27,7 @@ else
 		<th><?php echo $paginator->sort(__('Name', true), 'name'); ?></th>
 		<th><?php echo $paginator->sort(__('Created', true), 'username'); ?></th>
 		<th><?php echo $paginator->sort(__('Eliminar solo usuario', true), 'delete'); ?></th>
-		<th><?php echo $paginator->sort(__('Eliminar usuario y sus aportaciones', true), 'delete_cascade'); ?></th>
+		
 		
 	</tr>
 	
@@ -38,13 +38,10 @@ else
 			<td><?php echo $html->link($account['User']['username'],array('controller' => 'users', 'action' => 'account', $account['User']['username'])); ?></td>
 			<td><?php echo $account['User']['created']; ?> </td>
 			<td>
-			<?php echo $form->create('User', array('action' => 'delete/'.$account['User']['id'].'/'.1));?>
+			<?php echo $form->create('User', array('action' => 'delete/'.$account['User']['id']));?>
 			<?php echo $form->end('Eliminar solo usuario');?>
 			</td>
-			<td>
-			<?php echo $form->create('User', array('action' => 'delete/'.$account['User']['id'].'/'.0'));?>
-			<?php echo $form->end('Eliminar usuario y aportaciones');?>
-			</td>
+			
 			
 		</tr>
 		

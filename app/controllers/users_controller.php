@@ -127,7 +127,7 @@ class UsersController extends AppController {
 	}
 	
 	
-	function delete($id = null, $cas = null)
+	function delete($id = null)
 	
 	{
 	
@@ -143,19 +143,10 @@ class UsersController extends AppController {
 	
 	}
 	
-	if($cas == 1)
-	{
-	$cascade = true;
-	}
-	
-	elseif($cas == 0)
-	{
-	$cascade = false;
-	}
 	
 	$this->User->id = $id;
 	
-	$this->User->delete($id, $cascade);
+	$this->User->delete($id, false);
 	
 	$this->Session->setFlash('Usuario eliminado!');
 	$this->redirect(array('controller' => 'users', 'action' => 'view')); 
@@ -164,6 +155,8 @@ class UsersController extends AppController {
 	
 	
 	}
+	
+	
 	
 	function view()
 	
