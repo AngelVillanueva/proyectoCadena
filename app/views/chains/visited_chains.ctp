@@ -1,6 +1,6 @@
 <!-- Archivo: /app/views/chains/visited_chains.ctp -->
 
-<?php if(empty($user))
+<?php if(empty($username))
 {
 echo $html->link('Login', array('controller' => 'users', 'action' => 'login')); 
 }

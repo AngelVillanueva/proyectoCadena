@@ -33,7 +33,14 @@ class UsersController extends AppController {
 	$user_id = $this->Session->read('Auth.User.id');
 	$this->set('user_id',$user_id);
 	
+	
+	if($account_user != $user)
+	{
 	$account_id = $this->User->field('id', array('User.username' => $account_user));
+	}
+	
+	$add_fav = 0;
+	
 	
 	if(!empty($account_id))
 	{
@@ -49,6 +56,8 @@ class UsersController extends AppController {
 	$this->set('tittle1', $tittle1);
 	$tittle2 = 'Cadenas en las que '.$account_username.' ha participado';
 	$this->set('tittle2', $tittle2);
+	
+	$add_fav = 1;
 	
 	
 	}
@@ -67,6 +76,8 @@ class UsersController extends AppController {
 	$this->set('tittle1', $tittle1);
 	$tittle2 = 'Cadenas en las que has participado';
 	$this->set('tittle2', $tittle2);
+	
+	
 	
 	
 	}
@@ -88,6 +99,34 @@ class UsersController extends AppController {
 	
 	
 	
+	$filter_fav_chains = $this->User->Favorite->find('all', array('conditions' => array('Favorite.user_id' => $account_id, 'Favorite.type' => 1), 'fields' => array('Favorite.fav_id')));
+	
+	$filter_fav_users = $this->User->Favorite->find('all', array('conditions' => array('Favorite.user_id' => $account_id, 'Favorite.type' => 0), 'fields' => array('Favorite.fav_id')));
+	
+	$list_chains = array();
+	$list_users = array();
+	
+	foreach($filter_fav_chains as $favorite_chains)
+	{
+	
+	array_push($list_chains, $favorite_chains['Favorite']['fav_id']);
+	
+	}
+	
+	foreach($filter_fav_users as $favorite_users)
+	{
+	
+	array_push($list_users, $favorite_users['Favorite']['fav_id']);
+	
+	}
+	
+	$fav_chains = $this->User->Chain->find('all', array('conditions' => array('Chain.id' => $list_chains)));
+	$this->set('fav_chains', $fav_chains);
+	
+	$fav_users = $this->User->find('all', array('conditions' => array('User.id' => $list_users)));
+	$this->set('fav_users', $fav_users);
+	
+	$this->set('add_fav', $add_fav);
 	
 	
 	}
@@ -156,6 +195,7 @@ class UsersController extends AppController {
 	
 	}
 	
+
 	
 	
 	function view()

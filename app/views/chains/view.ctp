@@ -78,6 +78,11 @@ echo $form->create('Chain', array('controller' => 'chains', 'action' => 'denounc
 echo $form->end('Denunciar cadena'); 
 ?>
 
+<?php
+echo $form->create('Favorite', array('controller' => 'favorites', 'action' => 'add/'.$id.'/1'));
+echo $form->end('Añadir a favoritos'); 
+?>
+
 <h2>Comentarios:</h2>
 
 

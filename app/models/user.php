@@ -5,7 +5,7 @@ class User extends AppModel
 {
 
 	var $name = 'User';
-	var $hasMany = array('Chain','Item');
+	var $hasMany = array('Chain','Item', 'Favorite');
 	
 	var $validate = array(
 			'username' => array (
