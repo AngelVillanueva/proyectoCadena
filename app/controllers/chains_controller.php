@@ -232,6 +232,12 @@ $this->set(compact('data'));
 
 }
 
+}
+
+function last_chain()
+{
+
+$this->set('last_chain', $this->Chain->find('first',  array('order' => array('Chain.created DESC'))));
 
 }
 

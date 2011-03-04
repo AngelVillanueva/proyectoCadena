@@ -244,6 +244,13 @@ $this->redirect(array('controller' => 'items', 'action' => 'admin'));
 
 }
 
+function last_item()
+{
+
+$this->set('last_item', $this->Item->find('first',  array('order' => array('Item.created DESC'))));
+
+}
+
 function select_type($id = null)
 {
 $username = $this->Session->read('Auth.User.username');
