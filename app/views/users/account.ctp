@@ -23,6 +23,11 @@ else
 <br/>
 <br/>
 
+<br/>
+<?php echo $html->link('Inbox ('.$new_messages.'/'.$messages.')',array('controller' => 'messages', 'action' => 'inbox')); ?>
+<br/>
+<br/>
+
 <table>
 <h2><?php echo $html->link($tittle1,array('controller' => 'chains', 'action' => 'user_chains', $account_id)); ?></h2>
 	<tr>
@@ -134,6 +139,10 @@ if($add_fav==1)
 {
 echo $form->create('Favorite', array('controller' => 'favorites', 'action' => 'add/'.$account_id.'/0'));
 echo $form->end('Seguir usuario'); 
+
+echo $form->create('Message', array('controller' => 'messages', 'action' => 'write/'.$account_id));
+echo $form->end('Enviar mensaje'); 
+
 }
 ?>
 

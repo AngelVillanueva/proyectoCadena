@@ -94,14 +94,28 @@ class UsersController extends AppController {
 	//array de cadenas del usuario
 	$this->set('user_chains', $this->User->Chain->find('all',array('conditions' => array('Chain.user_id' => $account_id),'limit' => 5, 'order' => 'Chain.id ASC')));
 	
-	//array de cadenas en las que el usuario ha participado
+	//Array de cadenas en las que el usuario ha participado
+	
 	$this->set('join_chains', $this->User->Chain->Item->find('all', array('conditions' => array('Item.user_id' => $account_id), 'group by' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments'), 'fields' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments'),'limit' => 5, 'order' => 'Chain.id ASC')));
 	
+	//Mensajes y mensajes sin leer
 	
+	$messages = $this->User->ReceivedMessage->find('count', array('conditions' => array('ReceivedMessage.receiver_id' => $user_id, 'ReceivedMessage.deleted' => 0)) );
+	$this->set('messages', $messages);
+	
+	$new_messages =  $this->User->ReceivedMessage->find('count', array('conditions' => array('ReceivedMessage.receiver_id' => $user_id, 'ReceivedMessage.read' => 0, 'ReceivedMessage.deleted' => 0)));
+	$this->set('new_messages', $new_messages);
+	
+	
+	//Cadenas favoritas
 	
 	$filter_fav_chains = $this->User->Favorite->find('all', array('conditions' => array('Favorite.user_id' => $account_id, 'Favorite.type' => 1), 'fields' => array('Favorite.fav_id')));
 	
+	//Usuarios favoritos
+	
 	$filter_fav_users = $this->User->Favorite->find('all', array('conditions' => array('Favorite.user_id' => $account_id, 'Favorite.type' => 0), 'fields' => array('Favorite.fav_id')));
+	
+	//Se crean las listas para cadenas favoritas y usuarios favoritos
 	
 	$list_chains = array();
 	$list_users = array();
