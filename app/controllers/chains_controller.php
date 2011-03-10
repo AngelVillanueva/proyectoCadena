@@ -157,7 +157,7 @@ $this->redirect(array('controller' => 'chains', 'action' => 'view', $id));
 
 }
 
-function disapprove($id = null)
+function approve($id = null)
 
 {
 
@@ -184,8 +184,40 @@ $this->redirect(array('controller' => 'chains', 'action' => 'admin'));
 }
 else
 {
+$this->Session->setFlash('Esta cadena ya esta aprobada');
+$this->redirect(array('controller' => 'chains', 'action' => 'admin'));
+}
+
+}
+
+function disapprove($id = null)
+
+{
+
+$username = $this->Session->read('Auth.User.username');
+$role = $user = $this->Session->read('Auth.User.role');
+$this->set('username',$username);
+
+if($role != 1)
+{
+
+$this->Session->setFlash('Solo el Administrador puede acceder a esta zona.');
+$this->redirect(array('controller' => 'chains', 'action' => 'index'));
+
+}
+
+$this->Chain->id = $id;
+$status = $this->Chain->field('approved');
+
+if($status == 1)
+{
 $this->Chain->saveField('approved', 0);
 $this->Session->setFlash('Cadena DESAPROBADA');
+$this->redirect(array('controller' => 'chains', 'action' => 'admin'));
+}
+else
+{
+$this->Session->setFlash('Esta cadena ya esta eliminada');
 $this->redirect(array('controller' => 'chains', 'action' => 'admin'));
 }
 
@@ -237,6 +269,7 @@ $this->set(compact('data'));
 function last_chain()
 {
 
+$this->layout('ajax');
 $this->set('last_chain', $this->Chain->find('first',  array('order' => array('Chain.created DESC'))));
 
 }
@@ -325,6 +358,7 @@ $this->set('check_invitation', $this->Chain->Invitation->find('count', array('co
 
 
 }
+
 
 
 

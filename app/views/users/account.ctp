@@ -28,6 +28,12 @@ else
 <br/>
 <br/>
 
+
+<h2><?php echo $account_username;?></h2>
+<img src="<?php echo $this->webroot;?>attachments/users/avatar/<?php echo $file_path; ?>"
+<br/>
+<br/>
+
 <table>
 <h2><?php echo $html->link($tittle1,array('controller' => 'chains', 'action' => 'user_chains', $account_id)); ?></h2>
 	<tr>
@@ -120,22 +126,20 @@ else
 	<?php foreach($fav_users as $user): ?>
 	
 	<tr>
-		<td><img src="<?php echo $this->webroot;?>img/<?php echo $user['User']['image']; ?>" </td>
-		<td><?php echo $html->link($user['User']['username'],array('controller' => 'users', 'action' => 'account', $user['User']['username'])); ?></td>
-		
-		
-	
-		
+		<td><img src="<?php echo $this->webroot;?>attachments/users/avatar/<?php echo $user['User']['user_file_path']; ?>" </td>
+		<td><?php echo $html->link($user['User']['username'],array('controller' => 'users', 'action' => 'account', $user['User']['username'])); ?></td>	
 	</tr>
 	
 	<?php endforeach; ?>
+	
+	
 
 </table>
 
 
 
 <?php
-if($add_fav==1)
+if($check_user==1)
 {
 echo $form->create('Favorite', array('controller' => 'favorites', 'action' => 'add/'.$account_id.'/0'));
 echo $form->end('Seguir usuario'); 

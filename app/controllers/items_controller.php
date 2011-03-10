@@ -40,48 +40,42 @@ $this->set('item_type', $item_type);
 if (!empty($this->data)) {
 
 	$item_type = $this->data['Item']['type'];
-
-	switch($item_type)
-	{
-
+	$this->set('item_type', $item_type);
+			
+	$this->set('username',$username); 
+		
+	$user_id = $this->Session->read('Auth.User.id');
+	$this->set('user_id',$user_id);
+		
+	$this->data['Item']['user_id'] = $user_id;
+	$this->data['Item']['username'] = $username;
+	$this->data['Item']['denounced'] = 0;
+	$this->data['Item']['approved'] = 1;
+	$this->data['Item']['deleted'] = 0;
 	
-
-		//texto
-		case 1:
-		break;
-		
-		//foto
-		case 2:
-		$this->Session->setFlash('ESTO EN FOTO');
-			$username = $this->Session->read('Auth.User.username');
-			$this->set('username',$username); 
-		
-			$user_id = $this->Session->read('Auth.User.id');
-			$this->set('user_id',$user_id);
+	if($item_type == 2)
+	{
+	
+	$file_path = $this->Attachment->upload($this->data['Item']);
+	
+	}
+	
+	if($this->Item->save($this->data))
 			
-		
-			$this->data['Item']['user_id'] = $user_id;
-			$this->data['Item']['username'] = $username;
-			$this->data['Item']['denounced'] = 0;
-			$this->data['Item']['approved'] = 1;
+			{
 			
 			
-			$file_path = $this->Attachment->upload($this->data['Item']);
 		
-		
-			if($this->Item->save($this->data))
-				{
+			$chain_id = $this->data['Item']['chain_id'];
+			$this->Item->Chain->id = $chain_id;
+			$n_items = $this->Item->Chain->field('n_items');
+			$this->Item->Chain->saveField('n_items', $n_items + 1);
+			$this->Item->saveField('position', $n_items + 1);
+	
+			$item_id = $this->Item->id; 
+			$user_mail = $this->Session->read('Auth.User.mail'); 
 			
-				$chain_id = $this->data['Item']['chain_id'];
-				$this->Item->Chain->id = $chain_id;
-				$n_items = $this->Item->Chain->field('n_items');
-				$this->Item->Chain->saveField('n_items', $n_items + 1);
-				$this->Item->saveField('position', $n_items + 1);
-				
-				$item_id = $this->Item->id; 
-				$user_mail = $this->Session->read('Auth.User.mail');         
-					
-				$invitations = $this->Item->Chain->Invitation->find('all', array('conditions' => array('Invitation.chain_id' => $chain_id, 'Invitation.guest_mail' => $user_mail)));
+			$invitations = $this->Item->Chain->Invitation->find('all', array('conditions' => array('Invitation.chain_id' => $chain_id, 'Invitation.guest_mail' => $user_mail)));
 					
 				foreach($invitations as $invitation)
 					{
@@ -98,79 +92,13 @@ if (!empty($this->data)) {
 					
 					
 				}
-			else{
-			$this->Session->setFlash('PROBLEMON');
+	else{
+			$this->Session->setFlash('Problema al guardar datos');
 			
-			}
-		
-		break;
-		
-		//video
-		case 3:
-		break; 
-	
 	}
 
-
-/*
-
-$username = $this->Session->read('Auth.User.username');
-$this->set('username',$username); 
-
-$user_id = $this->Session->read('Auth.User.id');
-$this->set('user_id',$user_id);
-
-
-	if(empty($this->data['Item']['name']) || empty($this->data['Item']['description'])){
-	
-	$this->Session->setFlash('Debe rellenar todos los campos!');
-
-	}
-	
-	else
-	{
-	$this->data['Item']['user_id'] = $user_id;
-	$this->data['Item']['username'] = $username;
-	
-
-	$file_path = $this->Attachment->upload($this->data['Item']);
-		
-	if($this->Item->save($this->data))
-	{
-
-	$chain_id = $this->data['Item']['chain_id'];
-	$this->Item->Chain->id = $chain_id;
-	$n_items = $this->Item->Chain->field('n_items');
-	$this->Item->Chain->saveField('n_items', $n_items + 1);
-	$this->Item->saveField('position', $n_items + 1);
-	
-	
-	
-	$item_id = $this->Item->id; 
-	$user_mail = $this->Session->read('Auth.User.mail');         
-	
-	$invitations = $this->Item->Chain->Invitation->find('all', array('conditions' => array('Invitation.chain_id' => $chain_id, 'Invitation.guest_mail' => $user_mail)));
-	
-	foreach($invitations as $invitation)
-	{
-	
-	$this->Item->Chain->Invitation->id = $invitation['Invitation']['id'];
-	$this->Item->Chain->Invitation->saveField('pending', 0);
-	
-	
-	}
-
-	$this->redirect(array('controller' => 'invitations', 'action' => 'add/'.$chain_id));
-	 
-	//DEBE ACTIVARSE UN BOTÓN PARA CONTINUAR
-	
-	
-	}
-
-
-	}
-*/	
 }
+
 
 }
 
@@ -179,7 +107,7 @@ function admin()
 {
 
 $username = $this->Session->read('Auth.User.username');
-$role = $user = $this->Session->read('Auth.User.role');
+$role = $this->Session->read('Auth.User.role');
 $this->set('username',$username);
 
 if($role != 1)
@@ -198,6 +126,66 @@ $this->set(compact('data'));
 
 }
 
+function approve($id = null)
+{
+
+$user = $this->Session->read('Auth.User.username');
+$role = $this->Session->read('Auth.User.role');
+$this->set('user',$user);
+
+$this->Item->id = $id;
+$chain_id = $this->Item->field('chain_id');
+
+$item_user = $this->Item->field('username');
+
+if($role != 1)
+{
+
+$this->Session->setFlash('Solo el Admin puede aprobar items.'.$item_user.'/'.$user);
+$this->redirect(array('controller' => 'items', 'action' => 'view', $id));
+
+}
+
+
+if($this->Item->field('approved') == 0)
+
+{
+
+
+$this->Item->saveField('approved', 1);
+$position = $this->Item->field('position');
+
+$items_chain = $this->Item->find('all', array('conditions' => array('Item.id !=' => $id, 'Item.chain_id' => $chain_id, 'Item.approved' => 1, 'Item.position >=' => $position)));
+
+foreach($items_chain as $item)
+{
+	
+	$this->Item->id = $item['Item']['id'];
+	$pos = $this->Item->field('position');
+	$this->Item->saveField('position', $pos + 1);
+
+}
+
+
+$this->Session->setFlash('Item aprobado!');
+$this->redirect(array('controller' => 'chains', 'action' => 'view', $chain_id)); 
+
+}
+
+
+else
+{
+
+$this->Session->setFlash('Este item ya está aprobado.');
+$this->redirect(array('controller' => 'items', 'action' => 'view', $id));
+
+
+}
+
+}
+
+
+
 
 function denounce($id = null)
 {
@@ -211,42 +199,69 @@ $this->redirect(array('controller' => 'items', 'action' => 'view', $id));
 }
 
 function disapprove($id = null)
-
 {
 
-$username = $this->Session->read('Auth.User.username');
-$role = $user = $this->Session->read('Auth.User.role');
-$this->set('username',$username);
+$user = $this->Session->read('Auth.User.username');
+$role = $this->Session->read('Auth.User.role');
+$this->set('user',$user);
 
-if($role != 1)
-{
 
-$this->Session->setFlash('Solo el Administrador puede acceder a esta zona.');
-$this->redirect(array('controller' => 'chains', 'action' => 'index'));
-
-}
 
 $this->Item->id = $id;
-$status = $this->Item->field('approved');
 
-if($status == 0)
+
+$chain_id = $this->Item->field('chain_id');
+
+$item_user = $this->Item->field('username');
+
+if($role != 1 && $item_user != $user)
 {
-$this->Item->saveField('approved', 1);
-$this->Session->setFlash('Item APROBADO');
-$this->redirect(array('controller' => 'items', 'action' => 'admin'));
+
+$this->Session->setFlash('Solo el Propietario del item puede eliminarlo.');
+$this->redirect(array('controller' => 'items', 'action' => 'view', $id));
+
 }
+
+if($this->Item->field('approved') == 1)
+
+{
+
+$this->Item->saveField('approved', 0);
+$position = $this->Item->field('position');
+
+$items_chain = $this->Item->find('all', array('conditions' => array('Item.chain_id' => $chain_id, 'Item.approved' => 1, 'Item.position >' => $position)));
+
+foreach($items_chain as $item)
+{
+
+	$this->Item->id = $item['Item']['id'];
+	$pos = $this->Item->field('position');
+	$this->Item->saveField('position', $pos - 1);
+
+}
+
+
+$this->Session->setFlash('Item eliminado!');
+$this->redirect(array('controller' => 'chains', 'action' => 'view', $chain_id)); 
+
+}
+
+
 else
 {
-$this->Item->saveField('approved', 0);
-$this->Session->setFlash('Item DESAPROBADO');
-$this->redirect(array('controller' => 'items', 'action' => 'admin'));
+
+$this->Session->setFlash('Este item ya está eliminado.');
+$this->redirect(array('controller' => 'items', 'action' => 'view', $id));
+
 }
 
 }
+
 
 function last_item()
 {
 
+$this->layout('ajax');
 $this->set('last_item', $this->Item->find('first',  array('order' => array('Item.created DESC'))));
 
 }

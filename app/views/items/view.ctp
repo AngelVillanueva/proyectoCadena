@@ -14,7 +14,11 @@
 		<th><?php __('Hits')?></th>   
 		<th><?php __('Position')?></th>  
 		<th><?php __('Imagen')?></th>
+		<th><?php __('Description')?></th>
+		<th><?php __('Aprobado')?></th>
 		<th><?php __('Denunciar')?></th>
+		<th><?php __('Eliminar')?></th>
+		<th><?php __('Aprobar')?></th>
 	
 		 
 		  
@@ -30,10 +34,24 @@
 		<td><?php echo $item['Item']['n_hits']; ?></td>
 		<td><?php echo $item['Item']['position']; ?></td>
 		<td><img src="<?php echo $this->webroot;?>attachments/items/avatar/<?php echo $item['Item']['item_file_path']; ?>"</td>
+		<td><?php echo $item['Item']['description']; ?></td>
+		<td><?php echo $item['Item']['approved']; ?></td>
 		<td>
 		<?php 
 		echo $form->create('Item', array('controller' => 'items', 'action' => 'denounce/'.$item['Item']['id']));
 		echo $form->end('Denunciar item'); 
+		?>
+		</td>
+		<td>
+		<?php 
+		echo $form->create('Item', array('controller' => 'items', 'action' => 'disapprove/'.$item['Item']['id']));
+		echo $form->end('Eliminar item'); 
+		?>
+		</td>
+		<td>
+		<?php 
+		echo $form->create('Item', array('controller' => 'items', 'action' => 'approve/'.$item['Item']['id']));
+		echo $form->end('Aprobar item'); 
 		?>
 		</td>
 	</tr>

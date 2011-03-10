@@ -19,8 +19,10 @@
 		<th><?php __('Items')?></th>
 		<th><?php __('Players')?></th>
 		<th><?php __('Items')?></th>
+		<th><?php __('Position Item')?></th>
 		<th><?php __('Votes')?></th>
 		<th><?php __('Meta')?></th>   
+		<th><?php __('Aprobada')?></th>   
 		     
 		  
 	</tr>
@@ -47,9 +49,16 @@
 		<br />
 		<?php endforeach; ?>
 		</td>
+		<td>
+		<?php foreach($items as $item): ?>
+		<?php echo $item['Item']['position']; ?>
+		<br />
+		<?php endforeach; ?>
+		</td>
 		<td><?php echo $chain['Chain']['n_votes']; ?></td>
 		<td><?php echo $chain['Objetive']['miles']; ?></td>
-		</td>
+		<td><?php echo $chain['Chain']['approved']; ?></td>
+		
 	</tr>
 
 </table>

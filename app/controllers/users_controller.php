@@ -4,6 +4,8 @@ class UsersController extends AppController {
 
 	var $name = 'Users';
 	
+	var $components = array('Attachment' => array('files_dir' => 'users', 'images_size' => array( 'avatar' => array(75, 75, 'resizeCrop') ) ));
+	
 	function index(){}
 	
 	function beforeFilter() {
@@ -33,13 +35,17 @@ class UsersController extends AppController {
 	$user_id = $this->Session->read('Auth.User.id');
 	$this->set('user_id',$user_id);
 	
+	$account_mail = $this->Session->read('Auth.User.mail');
+	$this->set('account_mail',$account_mail);
+	
 	
 	if($account_user != $user)
 	{
 	$account_id = $this->User->field('id', array('User.username' => $account_user));
+	
 	}
 	
-	$add_fav = 0;
+	$check_user = 0;
 	
 	
 	if(!empty($account_id))
@@ -48,16 +54,19 @@ class UsersController extends AppController {
 	$this->User->id = $account_id;
 	$this->set('account_id', $account_id);
 	
-	$account_mail = $this->User->field('mail');
+	
 	$account_username = $this->User->field('username');
 	$this->set('account_username', $account_username);
+	
+	$file_path = $this->User->field('user_file_path');
+	$this->set('file_path', $file_path);
 	
 	$tittle1 = 'Cadenas de '.$account_username;
 	$this->set('tittle1', $tittle1);
 	$tittle2 = 'Cadenas en las que '.$account_username.' ha participado';
 	$this->set('tittle2', $tittle2);
 	
-	$add_fav = 1;
+	$check_user = 1;
 	
 	
 	}
@@ -69,8 +78,14 @@ class UsersController extends AppController {
 	$account_id = $this->Session->read('Auth.User.id');
 	$this->set('account_id',$account_id);
 	
-	$account_mail = $this->Session->read('Auth.User.mail');
-	$this->set('account_mail',$account_mail);
+	$account_username = $this->Session->read('Auth.User.username');
+	$this->set('account_username', $account_username);
+	
+	
+	$this->User->id = $account_id;
+	
+	$file_path = $this->User->field('user_file_path');
+	$this->set('file_path', $file_path);
 	
 	$tittle1 = 'Tus cadenas';
 	$this->set('tittle1', $tittle1);
@@ -140,7 +155,8 @@ class UsersController extends AppController {
 	$fav_users = $this->User->find('all', array('conditions' => array('User.id' => $list_users)));
 	$this->set('fav_users', $fav_users);
 	
-	$this->set('add_fav', $add_fav);
+	
+	$this->set('check_user', $check_user);
 	
 	
 	}
@@ -163,6 +179,8 @@ class UsersController extends AppController {
 		if(!empty($this->data))
 		
 		{
+		
+		$file_path = $this->Attachment->upload($this->data['User']);
 		
 		if ($this->User->save($this->data)) { 
 		
@@ -209,9 +227,46 @@ class UsersController extends AppController {
 	
 	}
 	
+	function edit()
+	{
+	
+	$user = $this->Session->read('Auth.User.username');
+	$user_id = $this->Session->read('Auth.User.id');
+	
+	
+	
+	$this->User->id = $user_id;
+	
+	$this->set('file_path', $this->User->field('user_file_path'));
+	
+	
+	if(!empty($this->data))
+	
+	{
+	
+	$file_path = $this->Attachment->upload($this->data['User']);
+	
+	$this->User->saveField('user_file_path', $this->data['User']['user_file_path']);
+	$this->User->saveField('user_file_name', $this->data['User']['user_file_name']);
+	$this->User->saveField('user_file_size', $this->data['User']['user_file_size']);
+	$this->User->saveField('user_content_type', $this->data['User']['user_content_type']);
+	
+	$this->set('file_path', $this->User->field('user_file_path'));
+	
+	$this->Session->setFlash('Datos actualizados');
+	$this->redirect(array('controller' => 'users', 'action' => 'account', $user));
+	
+	
+	}
+	
+	
+	
+	}
+	
 	function last_user()
 	{
 	
+	$this->layout('ajax');
 	$this->set('last_user', $this->User->find('first',  array('order' => array('User.created DESC'))));
 	
 	}

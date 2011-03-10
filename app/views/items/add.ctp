@@ -13,6 +13,7 @@
 <?php echo $form->hidden('username', array('value' => $username));;?>
 <?php echo $form->input('name');?>
 <?php echo $form->input('description');?>
+<?php echo $form->input('link');?>
 <?php echo $form->input('item', array('type' => 'file'));?>
 <?php echo $form->end('Siguiente'); ?>
 

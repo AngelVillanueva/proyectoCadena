@@ -42,7 +42,8 @@ echo $html->link('Administrar comentarios',array('controller' => 'comments', 'ac
 		<th><?php echo $paginator->sort(__('Size', true), 'item_file_size'); ?></th>
 		<th><?php echo $paginator->sort(__('Denounced', true), 'denounced'); ?></th>
 		<th><?php echo $paginator->sort(__('Approved', true), 'approved'); ?></th>
-		<th><?php echo $paginator->sort(__('Approve/Disapprove', true), 'approve_disaprove'); ?></th>
+		<th><?php echo $paginator->sort(__('Disapprove', true), 'disaprove'); ?></th>
+		<th><?php echo $paginator->sort(__('Approve', true), 'approve'); ?></th>
 		
 	</tr>
 	
@@ -63,8 +64,16 @@ echo $html->link('Administrar comentarios',array('controller' => 'comments', 'ac
 			<td><?php echo $item['Item']['denounced']; ?> </td>
 			<td><?php echo $item['Item']['approved']; ?> </td>
 			<td>
-			<?php echo $form->create('Item', array('action' => 'disapprove/'.$item['Item']['id']));?>
-			<?php echo $form->end('desaprobar item');?>
+			<?php 
+			echo $form->create('Item', array('controller' => 'items', 'action' => 'disapprove/'.$item['Item']['id']));
+			echo $form->end('Eliminar item'); 
+			?>
+			</td>
+			<td>
+			<?php 
+			echo $form->create('Item', array('controller' => 'items', 'action' => 'approve/'.$item['Item']['id']));
+			echo $form->end('Aprobar item'); 
+			?>
 			</td>
 			
 		</tr>
