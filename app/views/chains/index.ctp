@@ -37,6 +37,12 @@ echo $html->link('Administrar usuarios',array('controller' => 'users', 'action' 
 <br/>
 <?php echo $html->link('Tienes '.$pending.' invitacion(es) pendientes!',array('controller' => 'invitations', 'action' => 'view')); ?>
 
+<?php
+echo $form->create('', array('action'=>'search'));
+echo $form->input('Buscar', array('type'=>'text'));
+echo $form->end('Buscar');
+?>
+
 
 <h2><br />Cadenas (muestra 5)</h2>
 

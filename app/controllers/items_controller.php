@@ -35,7 +35,19 @@ $this->set('chain_id', $id);
 
 $this->set('item_type', $item_type);
 
+//Comprobación de si ha participado ya en la cadena
 
+$check_items = $this->Item->find('count', array('conditions' => array('Item.chain_id' => $id, 'Item.username' => $username, 'Item.approved' => 1))); 
+
+if($check_items > 0)
+{
+
+$this->Session->setFlash('Ya has participado en esta cadena...');
+$this->redirect(array('controller' => 'chains', 'action' => 'view', $id));
+
+}
+
+//No ha participado en esta cadena
 
 if (!empty($this->data)) {
 
@@ -294,7 +306,7 @@ function view($id = null)
 
 // REDIRECCIONAR A UNA PAGINA DE ERROR ????
 
-$check_id = $this->Item->find('count', array('conditions' => array('Item.id' => $id)));
+$check_id = $this->Item->find('count', array('conditions' => array('Item.approved' => 1, 'Item.id' => $id)));
 
 if($check_id == 0)
 {
@@ -316,7 +328,7 @@ $this->Item->saveField('n_hits', $n_hits + 1);
 
 //lista de comentarios que corresponden a la cadena
 $this->set('n_comments', $this->Item->field('n_comments'));
-$this->set('comments', $this->Item->Comment->find('all', array('conditions' => array('Comment.item_id' => $this->Item->id), 'order' => 'Comment.id ASC')));
+$this->set('comments', $this->Item->Comment->find('all', array('conditions' => array('Comment.approved' => 1, 'Comment.item_id' => $this->Item->id), 'order' => 'Comment.id ASC')));
 }
 
 }

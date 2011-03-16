@@ -26,6 +26,45 @@ class AppController extends Controller {
 	}
 	
 
+	function search(){
+	
+	$username = $this->Session->read('Auth.User.username');
+	$this->set('username',$username);
+	
+	//$this->autoRender = false;
+	if(!empty($this->data)) { 
+
+	$search = $this->data[$this->modelClass]['Buscar'];
+	$cond ="";
+	
+	$i=0;
+	foreach($this->{$this->modelClass}->_schema as $field => $value){
+	//debug($field);
+	if($i>0){
+	$cond = $cond. " OR ";
+	}
+	$cond = $cond. " ".$this->modelClass.".".$field." LIKE '%".$search."%' ";
+	$i++;
+	}
+	
+	$this->Session->write('Search', $cond);
+	
+	}
+	
+	else
+	{
+	
+	$cond = $this->Session->read('Search');
+	
+	}
+	
+	
+	$conditions = array('limit'=>4,	'conditions'=> $cond);
+	$this->paginate = $conditions;
+	$this->set('data', $this->paginate());
+	//$this->render('index');
+	}
+
 
 
 }

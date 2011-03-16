@@ -31,26 +31,28 @@ $this->set('user_id',$user_id);
 
 $this->Chain->recursive = 0;
 
+$this->paginate = array('conditions' => array('Chain.approved ' => 1));
+
 $data = $this->paginate('Chain');
 $this->set(compact('data'));
 
 //array de mas visitadas
-$this->set('visited_chains', $this->Chain->find('all',array('conditions' => array('Chain.n_hits >' => 0),'limit' => 5, 'order' => 'Chain.n_hits DESC')));
+$this->set('visited_chains', $this->Chain->find('all',array('conditions' => array('Chain.approved' => 1, 'Chain.n_hits >' => 0),'limit' => 5, 'order' => 'Chain.n_hits DESC')));
 
 //array de mas comentadas
-$this->set('comment_chains', $this->Chain->find('all',array('conditions' => array('Chain.n_comments >' => 0),'limit' => 5, 'order' => 'Chain.n_comments DESC')));
+$this->set('comment_chains', $this->Chain->find('all',array('conditions' => array('Chain.approved' => 1, 'Chain.n_comments >' => 0),'limit' => 5, 'order' => 'Chain.n_comments DESC')));
 
 //array de mas votadas
-$this->set('voted_chains', $this->Chain->find('all',array('conditions' => array('Chain.n_votes >' => 0),'limit' => 5, 'order' => 'Chain.n_votes DESC')));
+$this->set('voted_chains', $this->Chain->find('all',array('conditions' => array('Chain.approved' => 1, 'Chain.n_votes >' => 0),'limit' => 5, 'order' => 'Chain.n_votes DESC')));
 
 //array de mas votadas
-$this->set('item_chains', $this->Chain->find('all',array('conditions' => array('Chain.n_items >' => 0),'limit' => 5, 'order' => 'Chain.n_items DESC')));
+$this->set('item_chains', $this->Chain->find('all',array('conditions' => array('Chain.approved' => 1, 'Chain.n_items >' => 0),'limit' => 5, 'order' => 'Chain.n_items DESC')));
 
 //array de cadenas del usuario
-$this->set('user_chains', $this->Chain->find('all',array('conditions' => array('Chain.user_id' => $user_id),'limit' => 5, 'order' => 'Chain.id ASC')));
+$this->set('user_chains', $this->Chain->find('all',array('conditions' => array('Chain.approved' => 1, 'Chain.user_id' => $user_id),'limit' => 5, 'order' => 'Chain.id ASC')));
 
 //array de cadenas en las que el usuario ha participado
-$this->set('join_chains', $this->Chain->Item->find('all', array('conditions' => array('Item.user_id' => $user_id), 'group by' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments'), 'fields' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments'),'limit' => 5, 'order' => 'Chain.id ASC')));
+$this->set('join_chains', $this->Chain->Item->find('all', array('conditions' => array('Chain.approved' => 1, 'Item.user_id' => $user_id), 'group by' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments'), 'fields' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments'),'limit' => 5, 'order' => 'Chain.id ASC')));
 
 //invitationes pendientes
 $this->set('pending', $this->Chain->Invitation->find('count', array('conditions' => array('Invitation.guest_mail' => $user_mail, 'Invitation.pending' => 1))));
@@ -140,7 +142,7 @@ function comment_chains()
 $username = $this->Session->read('Auth.User.username');
 $this->set('username',$username);
 
-$this->paginate = array('conditions' => array('Chain.n_comments >' => 0), 'limit' => 10, 'order' => 'Chain.n_comments DESC');
+$this->paginate = array('conditions' => array('Chain.approved' => 1, 'Chain.n_comments >' => 0), 'limit' => 10, 'order' => 'Chain.n_comments DESC');
 $data = $this->paginate('Chain');
 $this->set(compact('data'));
 
@@ -229,7 +231,7 @@ function item_chains()
 $username = $this->Session->read('Auth.User.username');
 $this->set('username',$username);
 
-$this->paginate = array('conditions' => array('Chain.n_items >' => 0), 'limit' => 10, 'order' => 'Chain.n_items DESC');
+$this->paginate = array('conditions' => array('Chain.approved' => 1, 'Chain.n_items >' => 0), 'limit' => 10, 'order' => 'Chain.n_items DESC');
 $data = $this->paginate('Chain');
 $this->set(compact('data'));
 
@@ -248,7 +250,7 @@ $this->set('user_id',$user_id);
 if(empty($account_id))
 {
 $this->set('tittle', 'Cadenas en las que has participado');
-$this->paginate = array('conditions' => array('Item.user_id LIKE' => $user_id), 'limit' => 10, 'order' => 'Chain.id ASC');
+$this->paginate = array('conditions' => array('Chain.approved' => 1, 'Item.user_id LIKE' => $user_id), 'limit' => 10, 'order' => 'Chain.id ASC');
 $data = $this->paginate('Item');
 $this->set(compact('data'));
 }
@@ -258,7 +260,7 @@ else
 $this->Chain->User->id = $account_id;
 $account_name = $this->Chain->User->field('username');
 $this->set('tittle', 'Cadenas en las que '.$account_name.' ha participado');
-$this->paginate = array('conditions' => array('Item.user_id LIKE' => $account_id), 'limit' => 10, 'order' => 'Chain.id ASC');
+$this->paginate = array('conditions' => array('Chain.approved' => 1, 'Item.user_id LIKE' => $account_id), 'limit' => 10, 'order' => 'Chain.id ASC');
 $data = $this->paginate('Item');
 $this->set(compact('data'));
 
@@ -286,7 +288,7 @@ $this->set('user_id',$user_id);
 if(empty($account_id))
 {
 $this->set('tittle', 'Tus cadenas');
-$this->paginate = array('conditions' => array('Chain.user_id LIKE' => $user_id), 'limit' => 10, 'order' => 'Chain.id ASC');
+$this->paginate = array('conditions' => array('Chain.approved' => 1, 'Chain.user_id LIKE' => $user_id), 'limit' => 10, 'order' => 'Chain.id ASC');
 $data = $this->paginate('Chain');
 $this->set(compact('data'));
 }
@@ -296,7 +298,7 @@ else
 $this->Chain->User->id = $account_id;
 $account_name = $this->Chain->User->field('username');
 $this->set('tittle', 'Cadenas de '.$account_name);
-$this->paginate = array('conditions' => array('Chain.user_id LIKE' => $account_id), 'limit' => 10, 'order' => 'Chain.id ASC');
+$this->paginate = array('conditions' => array('Chain.approved' => 1, 'Chain.user_id LIKE' => $account_id), 'limit' => 10, 'order' => 'Chain.id ASC');
 $data = $this->paginate('Chain');
 $this->set(compact('data'));
 
@@ -312,7 +314,7 @@ function voted_chains()
 $username = $this->Session->read('Auth.User.username');
 $this->set('username',$username);
 
-$this->paginate = array('conditions' => array('Chain.n_votes >' => 0), 'limit' => 10, 'order' => 'Chain.n_votes DESC');
+$this->paginate = array('conditions' => array('Chain.approved' => 1, 'Chain.n_votes >' => 0), 'limit' => 10, 'order' => 'Chain.n_votes DESC');
 $data = $this->paginate('Chain');
 $this->set(compact('data'));
 
@@ -323,7 +325,7 @@ function visited_chains()
 $username = $this->Session->read('Auth.User.username');
 $this->set('username',$username);
 
-$this->paginate = array('conditions' => array('Chain.n_hits >' => 0), 'limit' => 10, 'order' => 'Chain.n_hits DESC');
+$this->paginate = array('conditions' => array('Chain.approved' => 1, 'Chain.n_hits >' => 0), 'limit' => 10, 'order' => 'Chain.n_hits DESC');
 $data = $this->paginate('Chain');
 $this->set(compact('data'));
 
@@ -347,11 +349,11 @@ $this->Chain->saveField('n_hits', $n_hits + 1);
 
 //lista de items que corresponden a la cadena
 $this->set('n_items', $this->Chain->field('n_items'));
-$this->set('items', $this->Chain->Item->find('all', array('conditions' => array('Item.chain_id' => $this->Chain->id), 'order' => 'Item.id ASC')));
+$this->set('items', $this->Chain->Item->find('all', array('conditions' => array('Item.approved' => 1, 'Item.chain_id' => $this->Chain->id), 'order' => 'Item.id ASC')));
 
 //lista de comentarios que corresponden a la cadena
 $this->set('n_comments', $this->Chain->field('n_comments'));
-$this->set('comments', $this->Chain->Comment->find('all', array('conditions' => array('Comment.chain_id' => $this->Chain->id), 'order' => 'Comment.id ASC')));
+$this->set('comments', $this->Chain->Comment->find('all', array('conditions' => array('Comment.approved' => 1, 'Comment.chain_id' => $this->Chain->id), 'order' => 'Comment.id ASC')));
 
 //invitationes pendientes
 $this->set('check_invitation', $this->Chain->Invitation->find('count', array('conditions' => array('Invitation.chain_id' => $this->Chain->id, 'Invitation.guest_mail' => $user_mail, 'Invitation.pending' => 1))));
