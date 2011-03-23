@@ -263,13 +263,7 @@ class UsersController extends AppController {
 	
 	}
 	
-	function last_user()
-	{
-	
-	$this->layout('ajax');
-	$this->set('last_user', $this->User->find('first',  array('order' => array('User.created DESC'))));
-	
-	}
+
 	
 	
 	function view()

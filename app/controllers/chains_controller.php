@@ -90,6 +90,7 @@ if (!empty($this->data)) {
 	$this->data['Chain']['username'] = $username;
 	$this->data['Chain']['approved'] = 1;
 	$this->data['Chain']['denounced'] = 0;
+	
 	$this->Chain->save($this->data);
 	$id = $this->Chain->id;              
 	$this->redirect(array('controller' => 'invitations', 'action' => 'add/'.$id));   
@@ -268,13 +269,7 @@ $this->set(compact('data'));
 
 }
 
-function last_chain()
-{
 
-$this->layout('ajax');
-$this->set('last_chain', $this->Chain->find('first',  array('order' => array('Chain.created DESC'))));
-
-}
 
 function user_chains($account_id = null)
 {

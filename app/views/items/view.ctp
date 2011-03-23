@@ -20,7 +20,7 @@ echo $form->end('Buscar');
 		<th><?php __('Description')?></th>  
 		<th><?php __('Votes')?></th>   
 		<th><?php __('Hits')?></th>   
-		<th><?php __('Position')?></th>  
+		<th><?php __('Position/Total')?></th>  
 		<th><?php __('Imagen')?></th>
 		<th><?php __('Description')?></th>
 		<th><?php __('Aprobado')?></th>
@@ -40,7 +40,7 @@ echo $form->end('Buscar');
 		<td><?php echo $item['Item']['description']; ?></td>
 		<td><?php echo $item['Item']['n_votes']; ?></td>
 		<td><?php echo $item['Item']['n_hits']; ?></td>
-		<td><?php echo $item['Item']['position']; ?></td>
+		<td><?php echo $item['Item']['position']; ?>/<?php echo $n_items; ?></td>
 		<td><img src="<?php echo $this->webroot;?>attachments/items/avatar/<?php echo $item['Item']['item_file_path']; ?>"</td>
 		<td><?php echo $item['Item']['description']; ?></td>
 		<td><?php echo $item['Item']['approved']; ?></td>
@@ -114,5 +114,10 @@ echo $form->textarea('text');
 echo $form->end('Comentar'); 
 ?>
 
-
-
+<?php
+echo '<br/>';
+echo $html->link('Siguiente Item >>',array('controller' => 'items', 'action' => 'view', $next_item['Item']['id']));
+echo '<br/>';
+echo $html->link('<< Item Anterior',array('controller' => 'items', 'action' => 'view', $prev_item['Item']['id']));
+echo '<br/>';
+?>

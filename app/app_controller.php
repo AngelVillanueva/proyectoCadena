@@ -25,6 +25,63 @@ class AppController extends Controller {
 	
 	}
 	
+	function last($id = null){
+	
+	//$this->layout = 'ajax';
+	
+	$cond = '';
+	
+
+	if(!empty($id)){
+	
+	$check = 0;
+	
+	switch($this->modelClass)
+	{
+	
+	case 'User':
+	
+		$this->User->id = $id;
+		$this->set('last_chain', $this->User->Chain->find('first', array('conditions' => array('Chain.user_id' => $id) , 'order' => 'Chain.created DESC')));
+		$this->set('last_item', $this->User->Item->find('first', array('conditions' => array('Chain.user_id' => $id) ,'order' => 'Item.created DESC')));
+		$this->set('last_fav_user', $this->User->Favorite->find('first', array('conditions' => array('Favorite.user_id' => $id, 'Favorite.type' => 0) ,'order' => 'Favorite.created DESC')));
+		$this->set('last_fav_chain', $this->User->Favorite->find('first', array('conditions' => array('Favorite.user_id' => $id, 'Favorite.type' => 1) ,'order' => 'Favorite.created DESC')));
+		
+		$this->Session->setFlash('Usuarios');
+		break;
+		
+	case 'Chain':
+	
+		$this->Chain->id = $id;
+	
+		$this->set('last_item', $this->Chain->Item->find('first', array('conditions' => array('Chain.id' => $id) , 'order' => 'Item.created DESC')));
+		
+		$this->set('chain_id', $this->Chain->id);
+		$this->set('miles', $this->Chain->field('miles'));
+			
+		$this->Session->setFlash('Cadenas');
+		break;
+	
+	}
+	
+	$this->paginate = array('conditions' => array(''.$this->modelClass.'.id' => $id), 'limit'=>5, 'order' => array(''.$this->modelClass.'.created DESC'));
+	
+	}
+	
+	else{
+	
+	
+	$check = 1;
+	$this->paginate = array('conditions' => $cond, 'limit'=>5, 'order' => array(''.$this->modelClass.'.created DESC'));
+	
+	
+	}
+	
+	$this->set('check', $check);
+	$this->set('data', $this->paginate());
+	
+	}
+	
 
 	function search(){
 	

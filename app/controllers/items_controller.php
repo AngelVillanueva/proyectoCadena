@@ -3,7 +3,7 @@
 class ItemsController extends AppController {
 
 var $name = 'Items';
-var $components = array('Attachment' => array('files_dir' => 'items', 'images_size' => array( 'avatar' => array(75, 75, 'resizeCrop') ) ));
+var $components = array('Attachment' => array('files_dir' => 'items', 'images_size' => array( 'avatar' => array(263, 263, 'resize') ) ));
 
 var $paginate = array('fields' => array('Item.id', 'Item.name','Item.user_id', 'Item.chain_id','Item.type', 'Item.username', 'Item.position', 'Item.n_hits', 'Item.n_votes', 'Item.n_comments', 'Item.item_file_path', 'Item.item_file_size','Item.denounced', 'Item.approved'), 'limit' => 5, 'order' => array('Item.id' => 'asc'));
 
@@ -69,6 +69,7 @@ if (!empty($this->data)) {
 	{
 	
 	$file_path = $this->Attachment->upload($this->data['Item']);
+
 	
 	}
 	
@@ -270,13 +271,6 @@ $this->redirect(array('controller' => 'items', 'action' => 'view', $id));
 }
 
 
-function last_item()
-{
-
-$this->layout('ajax');
-$this->set('last_item', $this->Item->find('first',  array('order' => array('Item.created DESC'))));
-
-}
 
 function select_type($id = null)
 {
@@ -319,8 +313,55 @@ else
 {
 
 $this->Item->id = $id;
+$chain_id = $this->Item->field('chain_id');
+$this->Item->Chain->id = $chain_id;
+$n_items = $this->Item->Chain->field('n_items');
+$this->set('n_items', $n_items);
 $this->set('item', $this->Item->read());
 $this->set('id', $id);
+
+
+//item anterior y siguiente
+$position = $this->Item->field('position');
+
+//Si es el ultimo de la cadena
+
+if($n_items == $position){
+
+	$this->set('next_item',$this->Item->find('first', array('conditions' => array('Item.chain_id' => $chain_id, 'Item.position' => 1))));
+
+	$this->set('prev_item',$this->Item->find('first', array('conditions' => array('Item.chain_id' => $chain_id, 'Item.position' => $position - 1))));
+
+
+
+}
+
+//Si no es el último de la cadena
+
+else{
+
+	$this->set('next_item',$this->Item->find('first', array('conditions' => array('Item.chain_id' => $chain_id, 'Item.position' => $position + 1))));
+
+//Si es el primero
+
+	if($position == 1)
+		{
+		
+		$this->set('prev_item',$this->Item->find('first', array('conditions' => array('Item.chain_id' => $chain_id, 'Item.position' => $n_items))));
+		
+		
+		}
+//Si no es el primero		
+	else
+	{
+	
+	$this->set('prev_item',$this->Item->find('first', array('conditions' => array('Item.chain_id' => $chain_id, 'Item.position' => $position - 1))));
+	
+	}
+
+
+}
+
 
 //actualiza hits de item
 $n_hits = $this->Item->field('n_hits');
