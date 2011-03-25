@@ -73,29 +73,6 @@ else
 
 }
 
-function admin()
-
-{
-
-$username = $this->Session->read('Auth.User.username');
-$role = $user = $this->Session->read('Auth.User.role');
-$this->set('username',$username);
-
-if($role != 1)
-{
-
-$this->Session->setFlash('Solo el Administrador puede acceder a esta zona.');
-$this->redirect(array('controller' => 'chains', 'action' => 'index'));
-
-}
-
-$this->Comments->recursive = 0;
-
-$data = $this->paginate('Comment');
-$this->set(compact('data'));
-
-
-}
 
 
 function denounce($id = null, $chain_item_id = null, $type = null)

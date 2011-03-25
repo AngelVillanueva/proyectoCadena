@@ -25,8 +25,8 @@ echo $this->Form->select('private', $private_options, 0)
 <br/>
 <br/>
 <?php
-$objetive_options = array(0 => '100 miles', 1 => '1000 miles', 2 => '10000 miles');
-echo $this->Form->select('objetive', $objetive_options, 0)
+$objetive_options = array(100 => '100 millas', 1000 => '1000 millas', 10000 => '10000 millas');
+echo $this->Form->select('next_objetive', $objetive_options, 100)
 ?>
 <?php echo $form->end('Siguiente'); ?>
 

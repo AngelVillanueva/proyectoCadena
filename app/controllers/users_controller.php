@@ -4,7 +4,9 @@ class UsersController extends AppController {
 
 	var $name = 'Users';
 	
-	var $components = array('Attachment' => array('files_dir' => 'users', 'images_size' => array( 'avatar' => array(75, 75, 'resizeCrop') ) ));
+	var $components = array('Attachment' => array('files_dir' => 'users', 'images_size' => array( 'avatar' => array(75, 75, 'resizeCrop'))));
+	
+	
 	
 	function index(){}
 	
@@ -181,6 +183,7 @@ class UsersController extends AppController {
 		{
 		
 		$file_path = $this->Attachment->upload($this->data['User']);
+		$this->data['User']['active'] = 1;
 		
 		if ($this->User->save($this->data)) { 
 		
@@ -263,7 +266,43 @@ class UsersController extends AppController {
 	
 	}
 	
-
+	function active($account_id = null)
+	
+	{
+	
+	$user = $this->Session->read('Auth.User.username');
+	$role = $this->Session->read('Auth.User.role');
+	$this->set('user',$user);
+	
+	$this->User->id = $account_id;
+	
+	if($role != 1)
+	{
+	
+	$this->Session->setFlash('Solo el Admin puede aprobar items.'.$item_user.'/'.$user);
+	$this->redirect(array('controller' => 'items', 'action' => 'view', $id));
+	
+	}
+	
+	$status = $this->User->field('active');
+	
+	if($status == 0)
+	{
+	$this->User->saveField('active', 1);
+	$this->Session->setFlash('Usuario activo');
+	$this->redirect(array('controller' => 'users', 'action' => 'admin'));
+	}
+	else
+	{
+	$this->User->saveField('active', 0);
+	$this->Session->setFlash('Usuario NO activo');
+	$this->redirect(array('controller' => 'users', 'action' => 'admin'));
+	}
+	
+	
+	}
+	
+	
 	
 	
 	function view()

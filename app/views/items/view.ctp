@@ -25,7 +25,6 @@ echo $form->end('Buscar');
 		<th><?php __('Description')?></th>
 		<th><?php __('Aprobado')?></th>
 		<th><?php __('Denunciar')?></th>
-		<th><?php __('Eliminar')?></th>
 		<th><?php __('Aprobar')?></th>
 	
 		 
@@ -52,16 +51,11 @@ echo $form->end('Buscar');
 		</td>
 		<td>
 		<?php 
-		echo $form->create('Item', array('controller' => 'items', 'action' => 'disapprove/'.$item['Item']['id']));
+		echo $form->create('Item', array('controller' => 'items', 'action' => 'approve/'.$item['Item']['id']));
 		echo $form->end('Eliminar item'); 
 		?>
 		</td>
-		<td>
-		<?php 
-		echo $form->create('Item', array('controller' => 'items', 'action' => 'approve/'.$item['Item']['id']));
-		echo $form->end('Aprobar item'); 
-		?>
-		</td>
+		
 	</tr>
 
 </table>

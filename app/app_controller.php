@@ -5,6 +5,8 @@ class AppController extends Controller {
 
 	var $components = array('Auth', 'Session');
 	
+	
+	
 	function inicializarAuth()
 	{
 	
@@ -18,12 +20,40 @@ class AppController extends Controller {
 	
 	}
 	
+	
+	
 	function beforeFilter(){
 	
 	$this->inicializarAuth();
 	
 	
 	}
+	
+	
+	function admin()
+	
+	{
+	
+	$username = $this->Session->read('Auth.User.username');
+	$role = $user = $this->Session->read('Auth.User.role');
+	$this->set('username',$username);
+	
+	if($role != 1)
+	{
+	
+	$this->Session->setFlash('Solo el Administrador puede acceder a esta zona.');
+	$this->redirect(array('controller' => $modelClass, 'action' => 'index'));
+	
+	}
+	
+	$this->this->modelClass->recursive = 0;
+	
+	$data = $this->paginate($this->modelClass);
+	$this->set(compact('data'));
+	
+	
+	}
+	
 	
 	function last($id = null){
 	
@@ -83,46 +113,98 @@ class AppController extends Controller {
 	}
 	
 
+
+
 	function search(){
 	
 	$username = $this->Session->read('Auth.User.username');
 	$this->set('username',$username);
 	
-	//$this->autoRender = false;
-	if(!empty($this->data)) { 
-
-	$search = $this->data[$this->modelClass]['Buscar'];
-	$cond ="";
 	
-	$i=0;
-	foreach($this->{$this->modelClass}->_schema as $field => $value){
-	//debug($field);
-	if($i>0){
-	$cond = $cond. " OR ";
-	}
-	$cond = $cond. " ".$this->modelClass.".".$field." LIKE '%".$search."%' ";
-	$i++;
-	}
 	
-	$this->Session->write('Search', $cond);
+	if(!empty($this->data))
 	
+	{
+	
+	$search = $this->data[$this->modelClass]['search'];
+	
+	//$cond = "Chain.name LIKE '%".$search."%'". " OR ". "User.username LIKE '%".$search."%'";
+	
+	//$conditions = array('limit'=>4,	'conditions'=> $cond);
+	
+	
+	App::import('Model', 'User');       
+	$user = new User();
+	 
+	App::import('Model', 'Chain');       
+	$chain = new Chain();
+	
+	App::import('Model', 'Item');       
+	$item = new Item();
+	
+	//$this->Session->write('Search', $cond);
+	$this->Session->write('Search', $search);
+	
+	
+	
+	//$this->paginate = $conditions;
 	}
 	
 	else
 	{
 	
-	$cond = $this->Session->read('Search');
+	
+	//$cond = $this->Session->read('Search');
+	$search = $this->Session->read('Search');
+	//$conditions = array('limit'=>4,	'conditions'=> $cond);
+	
+	
+	
+	//$this->paginate = $conditions;
 	
 	}
 	
 	
-	$conditions = array('limit'=>4,	'conditions'=> $cond);
-	$this->paginate = $conditions;
-	$this->set('data', $this->paginate());
-	//$this->render('index');
+	$searchterm = "%".$search."%";
+
+	
+	
+	$this->paginate = array(
+	   'conditions' => array('Chain.name LIKE' => $searchterm),
+	   'limit' => 10
+	);
+	
+	$b_chains = $this->paginate('Chain');
+	$this->set(compact('b_chains'));
+	
+	$this->paginate = array(
+	   'conditions' => array('User.username LIKE' => $searchterm),
+	   'limit' => 10
+	);
+	
+	$b_users = $this->paginate('User');
+	$this->set(compact('b_users'));
+	
+	$this->paginate = array(
+	   'conditions' => array('Item.name LIKE' => $searchterm),
+	   'limit' => 10
+	);
+	
+	$b_items = $this->paginate('Item');
+	$this->set(compact('b_items'));
+	
+	//$this->set('b_chains', $this->paginate('Chain', array('conditions' => array('Chain.name LIKE' => '%'.$search.'%')), 'DISTINCT Chain.name' ));
+	
+	//$this->set('b_users', $this->paginate('User', array('conditions' => array('User.username LIKE' => '%'.$search.'%')), 'DISTINCT User.username'));
+	
+	
+	
+	
+	
+	
+	
+	
 	}
-
-
 
 }
 

@@ -37,11 +37,9 @@ echo $html->link('Administrar usuarios',array('controller' => 'users', 'action' 
 <br/>
 <?php echo $html->link('Tienes '.$pending.' invitacion(es) pendientes!',array('controller' => 'invitations', 'action' => 'view')); ?>
 
-<?php
-echo $form->create('', array('action'=>'search'));
-echo $form->input('Buscar', array('type'=>'text'));
-echo $form->end('Buscar');
-?>
+
+
+
 
 
 <h2><br />Cadenas (muestra 5)</h2>
@@ -56,7 +54,7 @@ echo $form->end('Buscar');
 		<th><?php echo $paginator->sort(__('Comments', true), 'n_comments'); ?></th>
 		<th><?php echo $paginator->sort(__('Items', true), 'n_comments'); ?></th>
 		<th><?php echo $paginator->sort(__('Millas', true), 'miles'); ?></th>
-		<th><?php echo $paginator->sort(__('Meta', true), 'objetive'); ?></th>
+		<th><?php echo $paginator->sort(__('Next Meta', true), 'next_objetive'); ?></th>
 		
 	</tr>
 	
@@ -71,7 +69,7 @@ echo $form->end('Buscar');
 			<td><?php echo $chain['Chain']['n_comments']; ?> </td>
 			<td><?php echo $chain['Chain']['n_items']; ?> </td>
 			<td><?php echo $chain['Chain']['miles']; ?> </td>
-			<td><?php echo $chain['Objetive']['miles']; ?> </td>
+			<td><?php echo $chain['Chain']['next_objetive']; ?> </td>
 			
 			
 		</tr>
@@ -273,9 +271,6 @@ echo $form->end('Buscar');
 
 
 
-	
-	
-	
 
 
 

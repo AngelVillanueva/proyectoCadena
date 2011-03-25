@@ -5,7 +5,9 @@ class ChainsController extends AppController {
 var $name = 'Chains';
 var $components = array('MathCaptcha');
 
-var $paginate = array('fields' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments', 'Chain.miles', 'Objetive.miles','Chain.denounced', 'Chain.approved'), 'limit' => 5, 'order' => array('Chain.id' => 'asc'));
+var $paginate = array('fields' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.created' , 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments', 'Chain.miles', 'Objetive.miles','Chain.denounced', 'Chain.approved'), 'limit' => 5, 'order' => array('Chain.id' => 'asc'));
+
+
 
 
 function beforeFilter() {
@@ -91,8 +93,15 @@ if (!empty($this->data)) {
 	$this->data['Chain']['approved'] = 1;
 	$this->data['Chain']['denounced'] = 0;
 	
+	
 	$this->Chain->save($this->data);
-	$id = $this->Chain->id;              
+	$id = $this->Chain->id; 
+	
+	$this->data['Objetive']['chain_id'] = $id;
+	$this->data['Objetive']['miles'] = $this->data['Chain']['next_objetive'];
+	
+	$this->Chain->Objetive->save($this->data);
+	          
 	$this->redirect(array('controller' => 'invitations', 'action' => 'add/'.$id));   
 	//DEBE ACTIVARSE UN BOTÓN PARA CONTINUAR
 	
@@ -110,30 +119,44 @@ if (!empty($this->data)) {
 
 }
 
-
-function admin()
+function approve($id = null)
 
 {
 
-$username = $this->Session->read('Auth.User.username');
-$role = $user = $this->Session->read('Auth.User.role');
-$this->set('username',$username);
+$user = $this->Session->read('Auth.User.username');
+$role = $this->Session->read('Auth.User.role');
+$this->set('user',$user);
+
+$this->Chain->id = $id;
 
 if($role != 1)
 {
 
-$this->Session->setFlash('Solo el Administrador puede acceder a esta zona.');
-$this->redirect(array('controller' => 'chains', 'action' => 'index'));
+$this->Session->setFlash('Solo el Admin puede aprobar cadenas.');
+$this->redirect(array('controller' => 'chains', 'action' => 'view'));
 
 }
 
-$this->Chain->recursive = 0;
+$status = $this->Chain->field('approved');
 
-$data = $this->paginate('Chain');
-$this->set(compact('data'));
+if($status == 0)
+{
+$this->Chain->saveField('approved', 1);
+$this->Session->setFlash('Cadena aprobada');
+$this->redirect(array('controller' => 'chains', 'action' => 'admin'));
+}
+else
+{
+$this->Chain->saveField('approved', 0);
+$this->Session->setFlash('Cadena desaprobada');
+$this->redirect(array('controller' => 'chains', 'action' => 'admin'));
+}
 
 
 }
+
+
+
 
 
 
@@ -160,71 +183,9 @@ $this->redirect(array('controller' => 'chains', 'action' => 'view', $id));
 
 }
 
-function approve($id = null)
 
-{
 
-$username = $this->Session->read('Auth.User.username');
-$role = $user = $this->Session->read('Auth.User.role');
-$this->set('username',$username);
 
-if($role != 1)
-{
-
-$this->Session->setFlash('Solo el Administrador puede acceder a esta zona.');
-$this->redirect(array('controller' => 'chains', 'action' => 'index'));
-
-}
-
-$this->Chain->id = $id;
-$status = $this->Chain->field('approved');
-
-if($status == 0)
-{
-$this->Chain->saveField('approved', 1);
-$this->Session->setFlash('Cadena APROBADA');
-$this->redirect(array('controller' => 'chains', 'action' => 'admin'));
-}
-else
-{
-$this->Session->setFlash('Esta cadena ya esta aprobada');
-$this->redirect(array('controller' => 'chains', 'action' => 'admin'));
-}
-
-}
-
-function disapprove($id = null)
-
-{
-
-$username = $this->Session->read('Auth.User.username');
-$role = $user = $this->Session->read('Auth.User.role');
-$this->set('username',$username);
-
-if($role != 1)
-{
-
-$this->Session->setFlash('Solo el Administrador puede acceder a esta zona.');
-$this->redirect(array('controller' => 'chains', 'action' => 'index'));
-
-}
-
-$this->Chain->id = $id;
-$status = $this->Chain->field('approved');
-
-if($status == 1)
-{
-$this->Chain->saveField('approved', 0);
-$this->Session->setFlash('Cadena DESAPROBADA');
-$this->redirect(array('controller' => 'chains', 'action' => 'admin'));
-}
-else
-{
-$this->Session->setFlash('Esta cadena ya esta eliminada');
-$this->redirect(array('controller' => 'chains', 'action' => 'admin'));
-}
-
-}
 
 
 function item_chains()
@@ -345,6 +306,9 @@ $this->Chain->saveField('n_hits', $n_hits + 1);
 //lista de items que corresponden a la cadena
 $this->set('n_items', $this->Chain->field('n_items'));
 $this->set('items', $this->Chain->Item->find('all', array('conditions' => array('Item.approved' => 1, 'Item.chain_id' => $this->Chain->id), 'order' => 'Item.id ASC')));
+
+//lista de metas que corresponden a la cadena
+$this->set('objetives', $this->Chain->Objetive->find('all', array('conditions' => array('Objetive.chain_id' => $this->Chain->id), 'order' => 'Objetive.miles ASC')));
 
 //lista de comentarios que corresponden a la cadena
 $this->set('n_comments', $this->Chain->field('n_comments'));

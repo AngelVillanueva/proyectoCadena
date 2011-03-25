@@ -25,7 +25,9 @@
 		<th><?php __('Items')?></th>
 		<th><?php __('Position Item')?></th>
 		<th><?php __('Votes')?></th>
-		<th><?php __('Meta')?></th>   
+		<th><?php __('Miles')?></th>
+		<th><?php __('Metas')?></th>
+		<th><?php __('Next Meta')?></th>   
 		<th><?php __('Aprobada')?></th>   
 		     
 		  
@@ -60,7 +62,14 @@
 		<?php endforeach; ?>
 		</td>
 		<td><?php echo $chain['Chain']['n_votes']; ?></td>
-		<td><?php echo $chain['Objetive']['miles']; ?></td>
+		<td><?php echo $chain['Chain']['miles']; ?></td>
+		<td>
+		<?php foreach($objetives as $objetive): ?>
+		<?php echo $objetive['Objetive']['miles']; ?>
+		<br />
+		<?php endforeach; ?>
+		</td>
+		<td><?php echo $chain['Chain']['next_objetive']; ?></td>
 		<td><?php echo $chain['Chain']['approved']; ?></td>
 		
 	</tr>

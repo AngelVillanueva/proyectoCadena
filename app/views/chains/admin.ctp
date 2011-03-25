@@ -47,7 +47,7 @@ echo $html->link('Administrar usuarios',array('controller' => 'users', 'action' 
 		<th><?php echo $paginator->sort(__('Denunciada', true), 'denounced'); ?></th>
 		<th><?php echo $paginator->sort(__('Aprobada', true), 'approved'); ?></th>
 		<th><?php echo $paginator->sort(__('Aprobar', true), 'approve'); ?></th>
-		<th><?php echo $paginator->sort(__('Eliminar', true), 'disapprove'); ?></th>
+		
 		
 	</tr>
 	
@@ -69,10 +69,7 @@ echo $html->link('Administrar usuarios',array('controller' => 'users', 'action' 
 			<?php echo $form->create('Chain', array('action' => 'approve/'.$chain['Chain']['id']));?>
 			<?php echo $form->end('aprobar cadena');?>
 			</td>
-			<td>
-			<?php echo $form->create('Chain', array('action' => 'disapprove/'.$chain['Chain']['id']));?>
-			<?php echo $form->end('desaprobar cadena');?>
-			</td>
+			
 			
 		</tr>
 		

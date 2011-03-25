@@ -84,6 +84,29 @@ if (!empty($this->data)) {
 			$n_items = $this->Item->Chain->field('n_items');
 			$this->Item->Chain->saveField('n_items', $n_items + 1);
 			$this->Item->saveField('position', $n_items + 1);
+			
+			//Actualizacion de millas
+			
+			$n_miles = $this->Item->Chain->field('miles');
+			
+			switch($item_type)
+			{
+			
+			case 1:
+			$this->Item->Chain->saveField('miles', $miles + 10);
+			break;
+			
+			case 2:
+			$this->Item->Chain->saveField('miles', $miles + 20);
+			break;
+			
+			case 3:
+			$this->Item->Chain->saveField('miles', $miles + 30);
+			break;
+			
+			
+			}
+			
 	
 			$item_id = $this->Item->id; 
 			$user_mail = $this->Session->read('Auth.User.mail'); 
@@ -115,29 +138,7 @@ if (!empty($this->data)) {
 
 }
 
-function admin()
 
-{
-
-$username = $this->Session->read('Auth.User.username');
-$role = $this->Session->read('Auth.User.role');
-$this->set('username',$username);
-
-if($role != 1)
-{
-
-$this->Session->setFlash('Solo el Administrador puede acceder a esta zona.');
-$this->redirect(array('controller' => 'chains', 'action' => 'index'));
-
-}
-
-$this->Item->recursive = 0;
-
-$data = $this->paginate('Item');
-$this->set(compact('data'));
-
-
-}
 
 function approve($id = null)
 {
@@ -151,19 +152,20 @@ $chain_id = $this->Item->field('chain_id');
 
 $item_user = $this->Item->field('username');
 
+
+
+$status = $this->Item->field('approved');
+
+if($status == 0)
+{
+
 if($role != 1)
 {
 
-$this->Session->setFlash('Solo el Admin puede aprobar items.'.$item_user.'/'.$user);
+$this->Session->setFlash('Solo el Admin puede aprobar items.');
 $this->redirect(array('controller' => 'items', 'action' => 'view', $id));
 
 }
-
-
-if($this->Item->field('approved') == 0)
-
-{
-
 
 $this->Item->saveField('approved', 1);
 $position = $this->Item->field('position');
@@ -181,7 +183,7 @@ foreach($items_chain as $item)
 
 
 $this->Session->setFlash('Item aprobado!');
-$this->redirect(array('controller' => 'chains', 'action' => 'view', $chain_id)); 
+$this->redirect(array('controller' => 'items', 'action' => 'admin')); 
 
 }
 
@@ -189,9 +191,40 @@ $this->redirect(array('controller' => 'chains', 'action' => 'view', $chain_id));
 else
 {
 
-$this->Session->setFlash('Este item ya está aprobado.');
+if($role != 1 && $item_user != $user)
+{
+
+$this->Session->setFlash('Solo el Propietario del item puede eliminarlo.');
 $this->redirect(array('controller' => 'items', 'action' => 'view', $id));
 
+}
+
+$this->Item->saveField('approved', 0);
+$position = $this->Item->field('position');
+
+$items_chain = $this->Item->find('all', array('conditions' => array('Item.chain_id' => $chain_id, 'Item.approved' => 1, 'Item.position >' => $position)));
+
+foreach($items_chain as $item)
+{
+
+	$this->Item->id = $item['Item']['id'];
+	$pos = $this->Item->field('position');
+	$this->Item->saveField('position', $pos - 1);
+
+}
+
+
+$this->Session->setFlash('Item eliminado!');
+
+if($role == 1)
+{
+$this->redirect(array('controller' => 'items', 'action' => 'admin')); 
+}
+
+else
+{
+$this->redirect(array('controller' => 'chains', 'action' => 'view', $chain_id)); 
+}
 
 }
 
@@ -211,64 +244,10 @@ $this->redirect(array('controller' => 'items', 'action' => 'view', $id));
 
 }
 
-function disapprove($id = null)
-{
-
-$user = $this->Session->read('Auth.User.username');
-$role = $this->Session->read('Auth.User.role');
-$this->set('user',$user);
 
 
 
-$this->Item->id = $id;
 
-
-$chain_id = $this->Item->field('chain_id');
-
-$item_user = $this->Item->field('username');
-
-if($role != 1 && $item_user != $user)
-{
-
-$this->Session->setFlash('Solo el Propietario del item puede eliminarlo.');
-$this->redirect(array('controller' => 'items', 'action' => 'view', $id));
-
-}
-
-if($this->Item->field('approved') == 1)
-
-{
-
-$this->Item->saveField('approved', 0);
-$position = $this->Item->field('position');
-
-$items_chain = $this->Item->find('all', array('conditions' => array('Item.chain_id' => $chain_id, 'Item.approved' => 1, 'Item.position >' => $position)));
-
-foreach($items_chain as $item)
-{
-
-	$this->Item->id = $item['Item']['id'];
-	$pos = $this->Item->field('position');
-	$this->Item->saveField('position', $pos - 1);
-
-}
-
-
-$this->Session->setFlash('Item eliminado!');
-$this->redirect(array('controller' => 'chains', 'action' => 'view', $chain_id)); 
-
-}
-
-
-else
-{
-
-$this->Session->setFlash('Este item ya está eliminado.');
-$this->redirect(array('controller' => 'items', 'action' => 'view', $id));
-
-}
-
-}
 
 
 
