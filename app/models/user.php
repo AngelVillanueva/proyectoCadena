@@ -33,6 +33,15 @@ class User extends AppModel
 					'rule' => 'notEmpty',
 					'message' => 'Introduzca nombre de usuario'
 				),
+			'mail' => array (
+					'rule' => 'notEmpty',
+					'message' => 'Introduzca mail de usuario'
+				),
+				
+			'password' => array (
+					'rule' => 'notEmpty',
+					'message' => 'Introduzca password de usuario'
+				),
 			
 				);
 	

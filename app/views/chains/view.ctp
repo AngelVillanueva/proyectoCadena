@@ -36,7 +36,7 @@
 	<tr>
 		<td><?php echo $chain['Chain']['id']; ?></td>
 		<td><?php echo $chain['Chain']['name']; ?></td>
-		<td><?php echo $html->link($chain['Chain']['username'],array('controller' => 'users', 'action' => 'account', $chain['Chain']['user_id'])); ?></td>
+		<td><?php echo $html->link($chain['Chain']['username'],array('controller' => 'users', 'action' => 'account', $chain['Chain']['username'])); ?></td>
 		<td>
 		<?php foreach($items as $item): ?>
 		<?php echo $html->link($item['Item']['id'],array('controller' => 'items', 'action' => 'view',$item['Item']['id'] ));?>
@@ -83,13 +83,13 @@ if($n_items == 0)
 {
 echo 'Cadena vacía... <br/>';
 }
-if($check_invitation > 0)
+if($check_invitation > 0 && $check_joins == 0)
 {
-echo $html->link('NUEVO ITEM',array('controller' => 'items', 'action' => 'select_type', $id)); 
+echo $form->create('Item', array('controller' => 'items', 'action' => 'select_type/'.$id));
+echo $form->end('Nuevo Item'); 
 }
 ?>
 
-<br/>
 <?php 
 echo $form->create('Vote', array('controller' => 'votes', 'action' => 'add/'.$id.'/c'));
 echo $form->end('Votar'); 
@@ -103,6 +103,19 @@ echo $form->end('Denunciar cadena');
 <?php
 echo $form->create('Favorite', array('controller' => 'favorites', 'action' => 'add/'.$id.'/1'));
 echo $form->end('Añadir a favoritos'); 
+?>
+
+<?php
+echo $form->create('Chain', array('controller' => 'chains', 'action' => 'approve/'.$id));
+echo $form->end('Borrar cadena'); 
+?>
+
+<?php
+if($check_joins == 0 && $private == 1)
+{
+echo $form->create('Invitation', array('controller' => 'invitations', 'action' => 'request/'.$id));
+echo $form->end('Solicitar unirse a la cadena'); 
+}
 ?>
 
 <h2>Comentarios:</h2>

@@ -25,6 +25,12 @@ echo $this->Form->select('private', $private_options, 0)
 <br/>
 <br/>
 <?php
+$repeat_options = array(0 => 'No', 1 => 'Yes');
+echo $this->Form->select('repeat', $repeat_options, 0)
+?>
+<br/>
+<br/>
+<?php
 $objetive_options = array(100 => '100 millas', 1000 => '1000 millas', 10000 => '10000 millas');
 echo $this->Form->select('next_objetive', $objetive_options, 100)
 ?>

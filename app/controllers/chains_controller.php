@@ -5,7 +5,7 @@ class ChainsController extends AppController {
 var $name = 'Chains';
 var $components = array('MathCaptcha');
 
-var $paginate = array('fields' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.created' , 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments', 'Chain.miles', 'Objetive.miles','Chain.denounced', 'Chain.approved'), 'limit' => 5, 'order' => array('Chain.id' => 'asc'));
+var $paginate = array('fields' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.created' , 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments', 'Chain.miles','Chain.denounced', 'Chain.approved'), 'limit' => 5, 'order' => array('Chain.id' => 'asc'));
 
 
 
@@ -58,6 +58,9 @@ $this->set('join_chains', $this->Chain->Item->find('all', array('conditions' => 
 
 //invitationes pendientes
 $this->set('pending', $this->Chain->Invitation->find('count', array('conditions' => array('Invitation.guest_mail' => $user_mail, 'Invitation.pending' => 1))));
+
+//solicitudes de participacion pendientes
+$this->set('request_invitations', $this->Chain->Invitation->find('count', array('conditions' => array('Invitation.username' => $username, 'Invitation.pending' => 1, 'Invitation.active' => 0))));
 
 }
 
@@ -129,6 +132,15 @@ $this->set('user',$user);
 
 $this->Chain->id = $id;
 
+$chain_user = $this->Chain->field('username');
+
+
+
+$status = $this->Chain->field('approved');
+
+if($status == 0)
+{
+
 if($role != 1)
 {
 
@@ -137,20 +149,45 @@ $this->redirect(array('controller' => 'chains', 'action' => 'view'));
 
 }
 
-$status = $this->Chain->field('approved');
-
-if($status == 0)
-{
 $this->Chain->saveField('approved', 1);
 $this->Session->setFlash('Cadena aprobada');
 $this->redirect(array('controller' => 'chains', 'action' => 'admin'));
 }
 else
 {
+
+if($role != 1 && $chain_user != $user)
+{
+
+$this->Session->setFlash('Solo el Propietario de la cadena puede eliminarla.');
+$this->redirect(array('controller' => 'chains', 'action' => 'view', $id));
+
+}
+
+if($role != 1 && $this->Chain->field('private') != 1)
+{
+$this->Session->setFlash('No puede borrar una cadena publica');
+$this->redirect(array('controller' => 'chains', 'action' => 'view', $id));
+
+}
+
 $this->Chain->saveField('approved', 0);
-$this->Session->setFlash('Cadena desaprobada');
+
+$this->Session->setFlash('Cadena borrada');
+
+if($role ==1)
+{
 $this->redirect(array('controller' => 'chains', 'action' => 'admin'));
 }
+else
+{
+$this->redirect(array('controller' => 'chains', 'action' => 'index')); 
+}
+
+
+}
+
+
 
 
 }
@@ -232,6 +269,7 @@ $this->set(compact('data'));
 
 
 
+
 function user_chains($account_id = null)
 {
 
@@ -295,9 +333,49 @@ $this->set('username',$username);
 $user_mail = $this->Session->read('Auth.User.mail');
 $this->set('user_mail',$user_mail);
 
+$user_role = $this->Session->read('Auth.User.role');
+
 $this->Chain->id = $id;
 $this->set('chain', $this->Chain->read());
 $this->set('id', $id);
+
+//cadena privada?
+$private = $this->Chain->field('private');
+$this->set('private', $private);
+
+//cadena restricted?
+$restricted = $this->Chain->field('restricted');
+$this->set('restricted', $restricted);
+
+//para comprobar si ya participo en la cadena
+
+$this->set('check_joins', 0);
+
+//Si la cadena es privada
+
+if($private == 1)
+{
+
+//comprueba si esta invitado
+$check_players = $this->Chain->Invitation->find('count',  array('conditions' => array('Invitation.chain_id' => $this->Chain->id, 'Invitation.guest_mail' => $user_mail)));
+
+//comprueba si es el dueño
+$check_own = $this->Chain->field('username');
+
+//comprueba si participo en la cadena
+$check_joins = $this->Chain->Item->find('count', array('conditions' => array('Item.approved' => 1, 'Item.chain_id' => $this->Chain->id, 'Item.username' => $username)));
+$this->set('check_joins', $check_joins);
+
+//si no es ninguno de los casos anteriores no le deja ver la cadena (el admin puede ver todo)
+if($check_players == 0 && $check_joins == 0 && $check_own != $username && $user_role != 1)
+
+{
+$this->Session->setFlash('Esta cadena es privada. Lo siento, solicita unirte para poder ver su contenido');
+$this->redirect(array('controller' => 'chains', 'action' => 'index'));
+
+}
+
+}
 
 //actualiza hits de cadena
 $n_hits = $this->Chain->field('n_hits');
@@ -314,8 +392,31 @@ $this->set('objetives', $this->Chain->Objetive->find('all', array('conditions' =
 $this->set('n_comments', $this->Chain->field('n_comments'));
 $this->set('comments', $this->Chain->Comment->find('all', array('conditions' => array('Comment.approved' => 1, 'Comment.chain_id' => $this->Chain->id), 'order' => 'Comment.id ASC')));
 
+//Si la cadena es restricted
+
+if($restricted == 1)
+{
+
+
 //invitationes pendientes
 $this->set('check_invitation', $this->Chain->Invitation->find('count', array('conditions' => array('Invitation.chain_id' => $this->Chain->id, 'Invitation.guest_mail' => $user_mail, 'Invitation.pending' => 1))));
+
+
+
+}
+
+else
+{
+
+$this->set('check_invitation', 1);
+
+
+//comprueba si ya ha participado
+
+$check_joins = $this->Chain->Item->find('count', array('conditions' => array('Item.approved' => 1, 'Item.chain_id' => $this->Chain->id, 'Item.username' => $username)));
+$this->set('check_joins', $check_joins);
+
+}
 
 
 }

@@ -19,7 +19,7 @@ else
 
 
 
-<h2>Mensajes de entrada</h2>
+<h2>Conversación</h2>
 
 <table>
 	<tr>
@@ -37,7 +37,7 @@ else
 		
 		<tr>
 			<td><?php echo $message['From']['username']; ?> </td>
-			<td><?php echo $html->link($message['Message']['subject'],array('controller' => 'messages', 'action' => 'read',$message['Message']['user_id'], $message['Message']['conv_id'])); ?></td>
+			<td><?php echo $message['Message']['subject']; ?> </td>
 			<td><?php echo $message['Message']['text']; ?> </td>
 			<td><?php echo $message['Message']['created']; ?> </td>
 			<td><?php echo $message['Message']['read']; ?> </td>
@@ -73,6 +73,14 @@ else
 
 <br/>
 <br/>
+
+<?php echo $form->create('Message', array('controller' => 'messages', 'action' => 'write/'.$from_id.'/'.$conv_id));?>
+<?php echo $form->hidden('id');?>
+<?php echo $form->hidden('user_id', array('value' => $user_id));;?>
+<?php echo $form->hidden('conv_id', array('value' => $conv_id));;?>
+<?php echo $form->hidden('receiver_id', array('value' => $from_id));;?>
+<?php echo $form->input('text');?>
+<?php echo $form->end('Responder'); ?>
 
 <?php
 echo $html->link('Mensajes enviados', array('controller' => 'messages', 'action' => 'sendbox'));

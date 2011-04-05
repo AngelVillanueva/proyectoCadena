@@ -36,7 +36,9 @@ echo $html->link('Administrar usuarios',array('controller' => 'users', 'action' 
 <br/>
 <br/>
 <?php echo $html->link('Tienes '.$pending.' invitacion(es) pendientes!',array('controller' => 'invitations', 'action' => 'view')); ?>
-
+<br/>
+<br/>
+<?php echo $html->link('Tienes '.$request_invitations.' solicitudes(es) de participacion pendientes!',array('controller' => 'invitations', 'action' => 'view_request')); ?>
 
 
 
@@ -55,6 +57,9 @@ echo $html->link('Administrar usuarios',array('controller' => 'users', 'action' 
 		<th><?php echo $paginator->sort(__('Items', true), 'n_comments'); ?></th>
 		<th><?php echo $paginator->sort(__('Millas', true), 'miles'); ?></th>
 		<th><?php echo $paginator->sort(__('Next Meta', true), 'next_objetive'); ?></th>
+		<th><?php echo $paginator->sort(__('Private', true), 'private'); ?></th>
+		<th><?php echo $paginator->sort(__('Restricted', true), 'restricted'); ?></th>
+		<th><?php echo $paginator->sort(__('Unirse', true), 'unirse'); ?></th>
 		
 	</tr>
 	
@@ -70,6 +75,14 @@ echo $html->link('Administrar usuarios',array('controller' => 'users', 'action' 
 			<td><?php echo $chain['Chain']['n_items']; ?> </td>
 			<td><?php echo $chain['Chain']['miles']; ?> </td>
 			<td><?php echo $chain['Chain']['next_objetive']; ?> </td>
+			<td><?php echo $chain['Chain']['private']; ?> </td>
+			<td><?php echo $chain['Chain']['restricted']; ?> </td>
+			<td>
+			<?php
+			echo $form->create('Invitation', array('controller' => 'invitations', 'action' => 'request/'.$chain['Chain']['id']));
+			echo $form->end('Solicitar unirse a la cadena'); 
+			?>
+			</td>
 			
 			
 		</tr>

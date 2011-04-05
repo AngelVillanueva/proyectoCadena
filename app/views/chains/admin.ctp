@@ -43,7 +43,6 @@ echo $html->link('Administrar usuarios',array('controller' => 'users', 'action' 
 		<th><?php echo $paginator->sort(__('Comments', true), 'n_comments'); ?></th>
 		<th><?php echo $paginator->sort(__('Items', true), 'n_comments'); ?></th>
 		<th><?php echo $paginator->sort(__('Millas', true), 'miles'); ?></th>
-		<th><?php echo $paginator->sort(__('Meta', true), 'objetive'); ?></th>
 		<th><?php echo $paginator->sort(__('Denunciada', true), 'denounced'); ?></th>
 		<th><?php echo $paginator->sort(__('Aprobada', true), 'approved'); ?></th>
 		<th><?php echo $paginator->sort(__('Aprobar', true), 'approve'); ?></th>
@@ -62,7 +61,6 @@ echo $html->link('Administrar usuarios',array('controller' => 'users', 'action' 
 			<td><?php echo $chain['Chain']['n_comments']; ?> </td>
 			<td><?php echo $chain['Chain']['n_items']; ?> </td>
 			<td><?php echo $chain['Chain']['miles']; ?> </td>
-			<td><?php echo $chain['Objetive']['miles']; ?> </td>
 			<td><?php echo $chain['Chain']['denounced']; ?> </td>
 			<td><?php echo $chain['Chain']['approved']; ?> </td>
 			<td>

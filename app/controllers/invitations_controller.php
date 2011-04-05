@@ -15,6 +15,40 @@ function beforeFilter(){
 function index()
 {}
 
+function active($invitation_id = null)
+{
+
+$user = $this->Session->read('Auth.User.username');
+$this->set('user',$user);
+
+
+
+if(!empty($invitation_id))
+
+{
+
+$this->Invitation->id = $invitation_id;
+
+$invitation_user = $this->Invitation->field('username');
+
+if($invitation_user != $user)
+{
+
+$this->Session->setFlash('No puedes aprobar esta solicitud');
+$this->redirect(array('controller' => 'invitations', 'action' => 'view_request'));
+
+}
+
+$this->Invitation->saveField('active', 1);
+$this->Session->setFlash('Solicitud aprobada');
+
+}
+
+$this->redirect(array('controller' => 'invitations', 'action' => 'view_request'));
+
+
+}
+
 function add($chain_id = null)
 {
 
@@ -36,6 +70,7 @@ if (!empty($this->data)) {
 	{
 	$user = $this->data['Invitation']['user'];
 	$chain_id = $this->data['Invitation']['chain_id'];
+	$this->data['Invitation']['active'] = 1;
 	
 	
 	
@@ -52,7 +87,31 @@ if (!empty($this->data)) {
 
 }
 
+function request($chain_id = null)
+{
 
+$user = $this->Session->read('Auth.User.username');
+$user_mail = $this->Session->read('Auth.User.mail');
+
+if (!empty($chain_id)) {
+
+	$this->Invitation->Chain->id = $chain_id;
+
+	$chain_user = $this->Invitation->Chain->field('username');
+
+	$this->data['Invitation']['username'] = $chain_user;
+	$this->data['Invitation']['guest_name'] = $user;
+	$this->data['Invitation']['guest_mail'] = $user_mail;
+	$this->data['Invitation']['chain_id'] = $chain_id;
+	$this->data['Invitation']['pending'] = 1;
+	$this->data['Invitation']['active'] = 0;
+
+	$this->Invitation->save($this->data);
+	$this->Session->setFlash('Se ha enviado la solicitud');
+	$this->redirect(array('controller' => 'chains', 'action' => 'view/'.$chain_id));
+}
+
+}
 
 
 
@@ -82,6 +141,20 @@ $pending = $this->Invitation->find('all', array('conditions' => array('Invitatio
 $this->set('pending', $pending);
 
 $this->paginate = array('conditions' => array('Invitation.pending' => 1, 'Invitation.guest_mail' => $user_mail), 'limit' => 10, 'order' => 'Invitation.id DESC');
+$data = $this->paginate('Invitation');
+$this->set(compact('data'));
+
+}
+
+function view_request()
+{
+$user = $this->Session->read('Auth.User.username');
+$user_mail = $this->Session->read('Auth.User.mail');
+
+$pending = $this->Invitation->find('all', array('conditions' => array('Invitation.username' => $user, 'Invitation.pending' => 1, 'Invitation.active' => 0)));
+$this->set('pending', $pending);
+
+$this->paginate = array('conditions' => array('Invitation.pending' => 1, 'Invitation.username' => $user, 'Invitation.active' => 0), 'limit' => 10, 'order' => 'Invitation.id DESC');
 $data = $this->paginate('Invitation');
 $this->set(compact('data'));
 

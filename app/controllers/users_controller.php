@@ -113,14 +113,16 @@ class UsersController extends AppController {
 	
 	//Array de cadenas en las que el usuario ha participado
 	
-	$this->set('join_chains', $this->User->Chain->Item->find('all', array('conditions' => array('Item.user_id' => $account_id), 'group by' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments'), 'fields' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments'),'limit' => 5, 'order' => 'Chain.id ASC')));
+	//$this->set('join_chains', $this->User->Chain->Item->find('all', array('conditions' => array('Item.user_id' => $account_id), 'group by' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments'), 'fields' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments'),'limit' => 5, 'order' => 'Chain.id ASC')));
+	
+	$this->set('join_chains', $this->User->Chain->Item->find('all', array('conditions' => array('Item.user_id' => $account_id),'group' => array('Chain.id'), 'fields' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments'),'limit' => 5, 'order' => 'Chain.id ASC')));
 	
 	//Mensajes y mensajes sin leer
 	
-	$messages = $this->User->ReceivedMessage->find('count', array('conditions' => array('ReceivedMessage.receiver_id' => $user_id, 'ReceivedMessage.deleted' => 0)) );
+	$messages = $this->User->ReceivedMessage->find('count', array('conditions' => array('ReceivedMessage.receiver_id' => $user_id, 'ReceivedMessage.deleted' => 0), 'fields' => 'DISTINCT ReceivedMessage.conv_id') );
 	$this->set('messages', $messages);
 	
-	$new_messages =  $this->User->ReceivedMessage->find('count', array('conditions' => array('ReceivedMessage.receiver_id' => $user_id, 'ReceivedMessage.read' => 0, 'ReceivedMessage.deleted' => 0)));
+	$new_messages =  $this->User->ReceivedMessage->find('count', array('conditions' => array('ReceivedMessage.receiver_id' => $user_id, 'ReceivedMessage.read' => 0, 'ReceivedMessage.deleted' => 0), 'fields' => 'DISTINCT ReceivedMessage.conv_id'));
 	$this->set('new_messages', $new_messages);
 	
 	
@@ -182,15 +184,24 @@ class UsersController extends AppController {
 		
 		{
 		
-		$file_path = $this->Attachment->upload($this->data['User']);
-		$this->data['User']['active'] = 1;
+		if ($this->data['User']['password'] == $this->Auth->password($this->data['User']['password_confirm']))
+		{
 		
-		if ($this->User->save($this->data)) { 
+			$file_path = $this->Attachment->upload($this->data['User']);
+			$this->data['User']['active'] = 1;
+		
+			if ($this->User->save($this->data)) { 
 		
 		
 		
-		$this->Session->setFlash('Usuario guardado!');
-		$this->redirect(array('controller' => 'users', 'action' => 'add')); 
+			$this->Session->setFlash('Usuario guardado!');
+			$this->redirect(array('controller' => 'users', 'action' => 'add')); 
+		
+			}
+		}
+		
+		else{
+		$this->Session->setFlash('Las contraseñas no coinciden');
 		
 		}
 		
