@@ -20,7 +20,7 @@ echo $html->link('Administrar items',array('controller' => 'items', 'action' => 
 echo '<br/>';
 echo $html->link('Administrar comentarios',array('controller' => 'comments', 'action' => 'admin'));
 echo '<br/>';
-echo $html->link('Administrar usuarios',array('controller' => 'users', 'action' => 'view'));
+echo $html->link('Administrar usuarios',array('controller' => 'users', 'action' => 'admin'));
 }
 ?>
 

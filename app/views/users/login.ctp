@@ -8,3 +8,9 @@ echo $this->Form->end('Login');
 
 ?>
 
+<?php
+
+echo $html->link('Has perdido la password?', array('controller' => 'users', 'action' => 'forgotPass')); 
+
+?>
+

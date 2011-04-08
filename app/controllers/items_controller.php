@@ -111,14 +111,18 @@ if (!empty($this->data)) {
 			$item_id = $this->Item->id; 
 			$user_mail = $this->Session->read('Auth.User.mail'); 
 			
+			
 			$invitations = $this->Item->Chain->Invitation->find('all', array('conditions' => array('Invitation.chain_id' => $chain_id, 'Invitation.guest_mail' => $user_mail)));
 					
 				foreach($invitations as $invitation)
 					{
 					
-					$this->Item->Chain->Invitation->id = $invitation['Invitation']['id'];
-					$this->Item->Chain->Invitation->saveField('pending', 0);
+					//Antes cuando utilizaba la invitacion la ponia pending = 0
+					//$this->Item->Chain->Invitation->id = $invitation['Invitation']['id'];
+					//$this->Item->Chain->Invitation->saveField('pending', 0);
 					
+					//Borra la invitation
+					$this->Item->Chain->Invitation->delete($invitation['Invitation']['id']);
 					
 					}
 				

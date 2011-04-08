@@ -29,27 +29,64 @@ class User extends AppModel
 			);
 	
 	var $validate = array(
+	
 			'username' => array (
-					'rule' => 'notEmpty',
-					'message' => 'Introduzca nombre de usuario'
-				),
+					'required' => array(
+					'rule' => array('minLength', 3)
+					
+					),
+					'unique' => array(
+					'rule' => array('isUnique', 'username'),
+					'message' => 'El usuario ya existe'
+					)
+					),
+			
 			'mail' => array (
-					'rule' => 'notEmpty',
-					'message' => 'Introduzca mail de usuario'
+					'valid' => array(
+					'rule' => array('email')
+					
+					),
+					'required' => array(
+					'rule' => array('minLength', 1)
+					),
+					'unique' => array(
+					'rule' => array('isUnique', 'mail'),
+					'message' => 'El mail ya existe'
+					)
+					
+					
 				),
 				
 			'password' => array (
-					'rule' => 'notEmpty',
-					'message' => 'Introduzca password de usuario'
+					'required' => array(
+					'rule' => array('minLength', 5),
+					'message' => 'La contraseña debe contener al menos 5 caracteres'
+					)
+					
 				),
 			
+			'password_confirm' => array (
+					'required' => array(
+					'rule' => array('minLength', 5),
+					'message' => 'La contraseña debe contener al menos 5 caracteres'
+					
+					),
+				
+	
+					)
+			
 				);
+				
 	
-		
+	function isUnique() {
 	
-
-
-
+		$args = func_get_args();
+		$field = $args[1];
+		$exists = $this->hasAny("$field='".$this->data["User"][$field]."'");
+		return $exists===false;
+	}
+	
+	
 
 }
 

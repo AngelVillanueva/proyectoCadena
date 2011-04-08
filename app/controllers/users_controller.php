@@ -4,7 +4,7 @@ class UsersController extends AppController {
 
 	var $name = 'Users';
 	
-	var $components = array('Attachment' => array('files_dir' => 'users', 'images_size' => array( 'avatar' => array(75, 75, 'resizeCrop'))));
+	var $components = array('Email', 'Attachment' => array('files_dir' => 'users', 'images_size' => array( 'avatar' => array(75, 75, 'resizeCrop'))));
 	
 	
 	
@@ -12,7 +12,7 @@ class UsersController extends AppController {
 	
 	function beforeFilter() {
 	
-	      $this->Auth->allow('login', 'logout');
+	      $this->Auth->allow('login', 'logout', 'forgotPass');
 	      
 	    }
 	
@@ -106,14 +106,12 @@ class UsersController extends AppController {
 	$this->set(compact('data'));
 	
 	//invitationes pendientes
-	$this->set('pending', $this->User->Chain->Invitation->find('count', array('conditions' => array('Invitation.guest_mail' => $account_mail, 'Invitation.pending' => 1))));
+	$this->set('pending', $this->User->Chain->Invitation->find('count', array('conditions' => array('Invitation.guest_mail' => $account_mail, 'Invitation.pending' => 1, 'Invitation.active' => 1))));
 	
 	//array de cadenas del usuario
 	$this->set('user_chains', $this->User->Chain->find('all',array('conditions' => array('Chain.user_id' => $account_id),'limit' => 5, 'order' => 'Chain.id ASC')));
 	
 	//Array de cadenas en las que el usuario ha participado
-	
-	//$this->set('join_chains', $this->User->Chain->Item->find('all', array('conditions' => array('Item.user_id' => $account_id), 'group by' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments'), 'fields' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments'),'limit' => 5, 'order' => 'Chain.id ASC')));
 	
 	$this->set('join_chains', $this->User->Chain->Item->find('all', array('conditions' => array('Item.user_id' => $account_id),'group' => array('Chain.id'), 'fields' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments'),'limit' => 5, 'order' => 'Chain.id ASC')));
 	
@@ -164,118 +162,6 @@ class UsersController extends AppController {
 	
 	
 	}
-
-
-	function add(){
-	
-		$user = $this->Session->read('Auth.User.username');
-		$role = $user = $this->Session->read('Auth.User.role');
-		$this->set('user',$user);
-		
-		if($role != 1)
-		{
-		
-		$this->Session->setFlash('Solo el Administrador puede acceder a esta zona.');
-		$this->redirect(array('controller' => 'chains', 'action' => 'index'));
-		
-		}
-		
-		if(!empty($this->data))
-		
-		{
-		
-		if ($this->data['User']['password'] == $this->Auth->password($this->data['User']['password_confirm']))
-		{
-		
-			$file_path = $this->Attachment->upload($this->data['User']);
-			$this->data['User']['active'] = 1;
-		
-			if ($this->User->save($this->data)) { 
-		
-		
-		
-			$this->Session->setFlash('Usuario guardado!');
-			$this->redirect(array('controller' => 'users', 'action' => 'add')); 
-		
-			}
-		}
-		
-		else{
-		$this->Session->setFlash('Las contraseñas no coinciden');
-		
-		}
-		
-		}
-		
-		
-	
-	}
-	
-	
-	function delete($id = null)
-	
-	{
-	
-	$user = $this->Session->read('Auth.User.username');
-	$role = $user = $this->Session->read('Auth.User.role');
-	$this->set('user',$user);
-	
-	if($role != 1)
-	{
-	
-	$this->Session->setFlash('Solo el Administrador puede acceder a esta zona.');
-	$this->redirect(array('controller' => 'chains', 'action' => 'index'));
-	
-	}
-	
-	
-	$this->User->id = $id;
-	
-	$this->User->delete($id, false);
-	
-	$this->Session->setFlash('Usuario eliminado!');
-	$this->redirect(array('controller' => 'users', 'action' => 'view')); 
-	
-	
-	
-	
-	}
-	
-	function edit()
-	{
-	
-	$user = $this->Session->read('Auth.User.username');
-	$user_id = $this->Session->read('Auth.User.id');
-	
-	
-	
-	$this->User->id = $user_id;
-	
-	$this->set('file_path', $this->User->field('user_file_path'));
-	
-	
-	if(!empty($this->data))
-	
-	{
-	
-	$file_path = $this->Attachment->upload($this->data['User']);
-	
-	$this->User->saveField('user_file_path', $this->data['User']['user_file_path']);
-	$this->User->saveField('user_file_name', $this->data['User']['user_file_name']);
-	$this->User->saveField('user_file_size', $this->data['User']['user_file_size']);
-	$this->User->saveField('user_content_type', $this->data['User']['user_content_type']);
-	
-	$this->set('file_path', $this->User->field('user_file_path'));
-	
-	$this->Session->setFlash('Datos actualizados');
-	$this->redirect(array('controller' => 'users', 'action' => 'account', $user));
-	
-	
-	}
-	
-	
-	
-	}
 	
 	function active($account_id = null)
 	
@@ -313,8 +199,227 @@ class UsersController extends AppController {
 	
 	}
 	
+
+
+	function add(){
+	
+		$user = $this->Session->read('Auth.User.username');
+		$role = $user = $this->Session->read('Auth.User.role');
+		$this->set('user',$user);
+		
+		if($role != 1)
+		{
+		
+		$this->Session->setFlash('Solo el Administrador puede acceder a esta zona.');
+		$this->redirect(array('controller' => 'chains', 'action' => 'index'));
+		
+		}
+		
+		if(!empty($this->data))
+		
+		{
+		
+		if ($this->data['User']['password'] == $this->Auth->password($this->data['User']['password_confirm']))
+		{
+			
+		
+			$file_path = $this->Attachment->upload($this->data['User']);
+			$this->data['User']['active'] = 1;
+		
+			if ($this->User->save($this->data)) { 
+		
+		
+		
+			$this->Session->setFlash('Usuario guardado!');
+			$this->redirect(array('controller' => 'users', 'action' => 'add')); 
+		
+			}
+		}
+		
+		else{
+		$this->Session->setFlash('Las contraseñas no coinciden');
+		
+		}
+		
+	}
+		
+		
+	
+	}
 	
 	
+	function delete($id = null)
+	
+	{
+	
+	$user = $this->Session->read('Auth.User.username');
+	$role = $user = $this->Session->read('Auth.User.role');
+	$this->set('user',$user);
+	
+	if($role != 1)
+	{
+	
+	$this->Session->setFlash('Solo el Administrador puede acceder a esta zona.');
+	$this->redirect(array('controller' => 'chains', 'action' => 'index'));
+	
+	}
+	
+	
+	$this->User->id = $id;
+	
+	$this->User->delete($id, false);
+	
+	$this->Session->setFlash('Usuario desactivado!');
+	$this->redirect(array('controller' => 'users', 'action' => 'view')); 
+	
+	
+	
+	
+	}
+	
+	
+	function edit()
+	
+	{
+	
+	$user = $this->Session->read('Auth.User.username');
+	$this->set('username', $user);
+	$user_id = $this->Session->read('Auth.User.id');
+	
+	$this->User->id = $user_id;
+	
+	$this->set('file_path', $this->User->field('user_file_path'));
+	
+	if(!empty($this->data))
+	
+	{
+	
+	if ($this->data['User']['password'] == $this->data['User']['password_confirm'])
+	{
+		
+		$this->data['User']['password'] =  $this->Auth->password($this->data['User']['password']);
+	
+		$file_path = $this->Attachment->upload($this->data['User']);
+		
+		if ($this->User->save($this->data)) { 
+		
+		
+		
+			$this->Session->setFlash('Usuario guardado!');
+			$this->redirect(array('controller' => 'users', 'action' => 'account', $user)); 
+		
+			}
+		
+	
+	}
+	
+	else
+	{
+	
+	$this->Session->setFlash('Las contraseñas no coinciden');
+	
+	}
+	
+	}
+	
+	}
+	
+	
+	
+	function forgotPass($token = null)
+	{
+	
+	if (!empty($this->data['User']['mail'])){ 
+	
+		$user = $this->User->findByMail($this->data['User']['mail']);
+		
+		if (empty($user)){ 
+		
+			$this->Session->setFlash('Unknown email.');   
+			return;  
+		}
+		
+		else
+		{
+			$username = $user['User']['username'];
+			$salt = Configure::read('Security.salt');
+			$emailtoken = md5($user['User']['password'].$salt);
+			
+			//SMTP
+			$this->Email->smtpOptions = array(
+			'port' => '25',
+			'timeout' => '30',
+			'host' => 'smtp.gmail.com',
+			'username' => 'tests@sinapsescopio.es',
+			'password' => 'key1and11971');
+			
+			//método de entrega
+			$this->Email->delivery = 'smtp';
+			
+			//Para enviar mails
+			$this->Email->from = 'tests@sinapsescopio.es';
+			$this->Email->to = $this->data['User']['mail'];
+			$this->Email->subject = $username.' le recordamos su contraseña';
+			$this->Email->send();
+			
+						
+			$this->Session->setFlash('Check your email.-> '.$emailtoken); 
+			return; 
+		
+		
+		}
+	
+	}
+	
+	
+	if (!empty($token)){
+		
+		$salt = Configure::read('Security.salt');
+
+		$user_id = '';
+		
+		$users = $this->User->find('all');
+		
+		foreach($users as $user)
+		{
+		
+		if(md5($user['User']['password'].$salt) == $token)
+		{
+		
+		$user_id = $user['User']['id'];
+		
+		}
+		
+		}
+		
+		$this->User->id = $user_id;
+		
+		if (empty($user_id)){ 
+		       
+			$this->Session->setFlash('Invalid token.'); 
+			return; 
+			
+		} 
+	
+		if (!empty($this->data['User']['password'])){
+		
+			if ($this->data['User']['password'] == $this->data['User']['password_confirm'])
+			{
+		
+				$this->data['User']['password'] = $this->Auth->password($this->data['User']['password']); 
+		 		$this->User->save($this->data); 
+		 		$this->Session->setFlash('New password set.'); 
+		 		$this->redirect('/');
+		 	}
+		
+		}
+		
+		$this->set('token', $token); 
+		$this->render('resetPass');
+	
+	}
+	
+	}
 	
 	function view()
 	

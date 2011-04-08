@@ -26,7 +26,9 @@ else
 		<th><?php echo $paginator->sort(__('Id', true), 'id'); ?></th>
 		<th><?php echo $paginator->sort(__('Name', true), 'name'); ?></th>
 		<th><?php echo $paginator->sort(__('Created', true), 'username'); ?></th>
-		<th><?php echo $paginator->sort(__('Eliminar solo usuario', true), 'delete'); ?></th>
+		<th><?php echo $paginator->sort(__('Activar usuario', true), 'active'); ?></th>
+		<th><?php echo $paginator->sort(__('Eliminar usuario', true), 'delete'); ?></th>
+		
 		
 		
 	</tr>
@@ -38,8 +40,12 @@ else
 			<td><?php echo $html->link($account['User']['username'],array('controller' => 'users', 'action' => 'account', $account['User']['username'])); ?></td>
 			<td><?php echo $account['User']['created']; ?> </td>
 			<td>
+			<?php echo $form->create('User', array('action' => 'active/'.$account['User']['id']));?>
+			<?php echo $form->end('Activar usuario');?>
+			</td>
+			<td>
 			<?php echo $form->create('User', array('action' => 'delete/'.$account['User']['id']));?>
-			<?php echo $form->end('Eliminar solo usuario');?>
+			<?php echo $form->end('Eliminar usuario');?>
 			</td>
 			
 			

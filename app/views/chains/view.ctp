@@ -18,7 +18,8 @@
 	
 	<tr> 
 		<th><?php __('Chain ID')?></th> 
-		<th><?php __('Name')?></th>        
+		<th><?php __('Name')?></th> 
+		<th><?php __('Description')?></th>        
 		<th><?php __('Author')?></th>   
 		<th><?php __('Items')?></th>
 		<th><?php __('Players')?></th>
@@ -36,6 +37,7 @@
 	<tr>
 		<td><?php echo $chain['Chain']['id']; ?></td>
 		<td><?php echo $chain['Chain']['name']; ?></td>
+		<td><?php echo $chain['Chain']['description']; ?></td>
 		<td><?php echo $html->link($chain['Chain']['username'],array('controller' => 'users', 'action' => 'account', $chain['Chain']['username'])); ?></td>
 		<td>
 		<?php foreach($items as $item): ?>
@@ -83,7 +85,7 @@ if($n_items == 0)
 {
 echo 'Cadena vacía... <br/>';
 }
-if($check_invitation > 0 && $check_joins == 0)
+if(($check_invitation > 0 || $check_own == $username) && $check_joins == 0)
 {
 echo $form->create('Item', array('controller' => 'items', 'action' => 'select_type/'.$id));
 echo $form->end('Nuevo Item'); 
@@ -111,7 +113,7 @@ echo $form->end('Borrar cadena');
 ?>
 
 <?php
-if($check_joins == 0 && $private == 1)
+if($restricted == 1 && $check_own != $username && $check_invitation == 0 && $check_joins == 0 && $check_request == 0)
 {
 echo $form->create('Invitation', array('controller' => 'invitations', 'action' => 'request/'.$id));
 echo $form->end('Solicitar unirse a la cadena'); 

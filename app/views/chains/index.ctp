@@ -20,7 +20,9 @@ echo $html->link('Administrar items',array('controller' => 'items', 'action' => 
 echo '<br/>';
 echo $html->link('Administrar comentarios',array('controller' => 'comments', 'action' => 'admin'));
 echo '<br/>';
-echo $html->link('Administrar usuarios',array('controller' => 'users', 'action' => 'view'));
+echo $html->link('Administrar usuarios',array('controller' => 'users', 'action' => 'admin'));
+echo '<br/>';
+echo $html->link('Administrar invitaciones',array('controller' => 'invitations', 'action' => 'admin'));
 }
 ?>
 
@@ -59,7 +61,7 @@ echo $html->link('Administrar usuarios',array('controller' => 'users', 'action' 
 		<th><?php echo $paginator->sort(__('Next Meta', true), 'next_objetive'); ?></th>
 		<th><?php echo $paginator->sort(__('Private', true), 'private'); ?></th>
 		<th><?php echo $paginator->sort(__('Restricted', true), 'restricted'); ?></th>
-		<th><?php echo $paginator->sort(__('Unirse', true), 'unirse'); ?></th>
+		
 		
 	</tr>
 	
@@ -77,12 +79,7 @@ echo $html->link('Administrar usuarios',array('controller' => 'users', 'action' 
 			<td><?php echo $chain['Chain']['next_objetive']; ?> </td>
 			<td><?php echo $chain['Chain']['private']; ?> </td>
 			<td><?php echo $chain['Chain']['restricted']; ?> </td>
-			<td>
-			<?php
-			echo $form->create('Invitation', array('controller' => 'invitations', 'action' => 'request/'.$chain['Chain']['id']));
-			echo $form->end('Solicitar unirse a la cadena'); 
-			?>
-			</td>
+			
 			
 			
 		</tr>

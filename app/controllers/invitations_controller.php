@@ -5,7 +5,7 @@ class InvitationsController extends AppController {
 var $name = 'Invitations';
 var $components = array('Email');
 
-var $paginate = array('fields' => array('Invitation.id', 'Invitation.chain_id', 'Invitation.username'), 'limit' => 5, 'order' => array('Invitation.id' => 'asc'));
+var $paginate = array('fields' => array('Invitation.id', 'Invitation.chain_id', 'Invitation.username', 'Invitation.guest_name', 'Invitation.guest_mail', 'Invitation.created', 'Invitation.pending', 'Invitation.active'), 'limit' => 5, 'order' => array('Invitation.id' => 'asc'));
 
 
 function beforeFilter(){
@@ -57,33 +57,88 @@ $role = $this->Session->read('Auth.User.role');
 $this->set('user',$user);
 $this->set('chain_id', $chain_id);
 
+$sent_invitations = 0;
 
 if (!empty($this->data)) {
+
+			$chain_id = $this->data['Invitation'][0]['chain_id'];
+
+
+			for($i=0;$i<count($this->data['Invitation']);$i++)
+			{
+			
+			if(!empty($this->data['Invitation'][$i]['guest_mail']))
+			{
+			
+			$this->Invitation->save($this->data['Invitation'][$i]); 
+			
+			$id = $this->Invitation->getLastInsertId();
+			
+			$this->Email->smtpOptions = array(
+				'port' => '25',
+				'timeout' => '30',
+				'host' => 'smtp.1and1.es',
+				'username' => 'tests@sinapsescopio.es',
+				'password' => 'key1and11971');
+			
+			//método de entrega
+			$this->Email->delivery = 'smtp';
+			
+			//Para enviar mails
+			$this->Email->from = 'tests@sinapsescopio.es';
+			$this->Email->to = $this->Invitation->field('guest_mail');
+			$chain_id = $this->Invitation->field('chain_id');
+			$this->Email->subject = 'Prueba invitacion cadena';
+			$this->Email->send();
+			$this->Email->reset();
+			
+			$sent_invitations++;
+			
+			}
+			
+			}
+			$this->Session->setFlash('Invitaciones enviadas!-> '.$sent_invitations);
+			$this->redirect(array('controller' => 'chains', 'action' => 'view/'.$chain_id));
 	
-	if(empty($this->data['Invitation']['guest_name']) || empty($this->data['Invitation']['guest_mail'])){
 	
-	$this->Session->setFlash('Debe rellenar todos los campos!');
+		
 	
 	}
 	
-	else
-	{
-	$user = $this->data['Invitation']['user'];
-	$chain_id = $this->data['Invitation']['chain_id'];
-	$this->data['Invitation']['active'] = 1;
 	
 	
 	
-	//Se guardan los datos de la invitacion
-	$this->Invitation->save($this->data);  
-	$id = $this->Invitation->id;
-	$this->redirect(array('controller' => 'invitations', 'action' => 'send/'.$id));        
-	//DEBE ACTIVARSE UN BOTÓN PARA CONTINUAR
-	}
-	
+
+
 
 
 }
+
+function delete($invitation_id)
+
+{
+
+$role = $this->Session->read('Auth.User.role');
+
+
+if(!empty($invitation_id))
+
+{
+
+
+$this->Invitation->delete($invitation_id, false);
+
+
+
+}
+
+if($role == 1)
+{
+$this->redirect(array('controller' => 'invitations', 'action' => 'admin'));
+
+}
+
+
 
 }
 
@@ -115,32 +170,15 @@ if (!empty($chain_id)) {
 
 
 
-function send($invitation_id = null)
-{
-
-$this->Invitation->id = $invitation_id;
-
-//Para enviar mails
-$this->Email->from = 'invitaciones@cadenas.com';
-$this->Email->to = $this->Invitation->field('guest_mail');
-$id = $this->Invitation->field('chain_id');
-$this->Email->subject = 'Prueba invitacion cadena';
-$this->Email->send('Prueba invitacion --> http://sinapsescopio.es/proyectoCadena/chains/view/'.$id);
-$this->Session->setFlash('Invitación enviada!');
-$this->redirect(array('controller' => 'chains', 'action' => 'view/'.$id)); 
-
-}
-
-
 function view()
 {
 $user = $this->Session->read('Auth.User.username');
 $user_mail = $this->Session->read('Auth.User.mail');
 
-$pending = $this->Invitation->find('all', array('conditions' => array('Invitation.guest_mail' => $user_mail, 'Invitation.pending' => 1)));
+$pending = $this->Invitation->find('all', array('conditions' => array('Invitation.guest_mail' => $user_mail, 'Invitation.pending' => 1, 'Invitation.active' => 1)));
 $this->set('pending', $pending);
 
-$this->paginate = array('conditions' => array('Invitation.pending' => 1, 'Invitation.guest_mail' => $user_mail), 'limit' => 10, 'order' => 'Invitation.id DESC');
+$this->paginate = array('conditions' => array('Invitation.pending' => 1, 'Invitation.active' => 1, 'Invitation.guest_mail' => $user_mail), 'limit' => 10, 'order' => 'Invitation.id DESC');
 $data = $this->paginate('Invitation');
 $this->set(compact('data'));
 
