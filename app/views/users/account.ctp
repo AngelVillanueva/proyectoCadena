@@ -40,6 +40,9 @@ echo $form->end('Buscar');
 <br/>
 <br/>
 
+<h2>Seguidores: <?php echo $supporters;?></h2>
+
+
 <table>
 <h2><?php echo $html->link($tittle1,array('controller' => 'chains', 'action' => 'user_chains', $account_id)); ?></h2>
 	<tr>
@@ -145,7 +148,7 @@ echo $form->end('Buscar');
 
 
 <?php
-if($check_user==1)
+if($check_user==1 && $check_fav == 0)
 {
 echo $form->create('Favorite', array('controller' => 'favorites', 'action' => 'add/'.$account_id.'/0'));
 echo $form->end('Seguir usuario'); 

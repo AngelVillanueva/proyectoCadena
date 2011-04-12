@@ -113,6 +113,11 @@ echo $form->end('Borrar cadena');
 ?>
 
 <?php
+echo $form->create('Invitation', array('controller' => 'invitations', 'action' => 'add/'.$id));
+echo $form->end('Enviar invitación'); 
+?>
+
+<?php
 if($restricted == 1 && $check_own != $username && $check_invitation == 0 && $check_joins == 0 && $check_request == 0)
 {
 echo $form->create('Invitation', array('controller' => 'invitations', 'action' => 'request/'.$id));

@@ -68,8 +68,12 @@ class UsersController extends AppController {
 	$tittle2 = 'Cadenas en las que '.$account_username.' ha participado';
 	$this->set('tittle2', $tittle2);
 	
-	$check_user = 1;
+	//Comprueba si la cuenta de usuario es la suya
 	
+	if($account_id != $user_id)
+	{
+	$check_user = 1;
+	}
 	
 	}
 	
@@ -122,6 +126,17 @@ class UsersController extends AppController {
 	
 	$new_messages =  $this->User->ReceivedMessage->find('count', array('conditions' => array('ReceivedMessage.receiver_id' => $user_id, 'ReceivedMessage.read' => 0, 'ReceivedMessage.deleted' => 0), 'fields' => 'DISTINCT ReceivedMessage.conv_id'));
 	$this->set('new_messages', $new_messages);
+	
+	
+	//Seguidores
+	
+	$supporters = $this->User->Favorite->find('count', array('conditions' => array('Favorite.fav_id' => $account_id, 'Favorite.type' => 0)));
+	$this->set('supporters', $supporters);
+	
+	//Comprueba si ya sigue al usuario
+	
+	$check_fav = $this->User->Favorite->find('count', array('conditions' => array('Favorite.user_id' => $user_id, 'Favorite.fav_id' => $account_id, 'Favorite.type' => 0)));
+	$this->set('check_fav', $check_fav);
 	
 	
 	//Cadenas favoritas
