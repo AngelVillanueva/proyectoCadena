@@ -248,11 +248,71 @@ $this->redirect(array('controller' => 'items', 'action' => 'view', $id));
 
 }
 
+function delete($id = null)
+
+{
+
+$user = $this->Session->read('Auth.User.username');
+$user_mail = $this->Session->read('Auth.User.mail');
+$role = $this->Session->read('Auth.User.role');
+$this->set('user',$user);
 
 
 
+$this->Item->id = $id;
+$chain_id = $this->Item->field('chain_id');
 
 
+$item_user = $this->Item->field('username');
+
+if($role != 1 && $item_user != $user)
+{
+
+$this->Session->setFlash('Solo el Propietario del item puede eliminarlo.');
+$this->redirect(array('controller' => 'items', 'action' => 'view', $id));
+
+}
+
+$position = $this->Item->field('position');
+$this->Item->Chain->id = $chain_id;
+
+$n_items = $this->Item->Chain->field('n_items');
+$this->Item->Chain->saveField('n_items', $n_items - 1);
+
+$this->Item->delete($id, false);
+
+$own_chain = $this->Item->Chain->field('username');
+
+if($user != $own_chain)
+{
+
+$this->data['Invitation']['chain_id'] = $chain_id;
+$this->data['Invitation']['username'] = 'Camelidus';
+$this->data['Invitation']['guest_name'] = $user;
+$this->data['Invitation']['guest_mail'] = $user_mail;
+$this->data['Invitation']['pending'] = 1;
+$this->data['Invitation']['active'] = 1;
+
+$this->Item->Chain->Invitation->save($this->data);
+
+}
+
+$items_chain = $this->Item->find('all', array('conditions' => array('Item.chain_id' => $chain_id, 'Item.approved' => 1, 'Item.position >' => $position)));
+
+foreach($items_chain as $item)
+{
+	
+	$this->Item->id = $item['Item']['id'];
+	$pos = $this->Item->field('position');
+	$this->Item->saveField('position', $pos - 1);
+
+}
+
+
+$this->Session->setFlash('Item eliminado!');
+$this->redirect(array('controller' => 'chains', 'action' => 'view', $chain_id)); 
+
+}
 
 
 function select_type($id = null)

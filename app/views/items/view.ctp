@@ -51,7 +51,7 @@ echo $form->end('Buscar');
 		</td>
 		<td>
 		<?php 
-		echo $form->create('Item', array('controller' => 'items', 'action' => 'approve/'.$item['Item']['id']));
+		echo $form->create('Item', array('controller' => 'items', 'action' => 'delete/'.$item['Item']['id']));
 		echo $form->end('Eliminar item'); 
 		?>
 		</td>

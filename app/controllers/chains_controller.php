@@ -369,13 +369,14 @@ switch($private)
 		$this->set('check_invitation', $check_invitation);
 		
 		//Comprueba si es uno de los participantes
-		$check_player = $this->Chain->Invitation->find('count',  array('conditions' => array('Invitation.chain_id' => $this->Chain->id, 'Invitation.guest_mail' => $user_mail, 'Invitation.active' => 1)));
-		 
+		$check_player = $this->Chain->Item->find('count',  array('conditions' => array('Item.chain_id' => $this->Chain->id, 'Item.username' => $username)));
+		
+		
 		
 		//Si no tiene invitacion, no es uno de los participantes, no es el creador y no es admin, prohibe la entrada
 		if($check_invitation == 0 && $check_player == 0 && $check_own != $username && $user_role != 1)
 			{
-			$this->Session->setFlash('Esta cadena es privada, no puedes ver su contenido');
+			$this->Session->setFlash('Esta cadena es privada, no puedes ver su contenido->'.$check_player);
 			$this->redirect(array('controller' => 'chains', 'action' => 'index'));
 			}
 		

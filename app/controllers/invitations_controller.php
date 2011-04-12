@@ -59,8 +59,13 @@ $this->set('chain_id', $chain_id);
 
 $sent_invitations = 0;
 
-if (!empty($this->data)) {
+$join_users = array();
+$this->set('join_users', $join_users);
 
+if (!empty($this->data)) {
+			
+			
+			
 			$chain_id = $this->data['Invitation'][0]['chain_id'];
 
 
@@ -68,6 +73,24 @@ if (!empty($this->data)) {
 			{
 			
 			if(!empty($this->data['Invitation'][$i]['guest_mail']))
+			{
+			
+			
+			$this->Invitation->Chain->id = $chain_id;
+			$guest_user = $this->Invitation->Chain->User->find('first', array('conditions' => array('User.mail' => $this->data['Invitation'][$i]['guest_mail'])));
+			$guest_name = $guest_user['User']['username'];
+			$own_user = $this->Invitation->Chain->field('username');
+			$check_join = $this->Invitation->Chain->Item->find('count', array('conditions' => array('Item.chain_id' => $chain_id, 'Item.username' => $guest_name)));
+			
+			if($check_join > 0 || $guest_name == $own_user)
+			{
+			
+			array_push($join_users, $this->data['Invitation'][$i]['guest_mail']);
+			
+			}
+			
+			else
+			
 			{
 			
 			$this->Invitation->save($this->data['Invitation'][$i]); 
@@ -97,7 +120,19 @@ if (!empty($this->data)) {
 			}
 			
 			}
-			$this->Session->setFlash('Invitaciones enviadas!-> '.$sent_invitations);
+			
+			}
+			
+			$this->set('join_users', $join_users);
+			$join_message = '';
+			
+			foreach($join_users as $join_user)
+			{
+			
+			$join_message = $join_message.' '.$join_user;
+			
+			}
+			$this->Session->setFlash('Invitaciones enviadas!-> '.$sent_invitations.'->'.$join_message);
 			$this->redirect(array('controller' => 'chains', 'action' => 'view/'.$chain_id));
 	
 	
@@ -113,6 +148,8 @@ if (!empty($this->data)) {
 
 
 }
+
+
 
 function delete($invitation_id)
 
@@ -154,6 +191,7 @@ if (!empty($chain_id)) {
 
 	$chain_user = $this->Invitation->Chain->field('username');
 
+	
 	$this->data['Invitation']['username'] = $chain_user;
 	$this->data['Invitation']['guest_name'] = $user;
 	$this->data['Invitation']['guest_mail'] = $user_mail;

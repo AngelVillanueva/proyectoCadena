@@ -5,6 +5,8 @@
 
 <h2>Invita a un amigo!</h2>
 
+<!-- USUARIOS QUE YA HAN PARTICIPADO EN LA CADENA -->
+<?php echo print_r($join_users);?>
 
 <?php echo $form->create('Invitation', array('enctype'=>"multipart/form-data"));?>
 
