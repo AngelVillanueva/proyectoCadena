@@ -1,0 +1,1 @@
+Hola <?php echo $guest_name_msg. '. ' .$user_msg. ' te ha invitado a participar en su cadena http://www.sinapsescopio.es/proyectoCadena/chains/view/'.$chain_id_msg. ' de Camelidus' ?>,   Gracias!.

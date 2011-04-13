@@ -1604,3 +1604,8 @@
 2011-04-12 23:28:11 Notice: Notice (8): Undefined variable: id in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/controllers/favorites_controller.php, line 31]
 2011-04-12 23:34:22 Notice: Notice (8): Undefined variable: id in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/controllers/favorites_controller.php, line 25]
 2011-04-12 23:34:22 Notice: Notice (8): Undefined variable: id in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/controllers/favorites_controller.php, line 31]
+2011-04-13 16:41:25 Notice: Notice (8): Undefined variable: guest_name in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/controllers/invitations_controller.php, line 82]
+2011-04-13 16:41:25 Notice: Notice (8): Undefined variable: guest_name in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/controllers/invitations_controller.php, line 84]
+2011-04-13 16:41:25 Notice: Notice (8): Undefined index:  Invitaion in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/controllers/invitations_controller.php, line 100]
+2011-04-13 16:42:32 Notice: Notice (8): Undefined variable: guest_name in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/controllers/invitations_controller.php, line 82]
+2011-04-13 16:42:32 Notice: Notice (8): Undefined variable: guest_name in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/controllers/invitations_controller.php, line 84]

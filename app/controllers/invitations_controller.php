@@ -67,7 +67,7 @@ if (!empty($this->data)) {
 			
 			
 			$chain_id = $this->data['Invitation'][0]['chain_id'];
-
+			$user = $this->data['Invitation'][0]['username'];
 
 			for($i=0;$i<count($this->data['Invitation']);$i++)
 			{
@@ -97,6 +97,10 @@ if (!empty($this->data)) {
 			
 			$id = $this->Invitation->getLastInsertId();
 			
+			$this->set('user_msg', $user);
+			$this->set('guest_name_msg', $this->data['Invitation'][$i]['guest_name']);
+			$this->set('chain_id_msg', $chain_id);
+			
 			$this->Email->smtpOptions = array(
 				'port' => '25',
 				'timeout' => '30',
@@ -112,6 +116,8 @@ if (!empty($this->data)) {
 			$this->Email->to = $this->Invitation->field('guest_mail');
 			$chain_id = $this->Invitation->field('chain_id');
 			$this->Email->subject = 'Prueba invitacion cadena';
+			$this->Email->template = 'simple_message';
+			$this->Email->sendAs = 'html';
 			$this->Email->send();
 			$this->Email->reset();
 			
