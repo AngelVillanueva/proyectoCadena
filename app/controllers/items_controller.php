@@ -93,15 +93,15 @@ if (!empty($this->data)) {
 			{
 			
 			case 1:
-			$this->Item->Chain->saveField('miles', $miles + 10);
+			$this->Item->Chain->saveField('miles', $n_miles + 10);
 			break;
 			
 			case 2:
-			$this->Item->Chain->saveField('miles', $miles + 20);
+			$this->Item->Chain->saveField('miles', $n_miles + 20);
 			break;
 			
 			case 3:
-			$this->Item->Chain->saveField('miles', $miles + 30);
+			$this->Item->Chain->saveField('miles', $n_miles + 30);
 			break;
 			
 			
@@ -261,6 +261,7 @@ $this->set('user',$user);
 
 $this->Item->id = $id;
 $chain_id = $this->Item->field('chain_id');
+$item_type = $this->Item->field('type');
 
 
 $item_user = $this->Item->field('username');
@@ -279,9 +280,39 @@ $this->Item->Chain->id = $chain_id;
 $n_items = $this->Item->Chain->field('n_items');
 $this->Item->Chain->saveField('n_items', $n_items - 1);
 
+//Borra el Item
+
 $this->Item->delete($id, false);
 
+//Borra las millas correspondientes
+
+
+$n_miles = $this->Item->Chain->field('miles');
+
+switch($item_type)
+{
+
+case 1:
+$this->Item->Chain->saveField('miles', $n_miles - 10);
+break;
+
+case 2:
+$this->Item->Chain->saveField('miles', $n_miles - 20);
+break;
+
+case 3:
+$this->Item->Chain->saveField('miles', $n_miles - 30);
+break;
+
+
+}
+
+
+//Comprueba si es el dueño de la cadena (porque el dueño siempre puede si no ha participado, no necesita invitacion)
+
 $own_chain = $this->Item->Chain->field('username');
+
+//Si no es el dueño de la cadena le envia una invitacion para poder usar la cadena otra vez
 
 if($user != $own_chain)
 {
@@ -309,7 +340,7 @@ foreach($items_chain as $item)
 }
 
 
-$this->Session->setFlash('Item eliminado!');
+$this->Session->setFlash('Item eliminado!'.$item_type);
 $this->redirect(array('controller' => 'chains', 'action' => 'view', $chain_id)); 
 
 }

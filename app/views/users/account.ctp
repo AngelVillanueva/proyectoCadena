@@ -148,10 +148,16 @@ echo $form->end('Buscar');
 
 
 <?php
-if($check_user==1 && $check_fav == 0)
+if($check_user==1)
 {
+
+if($check_fav == 0)
+{
+
 echo $form->create('Favorite', array('controller' => 'favorites', 'action' => 'add/'.$account_id.'/0'));
 echo $form->end('Seguir usuario'); 
+
+}
 
 echo $form->create('Message', array('controller' => 'messages', 'action' => 'write/'.$account_id));
 echo $form->end('Enviar mensaje'); 

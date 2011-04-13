@@ -80,9 +80,17 @@ if (!empty($this->data)) {
 			$guest_user = $this->Invitation->Chain->User->find('first', array('conditions' => array('User.mail' => $this->data['Invitation'][$i]['guest_mail'])));
 			$guest_name = $guest_user['User']['username'];
 			$own_user = $this->Invitation->Chain->field('username');
+			
+			//Comprueba si este usuario ya invito al otro usuario (para que no se puedan enviar varias invitaciones al mismo usuario desde la misma cuenta)
+			
+			$check_repeat = $this->Invitation->find('count', array('conditions' => array('Invitation.username' => $user, 'Invitation.guest_mail' => $this->data['Invitation'][$i]['guest_mail'])));
+			
+			//Comprueba si ya ha participado en la cadena
 			$check_join = $this->Invitation->Chain->Item->find('count', array('conditions' => array('Item.chain_id' => $chain_id, 'Item.username' => $guest_name)));
 			
-			if($check_join > 0 || $guest_name == $own_user)
+			//Si el invitado ya ha participado, es el dueño de la cadena o ya le ha enviado una invitación desde esa cuenta no la envia
+			
+			if($check_join > 0 || $guest_name == $own_user || $check_repeat > 0)
 			{
 			
 			array_push($join_users, $this->data['Invitation'][$i]['guest_mail']);
