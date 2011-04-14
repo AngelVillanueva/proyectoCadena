@@ -143,111 +143,6 @@ if (!empty($this->data)) {
 }
 
 
-
-function approve($id = null)
-{
-
-$user = $this->Session->read('Auth.User.username');
-$role = $this->Session->read('Auth.User.role');
-$this->set('user',$user);
-
-$this->Item->id = $id;
-$chain_id = $this->Item->field('chain_id');
-
-$item_user = $this->Item->field('username');
-
-
-
-$status = $this->Item->field('approved');
-
-if($status == 0)
-{
-
-if($role != 1)
-{
-
-$this->Session->setFlash('Solo el Admin puede aprobar items.');
-$this->redirect(array('controller' => 'items', 'action' => 'view', $id));
-
-}
-
-$this->Item->saveField('approved', 1);
-$position = $this->Item->field('position');
-
-$items_chain = $this->Item->find('all', array('conditions' => array('Item.id !=' => $id, 'Item.chain_id' => $chain_id, 'Item.approved' => 1, 'Item.position >=' => $position)));
-
-foreach($items_chain as $item)
-{
-	
-	$this->Item->id = $item['Item']['id'];
-	$pos = $this->Item->field('position');
-	$this->Item->saveField('position', $pos + 1);
-
-}
-
-
-$this->Session->setFlash('Item aprobado!');
-$this->redirect(array('controller' => 'items', 'action' => 'admin')); 
-
-}
-
-
-else
-{
-
-if($role != 1 && $item_user != $user)
-{
-
-$this->Session->setFlash('Solo el Propietario del item puede eliminarlo.');
-$this->redirect(array('controller' => 'items', 'action' => 'view', $id));
-
-}
-
-$this->Item->saveField('approved', 0);
-$position = $this->Item->field('position');
-
-$items_chain = $this->Item->find('all', array('conditions' => array('Item.chain_id' => $chain_id, 'Item.approved' => 1, 'Item.position >' => $position)));
-
-foreach($items_chain as $item)
-{
-
-	$this->Item->id = $item['Item']['id'];
-	$pos = $this->Item->field('position');
-	$this->Item->saveField('position', $pos - 1);
-
-}
-
-
-$this->Session->setFlash('Item eliminado!');
-
-if($role == 1)
-{
-$this->redirect(array('controller' => 'items', 'action' => 'admin')); 
-}
-
-else
-{
-$this->redirect(array('controller' => 'chains', 'action' => 'view', $chain_id)); 
-}
-
-}
-
-}
-
-
-
-
-function denounce($id = null)
-{
-
-$this->Item->id = $id;
-
-$this->Item->saveField('denounced', 1);
-$this->Session->setFlash('Item Denunciado, En breve revisaremos su contenido...');
-$this->redirect(array('controller' => 'items', 'action' => 'view', $id));
-
-}
-
 function delete($id = null)
 
 {
@@ -340,7 +235,13 @@ foreach($items_chain as $item)
 }
 
 
-$this->Session->setFlash('Item eliminado!'.$item_type);
+$this->Session->setFlash('Item eliminado!');
+
+if($role ==1)
+{
+$this->redirect(array('controller' => 'items', 'action' => 'admin')); 
+}
+
 $this->redirect(array('controller' => 'chains', 'action' => 'view', $chain_id)); 
 
 }

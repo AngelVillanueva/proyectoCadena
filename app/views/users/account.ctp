@@ -28,11 +28,7 @@ else
 <br/>
 <br/>
 
-<?php
-echo $form->create('', array('action'=>'search'));
-echo $form->input('Buscar', array('type'=>'text'));
-echo $form->end('Buscar');
-?>
+
 
 
 <h2><?php echo $account_username;?></h2>

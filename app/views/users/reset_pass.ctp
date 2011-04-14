@@ -1,4 +1,4 @@
-<h2>Introduce tu dirección de correo</h2>
+<h2>Introduce la nueva contraseña</h2>
 <?php       
 echo $this->Form->create('User', array('action' => 'forgotPass/'.$token));   
 echo $form->input('password', array('type' => 'password'));

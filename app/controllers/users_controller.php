@@ -351,7 +351,7 @@ class UsersController extends AppController {
 		if (empty($user)){ 
 		
 			$this->Session->setFlash('Unknown email.');   
-			return;  
+			  
 		}
 		
 		else
@@ -364,7 +364,7 @@ class UsersController extends AppController {
 			$this->Email->smtpOptions = array(
 			'port' => '25',
 			'timeout' => '30',
-			'host' => 'smtp.gmail.com',
+			'host' => 'smtp.1and1.es',
 			'username' => 'tests@sinapsescopio.es',
 			'password' => 'key1and11971');
 			
@@ -379,7 +379,7 @@ class UsersController extends AppController {
 			
 						
 			$this->Session->setFlash('Check your email.-> '.$emailtoken); 
-			return; 
+			
 		
 		
 		}

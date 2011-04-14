@@ -1,4 +1,4 @@
-<!-- Archivo: /app/views/items/search.ctp -->
+<!-- Archivo: /app/views/chains/buscador.ctp -->
 
 <?php if(empty($username))
 {
@@ -11,21 +11,9 @@ else
 }
 ?>
 
-<?php if($username == 'admin')
-{
-echo '<br/>';
-echo $html->link('Administrar cadenas',array('controller' => 'chains', 'action' => 'admin'));
-echo '<br/>';
-echo $html->link('Administrar items',array('controller' => 'items', 'action' => 'admin'));
-echo '<br/>';
-echo $html->link('Administrar comentarios',array('controller' => 'comments', 'action' => 'admin'));
-}
-?>
 
 
-
-
-<h2><br />Items (muestra 5)</h2>
+<h2><br />Buscador CADENAS</h2>
 
 <table>
 	<tr>
@@ -35,33 +23,86 @@ echo $html->link('Administrar comentarios',array('controller' => 'comments', 'ac
 		<th><?php echo $paginator->sort(__('Hits', true), 'n_hits'); ?></th>
 		<th><?php echo $paginator->sort(__('Votes', true), 'n_votes'); ?></th>
 		<th><?php echo $paginator->sort(__('Comments', true), 'n_comments'); ?></th>
-		<th><?php echo $paginator->sort(__('Chain', true), 'chain_id'); ?></th>
-		<th><?php echo $paginator->sort(__('Type', true), 'type'); ?></th>
-		<th><?php echo $paginator->sort(__('Position', true), 'position'); ?></th>
-		<th><?php echo $paginator->sort(__('Path', true), 'item_file_path'); ?></th>
-		<th><?php echo $paginator->sort(__('Size', true), 'item_file_size'); ?></th>
-		<th><?php echo $paginator->sort(__('Denounced', true), 'denounced'); ?></th>
-		<th><?php echo $paginator->sort(__('Approved', true), 'approved'); ?></th>
+		<th><?php echo $paginator->sort(__('Items', true), 'n_comments'); ?></th>
+		<th><?php echo $paginator->sort(__('Millas', true), 'miles'); ?></th>
+		<th><?php echo $paginator->sort(__('Meta', true), 'objetive'); ?></th>
 		
 		
 	</tr>
 	
-		<?php foreach($data as $item): ?>
+		<?php foreach($b_chains as $chain): ?>
+		
+		<tr>
+			<td><?php echo $chain['Chain']['id']; ?> </td>
+			<td><?php echo $html->link($chain['Chain']['name'],array('controller' => 'chains', 'action' => 'view', $chain['Chain']['id'])); ?></td>
+			<td><?php echo $html->link($chain['Chain']['username'],array('controller' => 'users', 'action' => 'account', $chain['Chain']['username'])); ?></td>
+			<td><?php echo $chain['Chain']['n_hits']; ?> </td>
+			<td><?php echo $chain['Chain']['n_votes']; ?> </td>
+			<td><?php echo $chain['Chain']['n_comments']; ?> </td>
+			<td><?php echo $chain['Chain']['n_items']; ?> </td>
+			<td><?php echo $chain['Chain']['miles']; ?> </td>
+			<td><?php echo $chain['Chain']['next_objetive']; ?> </td>
+		
+			
+		</tr>
+		
+		<?php endforeach; ?>
+
+</table>
+
+<h2><br />Buscador ITEMS</h2>
+
+<table>
+	<tr>
+		<th><?php echo $paginator->sort(__('Id', true), 'id'); ?></th>
+		<th><?php echo $paginator->sort(__('Name', true), 'name'); ?></th>
+		<th><?php echo $paginator->sort(__('Author', true), 'username'); ?></th>
+		<th><?php echo $paginator->sort(__('Hits', true), 'n_hits'); ?></th>
+		<th><?php echo $paginator->sort(__('Votes', true), 'n_votes'); ?></th>
+		<th><?php echo $paginator->sort(__('Comments', true), 'n_comments'); ?></th>
+		<th><?php echo $paginator->sort(__('Created', true), 'created'); ?></th>
+
+		
+		
+	</tr>
+	
+		<?php foreach($b_items as $item): ?>
 		
 		<tr>
 			<td><?php echo $item['Item']['id']; ?> </td>
-			<td><?php echo $html->link($item['Item']['name'],array('controller' => 'items', 'action' => 'view', $item['Item']['id'])); ?></td>
+			<td><?php echo $html->link($item['Item']['name'],array('controller' => 'chains', 'action' => 'view', $item['Item']['id'])); ?></td>
 			<td><?php echo $html->link($item['Item']['username'],array('controller' => 'users', 'action' => 'account', $item['Item']['username'])); ?></td>
-			<td><?php echo $item['Item']['n_hits']; ?> </td>
-			<td><?php echo $item['Item']['n_votes']; ?> </td>
-			<td><?php echo $item['Item']['n_comments']; ?> </td>
-			<td><?php echo $html->link($item['Item']['chain_id'],array('controller' => 'chains', 'action' => 'view', $item['Item']['chain_id'])); ?></td>
-			<td><?php echo $item['Item']['type']; ?> </td>
-			<td><?php echo $item['Item']['position']; ?> </td>
-			<td><?php echo $item['Item']['item_file_path']; ?> </td>
-			<td><?php echo $item['Item']['item_file_size']; ?> </td>
-			<td><?php echo $item['Item']['denounced']; ?> </td>
-			<td><?php echo $item['Item']['approved']; ?> </td>
+			<td><?php echo $item['Chain']['n_hits']; ?> </td>
+			<td><?php echo $item['Chain']['n_votes']; ?> </td>
+			<td><?php echo $item['Chain']['n_comments']; ?> </td>
+			<td><?php echo $item['Chain']['created']; ?> </td>
+	
+		
+			
+		</tr>
+		
+		<?php endforeach; ?>
+
+</table>
+
+
+
+	
+<h2><br />Buscador USUARIOS</h2>
+
+<table>
+	<tr>
+		<th><?php echo $paginator->sort(__('Id', true), 'id'); ?></th>
+		<th><?php echo $paginator->sort(__('Name', true), 'name'); ?></th>
+	
+	</tr>
+	
+		<?php foreach($b_users as $user): ?>
+		
+		<tr>
+			<td><?php echo $user['User']['id']; ?> </td>
+			<td><?php echo $html->link($user['User']['username'],array('controller' => 'users', 'action' => 'account', $user['User']['username'])); ?></td>
+			
 			
 			
 		</tr>
@@ -69,6 +110,7 @@ echo $html->link('Administrar comentarios',array('controller' => 'comments', 'ac
 		<?php endforeach; ?>
 
 </table>
+
 
 
 <!-- Muestra los numeros de página -->
@@ -86,9 +128,3 @@ echo $html->link('Administrar comentarios',array('controller' => 'comments', 'ac
 <!-- Muestra X de Y, donde X es la página actual e Y el total de páginas -->
 
 <?php echo $paginator->counter(); ?> 
-
-
-
-
-<table>
-

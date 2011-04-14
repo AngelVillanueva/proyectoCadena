@@ -42,7 +42,7 @@ echo $html->link('Administrar comentarios',array('controller' => 'comments', 'ac
 		<th><?php echo $paginator->sort(__('Size', true), 'item_file_size'); ?></th>
 		<th><?php echo $paginator->sort(__('Denounced', true), 'denounced'); ?></th>
 		<th><?php echo $paginator->sort(__('Approved', true), 'approved'); ?></th>
-		<th><?php echo $paginator->sort(__('Approve', true), 'approve'); ?></th>
+		<th><?php echo $paginator->sort(__('Delete', true), 'delete'); ?></th>
 		
 	</tr>
 	
@@ -64,8 +64,8 @@ echo $html->link('Administrar comentarios',array('controller' => 'comments', 'ac
 			<td><?php echo $item['Item']['approved']; ?> </td>
 			<td>
 			<?php 
-			echo $form->create('Item', array('controller' => 'items', 'action' => 'approve/'.$item['Item']['id']));
-			echo $form->end('Aprobar item'); 
+			echo $form->create('Item', array('controller' => 'items', 'action' => 'delete/'.$item['Item']['id']));
+			echo $form->end('Borrar item'); 
 			?>
 			</td>
 			

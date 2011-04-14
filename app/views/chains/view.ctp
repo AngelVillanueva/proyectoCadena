@@ -102,19 +102,33 @@ echo $form->create('Chain', array('controller' => 'chains', 'action' => 'denounc
 echo $form->end('Denunciar cadena'); 
 ?>
 
+
 <?php
+if($check_fav == 0)
+{
+
 echo $form->create('Favorite', array('controller' => 'favorites', 'action' => 'add/'.$id.'/1'));
 echo $form->end('Añadir a favoritos'); 
+
+}
 ?>
 
 <?php
+if($check_own == $username)
+{
+
 echo $form->create('Chain', array('controller' => 'chains', 'action' => 'approve/'.$id));
 echo $form->end('Borrar cadena'); 
+
+}
 ?>
 
 <?php
+if($check_own == $username || $check_joins > 0)
+{
 echo $form->create('Invitation', array('controller' => 'invitations', 'action' => 'add/'.$id));
 echo $form->end('Enviar invitación'); 
+}
 ?>
 
 <?php

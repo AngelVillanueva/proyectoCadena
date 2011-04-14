@@ -1,4 +1,4 @@
-<!-- Archivo: /app/views/chains/buscador.ctp -->
+<!-- Archivo: /app/views/chains/search.ctp -->
 
 <?php if(empty($username))
 {
@@ -11,11 +11,7 @@ else
 }
 ?>
 
-<?php
-echo $form->create('', array('action'=>'search'));
-echo $form->input('search', array('type'=>'text'));
-echo $form->end('Buscador');
-?>
+
 
 <h2><br />Buscador CADENAS</h2>
 
@@ -45,7 +41,7 @@ echo $form->end('Buscador');
 			<td><?php echo $chain['Chain']['n_comments']; ?> </td>
 			<td><?php echo $chain['Chain']['n_items']; ?> </td>
 			<td><?php echo $chain['Chain']['miles']; ?> </td>
-			<td><?php echo $chain['Objetive']['miles']; ?> </td>
+			<td><?php echo $chain['Chain']['next_objetive']; ?> </td>
 		
 			
 		</tr>

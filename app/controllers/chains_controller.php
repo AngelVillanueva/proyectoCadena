@@ -202,16 +202,6 @@ $this->set(compact('data'));
 
 }
 
-function denounce($id = null)
-{
-
-$this->Chain->id = $id;
-
-$this->Chain->saveField('denounced', 1);
-$this->Session->setFlash('Cadena Denunciada, En breve revisaremos su contenido...');
-$this->redirect(array('controller' => 'chains', 'action' => 'view', $id));
-
-}
 
 
 
@@ -326,6 +316,9 @@ $this->set('username',$username);
 $user_mail = $this->Session->read('Auth.User.mail');
 $this->set('user_mail',$user_mail);
 
+$user_id = $this->Session->read('Auth.User.id');
+$this->set('user_mail',$user_id);
+
 $user_role = $this->Session->read('Auth.User.role');
 
 $this->Chain->id = $id;
@@ -347,6 +340,11 @@ $this->set('check_joins', $this->Chain->Item->find('count',  array('conditions' 
 //Comprueba si el usuario es el creador
 $check_own = $this->Chain->field('username');
 $this->set('check_own',$check_own);
+
+//Comprueba si esta cadena es una de sus favoritas
+
+$check_fav = $this->Chain->User->Favorite->find('count', array('conditions' => array('Favorite.user_id' => $user_id, 'Favorite.fav_id' => $id, 'Favorite.type' => 1)));
+$this->set('check_fav', $check_fav);
 
 //Si la cadena es privada
 

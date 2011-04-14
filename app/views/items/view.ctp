@@ -1,10 +1,6 @@
 <!-- Archivo: /app/views/items/view.ctp -->
 
-<?php
-echo $form->create('', array('action'=>'search'));
-echo $form->input('Buscar', array('type'=>'text'));
-echo $form->end('Buscar');
-?>
+
 
 
 

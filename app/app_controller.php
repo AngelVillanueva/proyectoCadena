@@ -42,7 +42,7 @@ class AppController extends Controller {
 	{
 	
 	$this->Session->setFlash('Solo el Administrador puede acceder a esta zona.');
-	$this->redirect(array('controller' => $modelClass, 'action' => 'index'));
+	$this->redirect(array('controller' => $this->modelClass.'s', 'action' => 'index'));
 	
 	}
 	
@@ -51,6 +51,17 @@ class AppController extends Controller {
 	$data = $this->paginate($this->modelClass);
 	$this->set(compact('data'));
 	
+	
+	}
+	
+	function denounce($id = null)
+	{
+	
+	$this->{$this->modelClass}->id = $id;
+	
+	$this->{$this->modelClass}->saveField('denounced', 1);
+	$this->Session->setFlash('Denunciado, En breve revisaremos el contenido...');
+	$this->redirect(array('controller' => $this->modelClass.'s' , 'action' => 'view', $id));
 	
 	}
 	

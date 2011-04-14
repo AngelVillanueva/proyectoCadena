@@ -839,3 +839,6 @@
 2011-04-13 16:42:37 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/cake/libs/debugger.php:673) in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/cake/libs/controller/controller.php, line 746]
 2011-04-13 19:10:47 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/cake/libs/debugger.php:673) in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/cake/libs/controller/controller.php, line 746]
 2011-04-13 19:11:24 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/views/items/view.ctp, line 81]
+2011-04-14 15:20:16 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/views/items/search.ctp, line 49]
+2011-04-14 18:54:56 Warning: Warning (2): Attempt to assign property of non-object in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/app_controller.php, line 60]
+2011-04-14 18:58:37 Warning: Warning (2): Attempt to assign property of non-object in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/app_controller.php, line 60]
