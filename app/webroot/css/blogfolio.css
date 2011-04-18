@@ -1328,3 +1328,10 @@ img.alignleft, img.aligncenter, img.alignright, img.alignnone {
 	font: italic 95%/120% Georgia, "Times New Roman", Times, serif;
 	margin: 6px 0;
 }
+
+
+/************************************************************************************
+SINAPSE
+*************************************************************************************/
+html {background: none;}
+body {background: #E1E1D1 url('images/body-bg.jpg') repeat scroll center top;}

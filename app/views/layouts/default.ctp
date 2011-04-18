@@ -35,17 +35,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <!-- Place favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
-	<link rel="shortcut icon" href="/favicon.ico">
-	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+	<?php echo $this->Html->meta('favicon.ico', '/favicon.ico', array('rel'=>'shortcut icon', 'type'=>'icon')); ?>
+	<?php echo $this->Html->meta('apple.ico','/apple-touch-icon.png', array('rel'=>'apple-touch-icon', 'type'=>'icon')); ?>
 
   <!-- CSS: implied media="all" -->
-		<?php echo $this->Html->css('edmin'); ?>
+		<?php echo $this->Html->css('blogfolio'); ?>
   <!-- All JavaScript at the bottom, except for Modernizr which enables HTML5 elements & feature detects -->
 		<script src="js/libs/modernizr-1.7.min.js"></script>
 		
 </head>
 <body>
-	<div id="container">
+	<div id="pagewrap">
 		<header>
 			<?php echo $this->element('searcher'); ?>
 		</header>
@@ -59,25 +59,26 @@
 		<footer>
 			
 		</footer>
-	</div><!--! end of #container -->
+	</div><!--! end of #pagewrap -->
 	
 	<?php echo $this->element('sql_dump'); ?>
 	
 	<!-- JavaScript at the bottom for fast page loading -->
 
   <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if necessary -->
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>
+  <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.js"></script>-->
   <script>window.jQuery || document.write("<script src='js/libs/jquery-1.5.1.min.js'>\x3C/script>")</script>
 
 
   <!-- scripts concatenated and minified via ant build script-->
-  <script src="js/plugins.js"></script>
-  <script src="js/script.js"></script>
+  <?php echo $this->Html->script('plugins'); ?>
+  <?php echo $this->Html->script('script'); ?>
   <!-- end scripts-->
 
 
   <!--[if lt IE 7 ]>
     <script src="js/libs/dd_belatedpng.js"></script>
+    <?php echo $this->Html->script('libs/dd_belatedpng.js'); ?>
     <script>DD_belatedPNG.fix("img, .png_bg"); // Fix any <img> or .png_bg bg-images. Also, please read goo.gl/mZiyb </script>
   <![endif]-->
 
