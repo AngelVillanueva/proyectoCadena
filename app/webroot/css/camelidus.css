@@ -309,7 +309,6 @@ header {
 #site-logo {
 	position: absolute;
 	top: 38px;
-	left: 80px;
 }
 #site-logo a {
 	font: bold 32px/100% Georgia, "Times New Roman", Times, serif;
@@ -320,8 +319,7 @@ header {
 }
 #site-description {
 	position: absolute;
-	top: 75px;
-	left: 80px;
+	top: 90px;
 	width: 400px;
 	font: italic 14px/120% "Times New Roman", Times, serif;
 	color: #999;
