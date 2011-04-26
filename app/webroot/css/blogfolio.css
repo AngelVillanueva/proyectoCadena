@@ -273,7 +273,7 @@ GRID
 /************************************************************************************
 HEADER
 *************************************************************************************/
-#header {
+#header, header {
 	border-bottom: solid 1px #ccc;
 	position: relative;
 	height: 170px;
@@ -400,7 +400,7 @@ MAIN NAVIGATION
 /************************************************************************************
 HEADER WIDGET
 *************************************************************************************/
-#header .header-widget {
+header .header-widget {
 	position: absolute;
 	top: 20px;
 	right: 16px;
@@ -423,30 +423,30 @@ HEADER WIDGET
 	letter-spacing: normal;
 }
 
-#header .header-widget ul {
+header .header-widget ul {
 	margin: 0;
 	padding: 0;
 	float: left;
 }
-#header .header-widget li {
+header .header-widget li {
 	margin: 0 5px 0 0;
 	padding: 0;
 	float: left;
 	border: none;
 	clear: none;
 }
-#header .header-widget .widget {
+header .header-widget .widget {
 	float: left;
 	margin-right: 14px;
 }
-#header .header-widget img {
+header .header-widget img {
 	vertical-align: middle;
 	margin-top: -10px;
 }
-#header .rss {
+header .rss {
 	float: right;
 }
-#header .rss a {
+header .rss a {
 	background: url(images/rss.png) no-repeat left center;
 	padding-left: 16px;
 }
@@ -1333,5 +1333,7 @@ img.alignleft, img.aligncenter, img.alignright, img.alignnone {
 /************************************************************************************
 SINAPSE
 *************************************************************************************/
+header, footer { display:block;}
+
 html {background: none;}
 body {background: #E1E1D1 url('images/body-bg.jpg') repeat scroll center top;}
