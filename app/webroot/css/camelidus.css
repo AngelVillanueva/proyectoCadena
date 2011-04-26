@@ -59,6 +59,10 @@ header, footer {
 	display: block;
 }
 
+.hidden {
+	display: none;
+}
+
 /************************************************************************************
 GENERAL STYLING
 *************************************************************************************/
@@ -382,15 +386,18 @@ header {
 /************************************************************************************
 SEARCH FORM
 *************************************************************************************/
-header #searchform {
+#ChainSearchForm {
 	position: absolute;
 	bottom: 7px;
 	right: 0;
 }
-header #searchform #s {
-	width: 206px;
-	font: italic 14px/100% "Times New Roman", Times, serif;
+#ChainSearchForm label, #ChainSearchForm div.submit {
+	display: none;
 }
-#searchform #s:focus {
+#ChainSearchForm #ChainSearch {
+	font: italic 14px/100% sans-serif;
+	width: 206px;
+}
+#ChainSearchForm #ChainSearch:focus {
 	font-style: normal;
 }
