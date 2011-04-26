@@ -12,7 +12,7 @@ class UsersController extends AppController {
 	
 	function beforeFilter() {
 	
-	      $this->Auth->allow('login', 'logout', 'forgotPass');
+	      $this->Auth->allow('login', 'logout', 'forgotPass', 'search');
 	      
 	    }
 	

@@ -12,7 +12,7 @@ var $paginate = array('fields' => array('Chain.id', 'Chain.name','Chain.user_id'
 
 function beforeFilter() {
     
-     $this->Auth->allow('index', 'view');
+     $this->Auth->allow('index', 'view', 'search');
      
      }
 
@@ -333,6 +333,9 @@ $this->set('private', $private);
 $restricted = $this->Chain->field('restricted');
 $this->set('restricted', $restricted);
 
+$repeat = $this->Chain->field('repeat');
+
+
 //Comprueba si el usuario ya ha participado en la cadena
 
 $this->set('check_joins', $this->Chain->Item->find('count',  array('conditions' => array('Item.chain_id' => $this->Chain->id, 'Item.username' => $username))));
@@ -345,6 +348,37 @@ $this->set('check_own',$check_own);
 
 $check_fav = $this->Chain->User->Favorite->find('count', array('conditions' => array('Favorite.user_id' => $user_id, 'Favorite.fav_id' => $id, 'Favorite.type' => 1)));
 $this->set('check_fav', $check_fav);
+
+// Si la cadena permite repetición
+
+switch($repeat)
+	{
+	
+	case 0:
+	$this->set('check_repeat', 0);
+	break;
+	
+	
+	case 1:
+	//Se comprueba si el usuario ha puesto el ultimo item...
+	
+	$last_item = $this->Chain->Item->find('first', array('order' => array('Item.created DESC')));
+		if($last_item['Item']['username'] == $username)
+			{
+			
+			$this->set('check_repeat', 0);
+			
+			}
+		else
+			{
+			$this->set('check_repeat', 1);
+			
+			}
+	break;
+	
+	}
+
+
 
 //Si la cadena es privada
 
@@ -402,6 +436,8 @@ switch ($restricted)
 	break;
 	
 	}
+	
+
 	
 
 //actualiza hits de cadena

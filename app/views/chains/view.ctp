@@ -85,7 +85,7 @@ if($n_items == 0)
 {
 echo 'Cadena vacía... <br/>';
 }
-if(($check_invitation > 0 || $check_own == $username) && $check_joins == 0)
+if(($check_invitation > 0 || $check_own == $username) && ($check_joins == 0 || $check_repeat == 1))
 {
 echo $form->create('Item', array('controller' => 'items', 'action' => 'select_type/'.$id));
 echo $form->end('Nuevo Item'); 

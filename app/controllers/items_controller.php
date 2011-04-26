@@ -10,7 +10,7 @@ var $paginate = array('fields' => array('Item.id', 'Item.name','Item.user_id', '
 
 function beforeFilter(){
 
- $this->Auth->allow('view');
+ $this->Auth->allow('view', 'search');
  
 }
 

@@ -27,6 +27,7 @@ class AppController extends Controller {
 	$this->inicializarAuth();
 	
 	
+	
 	}
 	
 	
