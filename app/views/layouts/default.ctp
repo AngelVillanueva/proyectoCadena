@@ -47,7 +47,7 @@
 <body>
 	<div id="pagewrap">
 		<header>
-			<?php echo $this->element('searcher', array('username'=>$username)); ?>
+			<?php echo $this->element('header', array('username'=>$username)); ?>
 		</header>
 		<div id="main" role="main">
 			
