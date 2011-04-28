@@ -12,6 +12,7 @@
 <?php echo $form->hidden('username', array('value' => $username));?>
 <?php echo $form->input('name');?>
 <?php echo $form->input('description');?>
+<?php echo $form->input('chain', array('type' => 'file'));?>
 <?php
 $restricted_options = array(0 => 'Open', 1 => 'Restricted');
 echo $this->Form->select('restricted', $restricted_options, 0)

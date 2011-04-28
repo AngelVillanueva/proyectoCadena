@@ -21,6 +21,7 @@
 		<th><?php __('Name')?></th> 
 		<th><?php __('Description')?></th>        
 		<th><?php __('Author')?></th>   
+		<th><?php __('Image')?></th> 
 		<th><?php __('Items')?></th>
 		<th><?php __('Players')?></th>
 		<th><?php __('Items')?></th>
@@ -39,7 +40,8 @@
 		<td><?php echo $chain['Chain']['name']; ?></td>
 		<td><?php echo $chain['Chain']['description']; ?></td>
 		<td><?php echo $html->link($chain['Chain']['username'],array('controller' => 'users', 'action' => 'account', $chain['Chain']['username'])); ?></td>
-		<td>
+		<td><img src="<?php echo $this->webroot;?>attachments/chains/avatar/<?php echo $chain['Chain']['chain_file_path']; ?>"</td>
+		
 		<?php foreach($items as $item): ?>
 		<?php echo $html->link($item['Item']['id'],array('controller' => 'items', 'action' => 'view',$item['Item']['id'] ));?>
 		<br />

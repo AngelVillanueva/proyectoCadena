@@ -3,9 +3,9 @@
 class ChainsController extends AppController {
 
 var $name = 'Chains';
-var $components = array('MathCaptcha');
+var $components = array('MathCaptcha', 'Attachment' => array('files_dir' => 'chains', 'images_size' => array( 'avatar' => array(263, 263, 'resize') ) ));
 
-var $paginate = array('fields' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.created' , 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments', 'Chain.miles','Chain.denounced', 'Chain.approved'), 'limit' => 5, 'order' => array('Chain.id' => 'asc'));
+var $paginate = array('fields' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.created' , 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments', 'Chain.miles','Chain.denounced', 'Chain.approved', 'Chain.chain_file_path'), 'limit' => 5, 'order' => array('Chain.id' => 'asc'));
 
 
 
@@ -99,6 +99,7 @@ if (!empty($this->data)) {
 			$this->data['Chain']['approved'] = 1;
 			$this->data['Chain']['denounced'] = 0;
 	
+			$file_path = $this->Attachment->upload($this->data['Chain']);
 	
 			$this->Chain->save($this->data);
 			$id = $this->Chain->getLastInsertId(); 
