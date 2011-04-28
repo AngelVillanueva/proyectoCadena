@@ -19,14 +19,15 @@
 				$orden = 0;
 				foreach($data as $chain) {
 					$lastitemimage = $this->requestAction('chains/getImage/'.$chain['Chain']['id']);
-					if($lastitemimage) { $urllastitemimage = $this->webroot.'../attachments/items/avatar/'.$lastitemimage;} else { $lastitemimage = 'default-chain-image.png'; }
-					if(!$chain['Chain']['chain_file_path']) {$urlchainimage = 'default-chain-image.png'; } else { $urlchainimage = $chain['Chain']['chain_file_path']; }
+					if($lastitemimage) { $urllastitemimage = $this->webroot.'../attachments/items/avatar/'.$lastitemimage;} else { $urllastitemimage = 'default-chain-image.png'; }
+					if(!$chain['Chain']['chain_file_path']) {$urlchainimage = 'default-chain-image.png'; } else { $urlchainimage = $this->webroot.'../attachments/chains/avatar/'.$chain['Chain']['chain_file_path']; }
 					$orden = $orden + 1;
 					if($orden == 1 || $orden % 5 == 0) { $divclases = 'post nomargin'; } else { $divclases = 'post';}
 					echo $this->Html->div($divclases, null);
 						echo $this->Html->div('post-image', null);
 							echo $this->Html->link(
-								$this->Html->image($urlchainimage, array('alt'=>$chain['Chain']['name'], 'title'=>$chain['Chain']['name'])),
+								$this->Html->image($urlchainimage, array('alt'=>$chain['Chain']['name'], 'title'=>$chain['Chain']['name'])).
+								$this->Html->image($urllastitemimage, array('alt'=>$chain['Chain']['name'], 'title'=>$chain['Chain']['name'], 'class'=>'mini')),
 								array('controller' => 'chains', 'action' => 'view', $chain['Chain']['id']),
 								array('escape'=>false)
 							);

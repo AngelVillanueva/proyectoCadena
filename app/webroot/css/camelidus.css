@@ -813,7 +813,15 @@ IMAGE STYLES
 *************************************************************************************/
 .post-image img {
 	height: 140px;
+	position: relative;
 	width: 212px;
+}
+.post-image img.mini {
+	bottom: 0;
+	height: 35px;
+	position: absolute;
+	right:0;
+	width: 53px;
 }
 .slides img,
 .single-post-img img, .post-image img,
