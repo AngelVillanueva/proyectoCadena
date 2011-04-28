@@ -236,7 +236,7 @@ $this->set(compact('data'));
 
 }
 
-function view_request()
+function viewRequest()
 {
 $user = $this->Session->read('Auth.User.username');
 $user_mail = $this->Session->read('Auth.User.mail');

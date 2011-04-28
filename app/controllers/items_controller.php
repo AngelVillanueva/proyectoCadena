@@ -35,19 +35,6 @@ $this->set('chain_id', $id);
 
 $this->set('item_type', $item_type);
 
-//Comprobación de si ha participado ya en la cadena
-
-$check_items = $this->Item->find('count', array('conditions' => array('Item.chain_id' => $id, 'Item.username' => $username, 'Item.approved' => 1))); 
-
-if($check_items > 0)
-{
-
-$this->Session->setFlash('Ya has participado en esta cadena...');
-$this->redirect(array('controller' => 'chains', 'action' => 'view', $id));
-
-}
-
-//No ha participado en esta cadena
 
 if (!empty($this->data)) {
 
@@ -247,7 +234,7 @@ $this->redirect(array('controller' => 'chains', 'action' => 'view', $chain_id));
 }
 
 
-function select_type($id = null)
+function selectType($id = null)
 {
 $username = $this->Session->read('Auth.User.username');
 $this->set('username',$username);

@@ -40,7 +40,7 @@ echo $html->link('Administrar invitaciones',array('controller' => 'invitations',
 <?php echo $html->link('Tienes '.$pending.' invitacion(es) pendientes!',array('controller' => 'invitations', 'action' => 'view')); ?>
 <br/>
 <br/>
-<?php echo $html->link('Tienes '.$request_invitations.' solicitudes(es) de participacion pendientes!',array('controller' => 'invitations', 'action' => 'view_request')); ?>
+<?php echo $html->link('Tienes '.$request_invitations.' solicitudes(es) de participacion pendientes!',array('controller' => 'invitations', 'action' => 'viewRequest')); ?>
 
 
 
@@ -111,7 +111,7 @@ echo $html->link('Administrar invitaciones',array('controller' => 'invitations',
 <table>
 <br/>
 <br/>
-<h2><?php echo $html->link('MAS VISITADAS',array('controller' => 'chains', 'action' => 'visited_chains')); ?></h2>
+<h2><?php echo $html->link('MAS VISITADAS',array('controller' => 'chains', 'action' => 'visitedChains')); ?></h2>
 
 	<tr>
 		<th><?php echo $paginator->sort(__('Id', true), 'id'); ?></th>
@@ -140,7 +140,7 @@ echo $html->link('Administrar invitaciones',array('controller' => 'invitations',
 <table>
 <br/>
 <br/>
-<h2><?php echo $html->link('MAS COMENTADAS',array('controller' => 'chains', 'action' => 'comment_chains')); ?></h2>
+<h2><?php echo $html->link('MAS COMENTADAS',array('controller' => 'chains', 'action' => 'commentChains')); ?></h2>
 
 	<tr>
 		<th><?php echo $paginator->sort(__('Id', true), 'id'); ?></th>
@@ -171,7 +171,7 @@ echo $html->link('Administrar invitaciones',array('controller' => 'invitations',
 <table>
 <br/>
 <br/>
-<h2><?php echo $html->link('MAS VOTADAS',array('controller' => 'chains', 'action' => 'voted_chains')); ?></h2>
+<h2><?php echo $html->link('MAS VOTADAS',array('controller' => 'chains', 'action' => 'votedChains')); ?></h2>
 	<tr>
 		<th><?php echo $paginator->sort(__('Id', true), 'id'); ?></th>
 		<th><?php echo $paginator->sort(__('Author', true), 'username'); ?></th>
@@ -199,7 +199,7 @@ echo $html->link('Administrar invitaciones',array('controller' => 'invitations',
 <table>
 <br/>
 <br/>
-<h2><?php echo $html->link('Con mas Items!',array('controller' => 'chains', 'action' => 'item_chains')); ?></h2>
+<h2><?php echo $html->link('Con mas Items!',array('controller' => 'chains', 'action' => 'itemChains')); ?></h2>
 	<tr>
 		<th><?php echo $paginator->sort(__('Id', true), 'id'); ?></th>
 		<th><?php echo $paginator->sort(__('Author', true), 'username'); ?></th>
@@ -227,7 +227,7 @@ echo $html->link('Administrar invitaciones',array('controller' => 'invitations',
 <table>
 <br/>
 <br/>
-<h2><?php echo $html->link('Tus cadenas!',array('controller' => 'chains', 'action' => 'user_chains')); ?></h2>
+<h2><?php echo $html->link('Tus cadenas!',array('controller' => 'chains', 'action' => 'userChains')); ?></h2>
 	<tr>
 		<th><?php echo $paginator->sort(__('Id', true), 'id'); ?></th>
 		<th><?php echo $paginator->sort(__('Author', true), 'username'); ?></th>
@@ -253,7 +253,7 @@ echo $html->link('Administrar invitaciones',array('controller' => 'invitations',
 
 <table>
 
-<h2><?php echo $html->link('Cadenas en las que has participado (añadido items)',array('controller' => 'chains', 'action' => 'join_chains')); ?></h2>
+<h2><?php echo $html->link('Cadenas en las que has participado (añadido items)',array('controller' => 'chains', 'action' => 'joinChains')); ?></h2>
 	<tr>
 		<th><?php echo $paginator->sort(__('Id', true), 'id'); ?></th>
 		<th><?php echo $paginator->sort(__('Author', true), 'username'); ?></th>

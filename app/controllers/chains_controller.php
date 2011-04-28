@@ -191,7 +191,7 @@ $this->redirect(array('controller' => 'chains', 'action' => 'index'));
 }
 
 
-function comment_chains()
+function commentChains()
 {
 $username = $this->Session->read('Auth.User.username');
 $this->set('username',$username);
@@ -204,11 +204,26 @@ $this->set(compact('data'));
 
 
 
+function getImage($chain_id = null)
+{
+
+if(!empty($chain_id))
+{
+$this->Chain->id = $chain_id;
+
+$last_item = $this->Chain->Item->find('first', array('conditions' => array('Item.chain_id' => $chain_id), 'order' => 'Item.created DESC'));
+
+$image = $last_item['Item']['item_file_path'];
+
+$this->set('image', $image);
+
+}
+
+}
 
 
 
-
-function item_chains()
+function itemChains()
 {
 $username = $this->Session->read('Auth.User.username');
 $this->set('username',$username);
@@ -219,7 +234,7 @@ $this->set(compact('data'));
 
 }
 
-function join_chains($account_id = null)
+function joinChains($account_id = null)
 {
 
 $username = $this->Session->read('Auth.User.username');
@@ -253,7 +268,7 @@ $this->set(compact('data'));
 
 
 
-function user_chains($account_id = null)
+function userChains($account_id = null)
 {
 
 $username = $this->Session->read('Auth.User.username');
@@ -286,7 +301,7 @@ $this->set(compact('data'));
 }
 
 
-function voted_chains()
+function votedChains()
 {
 $username = $this->Session->read('Auth.User.username');
 $this->set('username',$username);
@@ -297,7 +312,7 @@ $this->set(compact('data'));
 
 }
 
-function visited_chains()
+function visitedChains()
 {
 $username = $this->Session->read('Auth.User.username');
 $this->set('username',$username);
