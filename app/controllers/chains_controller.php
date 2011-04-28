@@ -233,6 +233,30 @@ $this->set('image', $image);
 
 }
 
+function getPending()
+{
+	$user_mail = $this->Session->read('Auth.User.mail');
+	$pending = $this->Chain->Invitation->find('count', array('conditions' => array('Invitation.guest_mail' => $user_mail, 'Invitation.pending' => 1, 'Invitation.active' => 1)));
+if(isset($this->params['requested'])) {
+	return $pending;
+}
+else {
+	$this->set('pending', $pending);
+}
+}
+
+function getRequestInvitations()
+{
+	$username = $this->Session->read('Auth.User.username');
+	$request_invitations = $this->Chain->Invitation->find('count', array('conditions' => array('Invitation.username' => $username, 'Invitation.pending' => 1, 'Invitation.active' => 0)));
+if(isset($this->params['requested'])) {
+	return $request_invitations;
+}
+else {
+	$this->set('request_invitations', $request_invitations);
+}
+}
+
 
 
 function itemChains()

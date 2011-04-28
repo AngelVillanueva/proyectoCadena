@@ -47,7 +47,7 @@
 <body>
 	<div id="pagewrap">
 		<header>
-			<?php echo $this->element('header', array('username'=>$username)); ?>
+			<?php echo $this->element('header', array('username'=>$username, 'user_mail'=>$user_mail)); ?>
 		</header>
 		<div id="body" role="main" class="clearfix">
 			

@@ -84,8 +84,24 @@
 	<?php
 		echo $this->Html->tag('li', null);
 			echo $this->Html->link(__('My Account',true),array('controller' => 'users', 'action' => 'account'));
+			echo '</li>';
+		if($username) {
+			$pending = $this->requestAction('chains/getPending');
+			$requests = $this->requestAction('chains/getRequestInvitations');
+			$messages = $this->requestAction('users/getMessages');
+			$new_messages = $this->requestAction('users/getNewMessages');
+			
+			echo $this->Html->tag('li', null, array('class'=>'bubble-inv'));
+				echo $this->Html->link(__($pending,true), array('controller' => 'invitations', 'action' => 'view'));
+				echo '</li>';
+			echo $this->Html->tag('li', null, array('class'=>'bubble-req'));
+				echo $this->Html->link(__($requests,true), array('controller' => 'invitations', 'action' => 'viewRequest'));
+				echo '</li>';
+			echo $this->Html->tag('li', null, array('class'=>'bubble-mes'));
+				echo $this->Html->link(__($new_messages.'/'.$messages,true), array('controller' => 'messages', 'action' => 'inbox'));
+				echo '</li>';
+		}
 	?>
-	</li>
 </ul>
 
 <!-- ***  SUB NAV *** -->

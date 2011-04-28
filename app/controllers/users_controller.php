@@ -453,6 +453,32 @@ class UsersController extends AppController {
 	
 	}
 	
+	function getMessages()
+	{
+		$user_id = $this->Session->read('Auth.User.id');
+		
+		$messages = $this->User->ReceivedMessage->find('count', array('conditions' => array('ReceivedMessage.receiver_id' => $user_id, 'ReceivedMessage.deleted' => 0), 'fields' => 'DISTINCT ReceivedMessage.conv_id') );
+	if(isset($this->params['requested'])) {
+		return $messages;
+	}
+	else {
+		$this->set('messages', $messages);
+	}
+	}
+	
+	function getNewMessages()
+	{
+		$user_id = $this->Session->read('Auth.User.id');
+		
+		$new_messages =  $this->User->ReceivedMessage->find('count', array('conditions' => array('ReceivedMessage.receiver_id' => $user_id, 'ReceivedMessage.read' => 0, 'ReceivedMessage.deleted' => 0), 'fields' => 'DISTINCT ReceivedMessage.conv_id'));
+	if(isset($this->params['requested'])) {
+		return $new_messages;
+	}
+	else {
+		$this->set('new_messages', $new_messages);
+	}
+	}
+	
 	function view()
 	
 	{

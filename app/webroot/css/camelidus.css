@@ -527,6 +527,18 @@ MAIN NAVIGATION
 	color: #000;
 }
 
+/* bubbles */
+
+#main-nav li.bubble-inv {
+	background: transparent url('images/bub-invitations.png') 0 0 no-repeat;
+}
+#main-nav li.bubble-req {
+	background: transparent url('images/bub-requests.png') 0 0 no-repeat;
+}
+#main-nav li.bubble-mes {
+	background: transparent url('images/bub-messages.png') 0 0 no-repeat;
+}
+
 /************************************************************************************
 SUB NAVIGATION
 *************************************************************************************/

@@ -34,6 +34,8 @@ class AppController extends Controller {
 	
 	$username = $this->Session->read('Auth.User.username');
 	$this->set('username',$username);
+	$user_mail = $this->Session->read('Auth.User.mail');
+	$this->set('user_mail',$user_mail);
 	}
 	
 	function admin()
