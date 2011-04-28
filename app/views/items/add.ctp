@@ -15,5 +15,6 @@
 <?php echo $form->input('description');?>
 <?php echo $form->input('link');?>
 <?php echo $form->input('item', array('type' => 'file'));?>
+<?php echo $form->input('security_code', array('label' => 'Please Enter the Sum of ' .$mathCaptcha));?>
 <?php echo $form->end('Siguiente'); ?>
 

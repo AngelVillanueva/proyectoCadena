@@ -3,7 +3,7 @@
 class ItemsController extends AppController {
 
 var $name = 'Items';
-var $components = array('Attachment' => array('files_dir' => 'items', 'images_size' => array( 'avatar' => array(263, 263, 'resize') ) ));
+var $components = array('MathCaptcha', 'Attachment' => array('files_dir' => 'items', 'images_size' => array( 'avatar' => array(263, 263, 'resize') ) ));
 
 var $paginate = array('fields' => array('Item.id', 'Item.name','Item.user_id', 'Item.chain_id','Item.type', 'Item.username', 'Item.position', 'Item.n_hits', 'Item.n_votes', 'Item.n_comments', 'Item.item_file_path', 'Item.item_file_size','Item.denounced', 'Item.approved'), 'limit' => 5, 'order' => array('Item.id' => 'asc'));
 
@@ -38,76 +38,76 @@ $this->set('item_type', $item_type);
 
 if (!empty($this->data)) {
 
-	$item_type = $this->data['Item']['type'];
-	$this->set('item_type', $item_type);
-			
-	$this->set('username',$username); 
+		if($this->MathCaptcha->validates($this->data['Item']['security_code']))
+		{
 		
-	$user_id = $this->Session->read('Auth.User.id');
-	$this->set('user_id',$user_id);
+
+				$item_type = $this->data['Item']['type'];
+				$this->set('item_type', $item_type);
+				
+				$this->set('username',$username); 
 		
-	$this->data['Item']['user_id'] = $user_id;
-	$this->data['Item']['username'] = $username;
-	$this->data['Item']['denounced'] = 0;
-	$this->data['Item']['approved'] = 1;
-	$this->data['Item']['deleted'] = 0;
+				$user_id = $this->Session->read('Auth.User.id');
+				$this->set('user_id',$user_id);
+		
+				$this->data['Item']['user_id'] = $user_id;
+				$this->data['Item']['username'] = $username;
+				$this->data['Item']['denounced'] = 0;
+				$this->data['Item']['approved'] = 1;
+				$this->data['Item']['deleted'] = 0;
 	
-	if($item_type == 2)
-	{
+				if($item_type == 2)
+				{
 	
-	$file_path = $this->Attachment->upload($this->data['Item']);
+					$file_path = $this->Attachment->upload($this->data['Item']);
 
 	
-	}
+				}
 	
-	if($this->Item->save($this->data))
+				if($this->Item->save($this->data))
 			
-			{
+				{
 			
 			
 		
-			$chain_id = $this->data['Item']['chain_id'];
-			$this->Item->Chain->id = $chain_id;
-			$n_items = $this->Item->Chain->field('n_items');
-			$this->Item->Chain->saveField('n_items', $n_items + 1);
-			$this->Item->saveField('position', $n_items + 1);
+				$chain_id = $this->data['Item']['chain_id'];
+				$this->Item->Chain->id = $chain_id;
+				$n_items = $this->Item->Chain->field('n_items');
+				$this->Item->Chain->saveField('n_items', $n_items + 1);
+				$this->Item->saveField('position', $n_items + 1);
 			
-			//Actualizacion de millas
+				//Actualizacion de millas
 			
-			$n_miles = $this->Item->Chain->field('miles');
+				$n_miles = $this->Item->Chain->field('miles');
 			
-			switch($item_type)
-			{
+				switch($item_type)
+				{
 			
-			case 1:
-			$this->Item->Chain->saveField('miles', $n_miles + 10);
-			break;
+				case 1:
+				$this->Item->Chain->saveField('miles', $n_miles + 10);
+				break;
 			
-			case 2:
-			$this->Item->Chain->saveField('miles', $n_miles + 20);
-			break;
+				case 2:
+				$this->Item->Chain->saveField('miles', $n_miles + 20);
+				break;
 			
-			case 3:
-			$this->Item->Chain->saveField('miles', $n_miles + 30);
-			break;
+				case 3:
+				$this->Item->Chain->saveField('miles', $n_miles + 30);
+				break;
 			
 			
-			}
+				}
 			
 	
-			$item_id = $this->Item->id; 
-			$user_mail = $this->Session->read('Auth.User.mail'); 
+				$item_id = $this->Item->id; 
+				$user_mail = $this->Session->read('Auth.User.mail'); 
 			
 			
-			$invitations = $this->Item->Chain->Invitation->find('all', array('conditions' => array('Invitation.chain_id' => $chain_id, 'Invitation.guest_mail' => $user_mail)));
+				$invitations = $this->Item->Chain->Invitation->find('all', array('conditions' => array('Invitation.chain_id' => $chain_id, 'Invitation.guest_mail' => $user_mail)));
 					
-				foreach($invitations as $invitation)
+					foreach($invitations as $invitation)
 					{
-					
-					//Antes cuando utilizaba la invitacion la ponia pending = 0
-					//$this->Item->Chain->Invitation->id = $invitation['Invitation']['id'];
-					//$this->Item->Chain->Invitation->saveField('pending', 0);
-					
+				
 					//Borra la invitation
 					$this->Item->Chain->Invitation->delete($invitation['Invitation']['id']);
 					
@@ -119,13 +119,22 @@ if (!empty($this->data)) {
 					
 					
 				}
-	else{
-			$this->Session->setFlash('Problema al guardar datos');
+				
+				else{
+					$this->Session->setFlash('Problema al guardar datos');
 			
-	}
+				}
+				
+		}
+		
+		else{
+			$this->Session->setFlash(__('Please enter the correct answer to the math question.', true));
+		
+		}
 
-}
+		}
 
+		$this->set('mathCaptcha', $this->MathCaptcha->generateEquation());
 
 }
 

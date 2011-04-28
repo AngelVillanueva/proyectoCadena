@@ -1663,3 +1663,8 @@
 2011-04-27 17:54:21 Notice: Notice (8): Undefined index:  item_file_path in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/controllers/chains_controller.php, line 216]
 2011-04-27 17:54:22 Notice: Notice (8): Undefined index:  item_file_path in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/controllers/chains_controller.php, line 216]
 2011-04-27 17:59:26 Notice: Notice (8): Undefined variable: image in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/views/chains/get_image.ctp, line 1]
+2011-04-28 14:28:42 Notice: Notice (8): Undefined variable: mathCaptcha in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/views/users/add.ctp, line 14]
+2011-04-28 14:30:33 Notice: Notice (8): Undefined variable: mathCaptcha in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/views/users/add.ctp, line 14]
+2011-04-28 14:40:50 Notice: Notice (8): Undefined index:  User in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/controllers/chains_controller.php, line 82]
+2011-04-28 14:51:57 Notice: Notice (8): Undefined variable: mathCaptcha in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/views/chains/view.ctp, line 184]
+2011-04-28 14:53:18 Notice: Notice (8): Undefined variable: mathCaptcha in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/views/chains/view.ctp, line 184]

@@ -8,9 +8,9 @@ echo $form->input('username');
 echo $form->input('password', array('type' => 'password'));
 echo $form->input('password_confirm', array('type' => 'password'));
 echo $form->input('mail');
-$options=array('1'=>'Admin','2'=>'Registered');
-echo $form->select('role',$options);  
+echo $form->hidden('role', array('value' => 2));
 echo $form->input('user', array('type' => 'file'));
+echo $form->input('security_code', array('label' => 'Please Enter the Sum of ' .$mathCaptcha));
 echo $form->end('Add User');
 
 ?>

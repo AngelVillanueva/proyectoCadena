@@ -79,46 +79,51 @@ $this->set('user_id',$user_id);
 
 if (!empty($this->data)) { 
 
-	
-	if(empty($this->data['Chain']['name']) || empty($this->data['Chain']['description'])){
-	
-	$this->Session->setFlash('Debe rellenar todos los campos!');
-	
-	}
-	
-	else
+	if($this->MathCaptcha->validates($this->data['Chain']['security_code']))
 	{
-	
-	
-	
-	$this->data['Chain']['user_id'] = $user_id;
-	$this->data['Chain']['username'] = $username;
-	$this->data['Chain']['approved'] = 1;
-	$this->data['Chain']['denounced'] = 0;
-	
-	
-	$this->Chain->save($this->data);
-	$id = $this->Chain->getLastInsertId(); 
-	
-	$this->data['Objetive']['chain_id'] = $id;
-	$this->data['Objetive']['miles'] = $this->data['Chain']['next_objetive'];
-	
-	$this->Chain->Objetive->save($this->data);
-	          
-	$this->redirect(array('controller' => 'invitations', 'action' => 'add/'.$id));   
-	//DEBE ACTIVARSE UN BOTÓN PARA CONTINUAR
-	
-	
-	
-	
-	
 
+	
+			if(empty($this->data['Chain']['name']) || empty($this->data['Chain']['description'])){
+	
+				$this->Session->setFlash('Debe rellenar todos los campos!');
+	
+			}
+	
+			else
+			{
+	
+	
+	
+			$this->data['Chain']['user_id'] = $user_id;
+			$this->data['Chain']['username'] = $username;
+			$this->data['Chain']['approved'] = 1;
+			$this->data['Chain']['denounced'] = 0;
+	
+	
+			$this->Chain->save($this->data);
+			$id = $this->Chain->getLastInsertId(); 
+	
+			$this->data['Objetive']['chain_id'] = $id;
+			$this->data['Objetive']['miles'] = $this->data['Chain']['next_objetive'];
+	
+			$this->Chain->Objetive->save($this->data);
+	          
+			$this->redirect(array('controller' => 'invitations', 'action' => 'add/'.$id));   
+			//DEBE ACTIVARSE UN BOTÓN PARA CONTINUAR
+	
+			}
 	
 	}
 	
-
+	else{
+		$this->Session->setFlash(__('Please enter the correct answer to the math question.', true));
+	
+	}
+	
 
 }
+
+	$this->set('mathCaptcha', $this->MathCaptcha->generateEquation());
 
 }
 

@@ -4,7 +4,7 @@ class UsersController extends AppController {
 
 	var $name = 'Users';
 	
-	var $components = array('Email', 'Attachment' => array('files_dir' => 'users', 'images_size' => array( 'avatar' => array(75, 75, 'resizeCrop'))));
+	var $components = array('MathCaptcha', 'Email', 'Attachment' => array('files_dir' => 'users', 'images_size' => array( 'avatar' => array(75, 75, 'resizeCrop'))));
 	
 	
 	
@@ -222,6 +222,7 @@ class UsersController extends AppController {
 		$role = $user = $this->Session->read('Auth.User.role');
 		$this->set('user',$user);
 		
+		/*
 		if($role != 1)
 		{
 		
@@ -229,36 +230,52 @@ class UsersController extends AppController {
 		$this->redirect(array('controller' => 'chains', 'action' => 'index'));
 		
 		}
+		*/
 		
 		if(!empty($this->data))
 		
 		{
 		
-		if ($this->data['User']['password'] == $this->Auth->password($this->data['User']['password_confirm']))
-		{
 			
 		
-			$file_path = $this->Attachment->upload($this->data['User']);
-			$this->data['User']['active'] = 1;
+				if($this->MathCaptcha->validates($this->data['User']['security_code']))
+				{
 		
-			if ($this->User->save($this->data)) { 
+					if ($this->data['User']['password'] == $this->Auth->password($this->data['User']['password_confirm']))
+					{
+			
+		
+					$file_path = $this->Attachment->upload($this->data['User']);
+					$this->data['User']['active'] = 1;
+		
+					if ($this->User->save($this->data)) { 
 		
 		
 		
-			$this->Session->setFlash('Usuario guardado!');
-			$this->redirect(array('controller' => 'users', 'action' => 'add')); 
+					$this->Session->setFlash('Usuario guardado!');
+					$this->redirect(array('controller' => 'users', 'action' => 'add')); 
+		
+					}
+				}
+		
+				else{
+			
+				$this->Session->setFlash('Las contraseñas no coinciden');
+		
+				}
+		
+				}
+		
+			else{
+				$this->Session->setFlash(__('Please enter the correct answer to the math question.', true));
+			
+			}
+			
+			
 		
 			}
-		}
-		
-		else{
-		$this->Session->setFlash('Las contraseñas no coinciden');
-		
-		}
-		
-	}
-		
-		
+			
+			$this->set('mathCaptcha', $this->MathCaptcha->generateEquation());
 	
 	}
 	

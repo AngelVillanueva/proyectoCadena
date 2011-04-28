@@ -34,5 +34,6 @@ echo $this->Form->select('repeat', $repeat_options, 0)
 $objetive_options = array(100 => '100 millas', 1000 => '1000 millas', 10000 => '10000 millas');
 echo $this->Form->select('next_objetive', $objetive_options, 100)
 ?>
+<?php echo $form->input('security_code', array('label' => 'Please Enter the Sum of ' .$mathCaptcha));?>
 <?php echo $form->end('Siguiente'); ?>
 
