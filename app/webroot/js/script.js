@@ -5,7 +5,14 @@
 /* Search Form */
 var textoInterior = $('header form .input label').text();
 createValueLabel($('header form #searchinput'), textoInterior);
+/* End of Search Form */
 
+/* First:n post */
+if($('div.post').size()) {
+	$('div.post:nth-child(4n+1)').css('margin-left','0');
+}
+createValueLabel($('header form #searchinput'), textoInterior);
+/* End of First:n post */
 
 /* FUNCTIONS
    Common functions

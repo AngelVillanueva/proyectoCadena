@@ -204,7 +204,27 @@ $this->set(compact('data'));
 
 
 
+function get_image($chain_id = null)
+{
 
+if(!empty($chain_id))
+{
+$this->Chain->id = $chain_id;
+
+$last_item = $this->Chain->Item->find('first', array('conditions' => array('Item.chain_id' => $chain_id), 'order' => 'Item.created DESC'));
+
+$image = $last_item['Item']['item_file_path'];
+
+if(isset($this->params['requested'])) {
+	return $image;
+}
+else {
+$this->set('image', $image);
+}
+
+}
+
+}
 
 
 

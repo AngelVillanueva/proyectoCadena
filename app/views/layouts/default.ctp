@@ -49,7 +49,7 @@
 		<header>
 			<?php echo $this->element('header', array('username'=>$username)); ?>
 		</header>
-		<div id="main" role="main">
+		<div id="body" role="main" class="clearfix">
 			
 			<?php echo $this->Session->flash(); ?>
 

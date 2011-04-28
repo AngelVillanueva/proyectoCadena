@@ -77,6 +77,11 @@
 	?>
 	</li>
 	<?php
+		echo $this->Html->tag('li', null, array('class'=>'new'));
+			echo $this->Html->link(__('New Chain',true),array('controller' => 'chains', 'action' => 'add'));
+	?>
+	</li>
+	<?php
 		echo $this->Html->tag('li', null);
 			echo $this->Html->link(__('My Account',true),array('controller' => 'users', 'action' => 'account'));
 	?>

@@ -1,48 +1,50 @@
 <!-- Archivo: /app/views/chains/index.ctp -->
 
-<?php if(empty($username))
-{
-echo $html->link('Login', array('controller' => 'users', 'action' => 'login')); 
-}
-else
-{
-	echo $session->read('Auth.User.username'); 
-	echo $html->link('Logout', array('controller' => 'users', 'action' => 'logout')); 
-}
-?>
 
-<?php if($username == 'admin')
-{
-echo '<br/>';
-echo $html->link('Administrar cadenas',array('controller' => 'chains', 'action' => 'admin'));
-echo '<br/>';
-echo $html->link('Administrar items',array('controller' => 'items', 'action' => 'admin'));
-echo '<br/>';
-echo $html->link('Administrar comentarios',array('controller' => 'comments', 'action' => 'admin'));
-echo '<br/>';
-echo $html->link('Administrar usuarios',array('controller' => 'users', 'action' => 'admin'));
-echo '<br/>';
-echo $html->link('Administrar invitaciones',array('controller' => 'invitations', 'action' => 'admin'));
-}
-?>
-
-<br/>
-<br/>
-<?php echo $html->link('Perfil',array('controller' => 'users', 'action' => 'account')); ?>
-<br/>
-<br/>
-<?php echo $html->link('NUEVA CADENA',array('controller' => 'chains', 'action' => 'add')); ?>
-<br/>
-<br/>
-<?php echo $html->link('REGISTRAR USUARIO',array('controller' => 'users', 'action' => 'add')); ?>
-<br/>
-<br/>
 <?php echo $html->link('Tienes '.$pending.' invitacion(es) pendientes!',array('controller' => 'invitations', 'action' => 'view')); ?>
 <br/>
 <br/>
 <?php echo $html->link('Tienes '.$request_invitations.' solicitudes(es) de participacion pendientes!',array('controller' => 'invitations', 'action' => 'view_request')); ?>
 
 
+<?php
+	echo $this->Html->div('clearfix sidebar-none', null, array('id'=>'layout'));
+		echo $this->Html->div('grid4', null, array('id'=>'content'));
+
+?>
+		<?php
+			echo $this->Html->div('category-section clearfix', null);
+		?>
+			<?php
+				foreach($data as $chain) {
+					$chainimage = $this->requestAction('chains/get_image/'.$chain['Chain']['id']);
+					if($chainimage) { $urlchainimage = $this->webroot.'../attachments/items/avatar/'.$chainimage;} else { $urlchainimage = 'default-chain-image.png'; }
+					echo $this->Html->div('post', null);
+						echo $this->Html->div('post-image', null);
+							echo $this->Html->link(
+								$this->Html->image($urlchainimage, array('alt'=>$chain['Chain']['name'], 'title'=>$chain['Chain']['name'])),
+								array('controller' => 'chains', 'action' => 'view', $chain['Chain']['id']),
+								array('escape'=>false)
+							);
+							echo $this->Html->para('post-date', $chain['Chain']['created']);
+						echo '</div>';
+						echo $this->Html->div('post-content', null);
+							echo $this->Html->tag('h2', null, array('class'=>'post-title'));
+								echo $this->Html->link($chain['Chain']['name'],array('controller' => 'chains', 'action' => 'view', $chain['Chain']['id']));
+								echo $this->Html->tag('sup', $chain['Chain']['n_comments'], array('class'=>'post-comment'));
+							echo '</h2>';
+							echo $this->Html->para('', $chain['Chain']['description']);
+							echo $this->Html->para('post-meta', null);
+								echo $this->Html->tag('span', '<em>By </em>'.$chain['Chain']['username'], array('class'=>'post-author'), array('escape'=>'false'));
+								echo $this->Html->tag('span', '<em>Items: </em>'.$chain['Chain']['n_items'], array('class'=>'post-category'), array('escape'=>'false'));
+							echo '</p>';
+						echo '</div>'; 
+					echo '</div>';
+				}
+			?>
+		</div>
+	</div>
+</div>
 
 
 
