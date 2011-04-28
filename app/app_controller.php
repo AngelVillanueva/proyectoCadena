@@ -30,6 +30,11 @@ class AppController extends Controller {
 	
 	}
 	
+	function beforeRender(){
+	
+	$username = $this->Session->read('Auth.User.username');
+	$this->set('username',$username);
+	}
 	
 	function admin()
 	
