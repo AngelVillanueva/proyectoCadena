@@ -16,10 +16,14 @@
 			echo $this->Html->div('category-section clearfix', null);
 		?>
 			<?php
+				$orden = 0;
 				foreach($data as $chain) {
-					$chainimage = $this->requestAction('chains/getImage/'.$chain['Chain']['id']);
-					if($chainimage) { $urlchainimage = $this->webroot.'../attachments/items/avatar/'.$chainimage;} else { $urlchainimage = 'default-chain-image.png'; }
-					echo $this->Html->div('post', null);
+					$lastitemimage = $this->requestAction('chains/getImage/'.$chain['Chain']['id']);
+					if($lastitemimage) { $urllastitemimage = $this->webroot.'../attachments/items/avatar/'.$lastitemimage;} else { $lastitemimage = 'default-chain-image.png'; }
+					if(!$chain['Chain']['chain_file_path']) {$urlchainimage = 'default-chain-image.png'; } else { $urlchainimage = $chain['Chain']['chain_file_path']; }
+					$orden = $orden + 1;
+					if($orden == 1 || $orden % 5 == 0) { $divclases = 'post nomargin'; } else { $divclases = 'post';}
+					echo $this->Html->div($divclases, null);
 						echo $this->Html->div('post-image', null);
 							echo $this->Html->link(
 								$this->Html->image($urlchainimage, array('alt'=>$chain['Chain']['name'], 'title'=>$chain['Chain']['name'])),

@@ -8,10 +8,9 @@ createValueLabel($('header form #searchinput'), textoInterior);
 /* End of Search Form */
 
 /* First:n post */
-if($('div.post').size()) {
+if($('div.postear').size()) {
 	$('div.post:nth-child(4n+1)').css('margin-left','0');
 }
-createValueLabel($('header form #searchinput'), textoInterior);
 /* End of First:n post */
 
 /* FUNCTIONS
