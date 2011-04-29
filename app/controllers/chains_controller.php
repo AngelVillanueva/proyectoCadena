@@ -22,6 +22,8 @@ function beforeFilter() {
 function index()
 {
 
+$this->helpers[] = 'Text';
+
 $username = $this->Session->read('Auth.User.username');
 $this->set('username',$username);
 
