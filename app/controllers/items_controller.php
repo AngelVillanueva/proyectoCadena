@@ -90,12 +90,58 @@ if (!empty($this->data)) {
 							parse_str($parse_url['query'], $query);
 							$video_id = ($query['v']);
 							$this->data['Item']['vid'] = $video_id;
+							
+							$thumb = sprintf('http://img.youtube.com/vi/%s/%s.jpg', $video_id, 'default');
+							
+							//guardar imagen en servidor
+							
+								$img_file = file_get_contents($thumb); 
+							
+							    $image_path = parse_url($thumb); 
+							    $img_path_parts = pathinfo($image_path['path']); 
+							     
+							    $filename = $video_id.'.'.$img_path_parts['extension'];
+							
+								$this->data['Item']['item_file_path'] = $filename;
+							
+							    $path = 'attachments/items/avatar/'; 
+							    $filex = $path . $filename; 
+							    $fh = fopen($filex, 'w'); 
+							    fputs($fh, $img_file); 
+							    fclose($fh); 
+							
+							
 							break;
 							
 							case 'www.vimeo.com':
 							case 'vimeo.com':
 							$this->data['Item']['host'] = $parse_url['host'];
 							$this->data['Item']['vid'] = $parse_url['path'];
+							$hash = unserialize(file_get_contents('http://vimeo.com/api/v2/video'.$parse_url['path'].'.php'));
+							
+							//guardar imagen en servidor
+							
+								$thumb = $hash[0]['thumbnail_medium']; 
+							
+								$img_file = file_get_contents($thumb); 
+							
+							    $image_path = parse_url($thumb); 
+							    $img_path_parts = pathinfo($image_path['path']); 
+							     
+							    $filename = $img_path_parts['basename'];
+							
+								$this->data['Item']['item_file_path'] = $filename;
+							
+							    $path = 'attachments/items/avatar/'; 
+							    $filex = $path . $filename; 
+							    $fh = fopen($filex, 'w'); 
+							    fputs($fh, $img_file); 
+							    fclose($fh); 
+							    
+							  
+							
+							
+							
 							break;
 							
 							default:

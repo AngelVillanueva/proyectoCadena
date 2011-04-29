@@ -4,7 +4,7 @@ class ChainsController extends AppController {
 
 var $name = 'Chains';
 var $components = array('MathCaptcha', 'Attachment' => array('files_dir' => 'chains', 'images_size' => array( 'avatar' => array(263, 263, 'resize') ) ));
-var $helpers = array('Youtube', 'Vimeo');
+
 
 var $paginate = array('fields' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.created' , 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments', 'Chain.miles','Chain.denounced', 'Chain.approved', 'Chain.chain_file_path'), 'limit' => 5, 'order' => array('Chain.id' => 'asc'));
 
@@ -224,6 +224,7 @@ $this->Chain->id = $chain_id;
 $last_item = $this->Chain->Item->find('first', array('conditions' => array('Item.chain_id' => $chain_id), 'order' => 'Item.created DESC'));
 
 $image = $last_item['Item']['item_file_path'];
+
 
 if(isset($this->params['requested'])) {
 	return $image;
