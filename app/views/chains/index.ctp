@@ -28,7 +28,9 @@
 						echo '</div>';
 						echo $this->Html->div('post-content', null);
 							echo $this->Html->tag('h2', null, array('class'=>'post-title'));
-								echo $this->Html->link($chain['Chain']['name'],array('controller' => 'chains', 'action' => 'view', $chain['Chain']['id']));
+								echo $this->Html->link(
+									$this->Text->truncate($chain['Chain']['name'], 30, array('ending'=>'...', 'exact'=>'true')),
+									array('controller' => 'chains', 'action' => 'view', $chain['Chain']['id']));
 								echo $this->Html->tag('sup', $chain['Chain']['n_comments'], array('class'=>'post-comment'));
 							echo '</h2>';
 							echo $this->Html->para('', $chain['Chain']['description']);

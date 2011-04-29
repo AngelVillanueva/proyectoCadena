@@ -194,8 +194,7 @@ font-size : 1em; /* 16 / 16 = 1 */ }
 
 /* 4.LINKS */
 
-a, 
-a:visited {
+a {
 outline : none;
 color : rgb(23,119,175);
 text-decoration : none; }

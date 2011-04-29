@@ -82,10 +82,11 @@
 	?>
 	</li>
 	<?php
-		echo $this->Html->tag('li', null);
-			echo $this->Html->link(__('My Account',true),array('controller' => 'users', 'action' => 'account'));
-			echo '</li>';
 		if($username) {
+			echo $this->Html->tag('li', null);
+				echo $this->Html->link(__('My Account',true),array('controller' => 'users', 'action' => 'account'));
+			echo '</li>';
+			
 			$pending = $this->requestAction('chains/getPending');
 			$requests = $this->requestAction('chains/getRequestInvitations');
 			$messages = $this->requestAction('users/getMessages');
@@ -93,13 +94,22 @@
 			
 			echo $this->Html->tag('li', null, array('class'=>'bubble-inv'));
 				echo $this->Html->link(__($pending,true), array('controller' => 'invitations', 'action' => 'view'));
-				echo '</li>';
+			echo '</li>';
 			echo $this->Html->tag('li', null, array('class'=>'bubble-req'));
 				echo $this->Html->link(__($requests,true), array('controller' => 'invitations', 'action' => 'viewRequest'));
-				echo '</li>';
+			echo '</li>';
 			echo $this->Html->tag('li', null, array('class'=>'bubble-mes'));
 				echo $this->Html->link(__($new_messages.'/'.$messages,true), array('controller' => 'messages', 'action' => 'inbox'));
-				echo '</li>';
+			echo '</li>';
+			
+			echo $this->Html->tag('li',null, array('class'=>'logout'));
+			echo $this->Html->link(__('Logout',true), array('controller' => 'users', 'action' => 'logout'));
+			echo '</li>';
+		}
+		else {
+			echo $this->Html->tag('li',null);
+				echo $this->Html->link(__('Login / Register',true), array('controller' => 'users', 'action' => 'login'));
+			echo '</li>';
 		}
 	?>
 </ul>
@@ -109,17 +119,10 @@
 	echo $this->Html->tag('ul', null, array('id'=>'sub-nav', 'class'=>'clearfix'));
 ?>
 	<?php
-		if(empty($username))
-			{
-				echo $this->Html->tag('li',null);
-				echo $this->Html->link(__('Login',true), array('controller' => 'users', 'action' => 'login'));
-				echo '</li>';
-			}
-		else
+		if(!empty($username))
 			{
 				echo $this->Html->tag('li',null);
 				echo __('Welcome,').' '.$session->read('Auth.User.username');
-				echo $this->Html->link(__('Logout',true), array('controller' => 'users', 'action' => 'logout'));
 				echo '</li>';
 			}
 	?>

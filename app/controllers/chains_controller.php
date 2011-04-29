@@ -12,7 +12,7 @@ var $paginate = array('fields' => array('Chain.id', 'Chain.name','Chain.user_id'
 
 function beforeFilter() {
     
-     $this->Auth->allow('index', 'view', 'search');
+     $this->Auth->allow('index', 'view', 'search', 'getImage');
      
      }
 
@@ -20,6 +20,8 @@ function beforeFilter() {
 
 function index()
 {
+
+$this->helpers[] = 'Text';
 
 $username = $this->Session->read('Auth.User.username');
 $this->set('username',$username);
