@@ -223,6 +223,7 @@ $last_item = $this->Chain->Item->find('first', array('conditions' => array('Item
 
 $image = $last_item['Item']['item_file_path'];
 
+
 if(isset($this->params['requested'])) {
 	return $image;
 }
