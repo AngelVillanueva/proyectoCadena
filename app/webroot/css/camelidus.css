@@ -78,7 +78,7 @@ p {
 	margin: 0 0 1.25em;
 	padding: 0;
 }
-a {
+a, a:visited {
 	color: #A49C81;
 	text-decoration: none;
 	outline: none;
@@ -441,8 +441,11 @@ MAIN NAVIGATION
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 }
+#main-nav li.logout a, #main-nav li.logout a:visited {
+	color: #A49C81;
+}
 /* main level link admin*/
-#main-nav a.admin {
+#main-nav a.admin, #main-nav a.admin:visited {
 	color: red;
 }
 /* main level link :hover */
@@ -555,15 +558,6 @@ SUB NAVIGATION
 	z-index: 100;
 }
 
-#sub-nav li a {
-	color: #A49C81;
-	padding-left: 10px;
-}
-
-#sub-nav li a:hover {
-	color: #000;
-}
-
 /************************************************************************************
 POST
 *************************************************************************************/
@@ -589,7 +583,7 @@ POST
 /* post date */
 .post-date {
 	color: #fff;
-	font: 80%/100% Arial, Helvetica, sans-serif;
+	font: 80%/100% sans-serif;
 	text-transform: uppercase;
 	background: #000;
 	background: rgba(0,0,0,.8);
@@ -601,14 +595,16 @@ POST
 
 /* post title */
 .post-title {
-	font: normal 24px/120% "Times New Roman", Times, serif;
+	font: normal 24px/120% sans-serif;
 	margin: 0 0 3px;
 	padding: 0;
 }
-.post-title sup a {
+.post-title sup a, .post-title sup a:visited {
 	margin: 0 1px;
 }
-.post-title a {
+.post-title a, .post-title a:visited {
+	color: #603913;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.7);
 	text-decoration: none;
 }
 
