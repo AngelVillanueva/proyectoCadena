@@ -559,6 +559,15 @@ SUB NAVIGATION
 }
 
 /************************************************************************************
+PAGE TITLE
+*************************************************************************************/
+.page-title {
+	font: normal 36px/120% "Helvetica Neue", sans-serif;
+	margin: 0 0 15px;
+	padding: 0;
+}
+
+/************************************************************************************
 POST
 *************************************************************************************/
 /* post */
@@ -608,6 +617,11 @@ POST
 	text-decoration: none;
 }
 
+/* post category */
+.post-category {
+	float: right;
+}
+
 /* post comment */
 .post-comment {
 	font-size: 65%;
@@ -647,7 +661,7 @@ POST
 	margin: 0 5px 0 0;
 }
 .post-meta a {
-	color: #777;
+	color: #8F7510;
 	text-decoration: none;
 }
 .post-meta a:hover {
