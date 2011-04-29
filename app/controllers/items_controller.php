@@ -4,6 +4,7 @@ class ItemsController extends AppController {
 
 var $name = 'Items';
 var $components = array('MathCaptcha', 'Attachment' => array('files_dir' => 'items', 'images_size' => array( 'avatar' => array(263, 263, 'resize') ) ));
+var $helpers = array('Youtube', 'Vimeo');
 
 var $paginate = array('fields' => array('Item.id', 'Item.name','Item.user_id', 'Item.chain_id','Item.type', 'Item.username', 'Item.position', 'Item.n_hits', 'Item.n_votes', 'Item.n_comments', 'Item.item_file_path', 'Item.item_file_size','Item.denounced', 'Item.approved'), 'limit' => 5, 'order' => array('Item.id' => 'asc'));
 
@@ -38,6 +39,8 @@ $this->set('item_type', $item_type);
 
 if (!empty($this->data)) {
 
+		$chain_id = $this->data['Item']['chain_id'];
+
 		if($this->MathCaptcha->validates($this->data['Item']['security_code']))
 		{
 		
@@ -56,13 +59,61 @@ if (!empty($this->data)) {
 				$this->data['Item']['approved'] = 1;
 				$this->data['Item']['deleted'] = 0;
 	
-				if($item_type == 2)
-				{
-	
+	//Comprobaciones según el tipo de item que se añade
+				switch($item_type)
+					{
+				
+					case 1:
+					$item_miles = 10;
+					break;
+				
+					case 2:
+					$item_miles = 20;
+					
 					$file_path = $this->Attachment->upload($this->data['Item']);
-
+					
+					
+					break;
+				
+					case 3:
+					$item_miles = 30;
+					
+					$url = $this->data['Item']['link'];
+					$parse_url = parse_url( $url );
+					
+					
+						switch($parse_url['host']){
+						
+							case 'www.youtube.com':
+							case 'youtube.com':
+							$this->data['Item']['host'] = $parse_url['host'];
+							parse_str($parse_url['query'], $query);
+							$video_id = ($query['v']);
+							$this->data['Item']['vid'] = $video_id;
+							break;
+							
+							case 'www.vimeo.com':
+							case 'vimeo.com':
+							$this->data['Item']['host'] = $parse_url['host'];
+							$this->data['Item']['vid'] = $parse_url['path'];
+							break;
+							
+							default:
+							$this->Session->setFlash('Solo se admiten videos de Youtube y Vimeo');
+							$this->redirect(array('controller' => 'items', 'action' => 'add/'.$chain_id.'/'.$item_type));
+							break;
+						
+						}
+					
+					
+					
+					break;
+				
+				
+					}
 	
-				}
+	
+	
 	
 				if($this->Item->save($this->data))
 			
@@ -80,23 +131,8 @@ if (!empty($this->data)) {
 			
 				$n_miles = $this->Item->Chain->field('miles');
 			
-				switch($item_type)
-				{
+				$this->Item->Chain->saveField('miles', $n_miles + $item_miles);
 			
-				case 1:
-				$this->Item->Chain->saveField('miles', $n_miles + 10);
-				break;
-			
-				case 2:
-				$this->Item->Chain->saveField('miles', $n_miles + 20);
-				break;
-			
-				case 3:
-				$this->Item->Chain->saveField('miles', $n_miles + 30);
-				break;
-			
-			
-				}
 			
 	
 				$item_id = $this->Item->id; 

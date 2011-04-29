@@ -36,7 +36,40 @@
 		<td><?php echo $item['Item']['n_votes']; ?></td>
 		<td><?php echo $item['Item']['n_hits']; ?></td>
 		<td><?php echo $item['Item']['position']; ?>/<?php echo $n_items; ?></td>
-		<td><img src="<?php echo $this->webroot;?>attachments/items/avatar/<?php echo $item['Item']['item_file_path']; ?>"</td>
+		
+		<td>
+		<?php 
+		switch($item['Item']['type'])
+		{
+			case 1:
+			break;
+			
+			case 2:
+			?><img src="<?php echo $this->webroot;?>attachments/items/avatar/<?php echo $item['Item']['item_file_path']; ?>"<?php
+			break;
+			
+			case 3:
+				switch($item['Item']['host']){
+				
+				case 'www.youtube.com':
+				case 'youtube.com':
+				echo $youtube->video($item['Item']['vid']);
+				break;
+				
+				case 'www.vimeo.com':
+				case 'vimeo.com':
+				echo $vimeo->getEmbedCode('http://www.vimeo.com'.$item['Item']['vid'], array());
+				break;
+				
+				}
+					
+			break;
+		
+		
+		
+		}
+		?>
+		</td>
 		<td><?php echo $item['Item']['description']; ?></td>
 		<td><?php echo $item['Item']['approved']; ?></td>
 		<td>

@@ -35,7 +35,7 @@ if($invitation_user != $user)
 {
 
 $this->Session->setFlash('No puedes aprobar esta solicitud');
-$this->redirect(array('controller' => 'invitations', 'action' => 'view_request'));
+$this->redirect(array('controller' => 'invitations', 'action' => 'viewRequest'));
 
 }
 
@@ -44,7 +44,7 @@ $this->Session->setFlash('Solicitud aprobada');
 
 }
 
-$this->redirect(array('controller' => 'invitations', 'action' => 'view_request'));
+$this->redirect(array('controller' => 'invitations', 'action' => 'viewRequest'));
 
 
 }
@@ -83,7 +83,7 @@ if (!empty($this->data)) {
 			
 			//Comprueba si este usuario ya invito al otro usuario (para que no se puedan enviar varias invitaciones al mismo usuario desde la misma cuenta)
 			
-			$check_repeat = $this->Invitation->find('count', array('conditions' => array('Invitation.username' => $user, 'Invitation.guest_mail' => $this->data['Invitation'][$i]['guest_mail'])));
+			$check_repeat = $this->Invitation->find('count', array('conditions' => array('Invitation.chain_id' => $chain_id, 'Invitation.username' => $user, 'Invitation.guest_mail' => $this->data['Invitation'][$i]['guest_mail'])));
 			
 			//Comprueba si ya ha participado en la cadena
 			$check_join = $this->Invitation->Chain->Item->find('count', array('conditions' => array('Item.chain_id' => $chain_id, 'Item.username' => $guest_name)));

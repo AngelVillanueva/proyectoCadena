@@ -41,7 +41,7 @@
 		<td><?php echo $chain['Chain']['description']; ?></td>
 		<td><?php echo $html->link($chain['Chain']['username'],array('controller' => 'users', 'action' => 'account', $chain['Chain']['username'])); ?></td>
 		<td><img src="<?php echo $this->webroot;?>attachments/chains/avatar/<?php echo $chain['Chain']['chain_file_path']; ?>"</td>
-		
+		<td>
 		<?php foreach($items as $item): ?>
 		<?php echo $html->link($item['Item']['id'],array('controller' => 'items', 'action' => 'view',$item['Item']['id'] ));?>
 		<br />
@@ -55,7 +55,37 @@
 		</td>
 		<td>
 		<?php foreach($items as $item): ?>
-		<img src="<?php echo $this->webroot;?>attachments/items/avatar/<?php echo $item['Item']['item_file_path']; ?>"
+		<?php switch($item['Item']['type'])
+			{
+		
+				case 1:
+				break;
+		
+				case 2:
+				?><img src="<?php echo $this->webroot;?>attachments/items/avatar/<?php echo $item['Item']['item_file_path']; ?>"<?php
+				break;
+		
+				case 3:
+				switch($item['Item']['host']){
+				
+				case 'www.youtube.com':
+				case 'youtube.com':
+				echo $youtube->image($item['Item']['vid'], 'small'); 
+				break;
+				
+				case 'www.vimeo.com':
+				case 'vimeo.com':
+				$hash = unserialize(file_get_contents('http://vimeo.com/api/v2/video'.$item['Item']['vid'].'.php'));
+				?><img src="<?php echo $hash[0]['thumbnail_medium'];?>"<?php
+				break;
+			
+				}
+				
+				break;
+		
+		}
+		?>
+		
 		<br />
 		<?php endforeach; ?>
 		</td>

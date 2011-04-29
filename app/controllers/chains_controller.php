@@ -4,6 +4,7 @@ class ChainsController extends AppController {
 
 var $name = 'Chains';
 var $components = array('MathCaptcha', 'Attachment' => array('files_dir' => 'chains', 'images_size' => array( 'avatar' => array(263, 263, 'resize') ) ));
+var $helpers = array('Youtube', 'Vimeo');
 
 var $paginate = array('fields' => array('Chain.id', 'Chain.name','Chain.user_id', 'Chain.username', 'Chain.created' , 'Chain.n_items', 'Chain.n_hits', 'Chain.n_votes', 'Chain.n_comments', 'Chain.miles','Chain.denounced', 'Chain.approved', 'Chain.chain_file_path'), 'limit' => 5, 'order' => array('Chain.id' => 'asc'));
 
@@ -12,7 +13,7 @@ var $paginate = array('fields' => array('Chain.id', 'Chain.name','Chain.user_id'
 
 function beforeFilter() {
     
-     $this->Auth->allow('index', 'view', 'search');
+     $this->Auth->allow('index', 'view', 'search', 'getImage');
      
      }
 
@@ -33,7 +34,7 @@ $this->set('user_id',$user_id);
 
 $this->Chain->recursive = 0;
 
-$this->paginate = array('conditions' => array('Chain.approved ' => 1));
+$this->paginate = array('conditions' => array('Chain.approved ' => 1), 'limit' => 5);
 
 $data = $this->paginate('Chain');
 $this->set(compact('data'));
