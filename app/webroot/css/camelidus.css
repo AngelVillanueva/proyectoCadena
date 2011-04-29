@@ -794,6 +794,55 @@ POST
 }
 
 /************************************************************************************
+FOOTER
+*************************************************************************************/
+footer {
+	clear: both;
+	font-size: 90%;
+	border-top: solid 1px #ccc;
+	padding: 20px 0 40px;
+}
+#footer-nav {
+	margin: 0 0 15px;
+	padding: 0;
+	text-align: center;
+	clear: both;
+}
+#footer-nav li {
+	margin: 0 3px;
+	padding: 0;
+	display: inline;
+	list-style: none;
+}
+#footer-nav a {
+	text-decoration: none;
+	margin: 0 8px;
+}
+#footer-nav a:hover {
+	text-decoration: underline;
+}
+
+/* footer text */
+.footer-text {
+	text-align: center;
+	font: italic 13px/130% "Times New Roman", Times, serif;
+	color: #999;
+	clear: both;
+}
+.footer-text a {
+	text-decoration: none;
+	color: #666;
+}
+.footer-text a:hover {
+	text-decoration: underline;
+}
+
+/* footer widget */
+footer .widget {
+	margin-bottom: 50px;
+}
+
+/************************************************************************************
 CLEAR & ALIGNMENT
 *************************************************************************************/
 .clear {

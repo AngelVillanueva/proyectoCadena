@@ -101,7 +101,7 @@ URL: http://stuffandnonsense.co.uk/projects/320andup
 
 		</div>
 		<footer role="contentinfo">
-			
+			<?php echo $this->element('footer'); ?>
 		</footer>
 	</div><!--! end of #pagewrap -->
 	
