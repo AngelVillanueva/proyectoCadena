@@ -363,7 +363,7 @@ function visitedChains()
 $username = $this->Session->read('Auth.User.username');
 $this->set('username',$username);
 
-$this->paginate = array('conditions' => array('Chain.approved' => 1, 'Chain.n_hits >' => 0), 'limit' => 10, 'order' => 'Chain.n_hits DESC');
+$this->paginate = array('conditions' => array('Chain.approved' => 1, 'Chain.n_hits >' => 0), 'limit' => 4, 'order' => 'Chain.n_hits DESC');
 $data = $this->paginate('Chain');
 //$this->set(compact('data'));
 if(isset($this->params['requested'])) { return $data; } else { $this->set(compact('data')); }

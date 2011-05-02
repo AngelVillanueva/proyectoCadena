@@ -5,7 +5,7 @@
 <?php
 	echo $this->Html->link(
 		$this->Html->image('logo-camelidus.png', array('alt'=>'Camelidus logo', 'title'=>'Camelidus')),
-		array('controller' => 'chains', 'action' => 'index'),
+		array('controller'=>'pages', 'action'=>'index'),
 		array('escape'=>false)
 	);
 ?>
@@ -92,19 +92,32 @@
 			$messages = $this->requestAction('users/getMessages');
 			$new_messages = $this->requestAction('users/getNewMessages');
 			
-			echo $this->Html->tag('li', null, array('class'=>'bubble-inv'));
-				echo $this->Html->link(__($pending,true), array('controller' => 'invitations', 'action' => 'view'));
-			echo '</li>';
-			echo $this->Html->tag('li', null, array('class'=>'bubble-req'));
-				echo $this->Html->link(__($requests,true), array('controller' => 'invitations', 'action' => 'viewRequest'));
-			echo '</li>';
-			echo $this->Html->tag('li', null, array('class'=>'bubble-mes'));
-				echo $this->Html->link(__($new_messages.'/'.$messages,true), array('controller' => 'messages', 'action' => 'inbox'));
-			echo '</li>';
-			
+			if($pending || $requests || $new_messages) {
+				echo $this->Html->tag('li', null, array('class'=>'bubble-inv'));
+					echo $this->Html->link(__($pending + $requests + $new_messages,true), '#');
+					echo $this->Html->tag('ul', null);
+						if($pending) {
+						echo $this->Html->tag('li', null);
+							echo $this->Html->link($pending.__(' pending invitations', true), array('controller' => 'invitations', 'action' => 'view'));
+						echo '</li>';
+						}
+						if($requests) {
+						echo $this->Html->tag('li', null);
+							echo $this->Html->link($requests.__(' pending requests', true), array('controller' => 'invitations', 'action' => 'viewRequest'));
+						echo '</li>';
+						}
+						if($new_messages) {
+						echo $this->Html->tag('li', null);
+							echo $this->Html->link($new_messages.' '.__('new messages', true), array('controller' => 'messages', 'action' => 'inbox'));
+						echo '</li>';
+						}
+					echo '</ul>';
+				echo '</li>';
+			}
 			echo $this->Html->tag('li',null, array('class'=>'logout'));
 			echo $this->Html->link(__('Logout',true), array('controller' => 'users', 'action' => 'logout'));
 			echo '</li>';
+			
 		}
 		else {
 			echo $this->Html->tag('li',null);
@@ -131,7 +144,10 @@
 
 <!-- ***  SEARCHER *** -->
 <?php
-echo $this->Form->create('', array('action'=>'search'));
+
+if($modelo == 'pages') { $modelo = 'Chain'; } else { $modelo = ''; }
+
+echo $this->Form->create($modelo, array('action'=>'search'));
 echo $this->Form->input('search', array('type'=>'text', 'id'=>'searchinput', 'label'=>__('Search...',true)));
 echo $this->Form->end(__('Search...',true));
 ?>

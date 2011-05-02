@@ -22,7 +22,7 @@ function beforeFilter() {
 function index()
 {
 
-
+	$this->set('title_for_layout', __('Camelidus', true));
 
 }
 

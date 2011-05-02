@@ -6,9 +6,10 @@
 
 ?>
 		<?php
+
 			echo $this->element('section-chains', array('chains'=>$data, 'heading'=>__('Last Chains', true), 'action'=>'index'));
 		?>
-				
+		
 	</div>
 </div>
 
