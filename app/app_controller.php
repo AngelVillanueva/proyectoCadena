@@ -146,10 +146,7 @@ class AppController extends Controller {
 	
 	$search = $this->data[$this->modelClass]['search'];
 	
-	//$cond = "Chain.name LIKE '%".$search."%'". " OR ". "User.username LIKE '%".$search."%'";
-	
-	//$conditions = array('limit'=>4,	'conditions'=> $cond);
-	
+
 	
 	App::import('Model', 'User');       
 	$user = new User();
@@ -160,25 +157,18 @@ class AppController extends Controller {
 	App::import('Model', 'Item');       
 	$item = new Item();
 	
-	//$this->Session->write('Search', $cond);
+
 	$this->Session->write('Search', $search);
 	
 	
 	
-	//$this->paginate = $conditions;
+
 	}
 	
 	else
 	{
 	
-	
-	//$cond = $this->Session->read('Search');
 	$search = $this->Session->read('Search');
-	//$conditions = array('limit'=>4,	'conditions'=> $cond);
-	
-	
-	
-	//$this->paginate = $conditions;
 	
 	}
 	
@@ -211,9 +201,7 @@ class AppController extends Controller {
 	$b_items = $this->paginate('Item');
 	$this->set(compact('b_items'));
 	
-	//$this->set('b_chains', $this->paginate('Chain', array('conditions' => array('Chain.name LIKE' => '%'.$search.'%')), 'DISTINCT Chain.name' ));
 	
-	//$this->set('b_users', $this->paginate('User', array('conditions' => array('User.username LIKE' => '%'.$search.'%')), 'DISTINCT User.username'));
 	
 	
 	
