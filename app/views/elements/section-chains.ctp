@@ -1,6 +1,9 @@
 <?php
 	echo $this->Html->tag('section', null, array('class'=>'category-section clearfix'));
-		echo $this->Html->tag('h1', $heading, array('class'=>'page-title'));
+		echo $this->Html->tag('h1',
+		$this->Html->link($heading, array('controller'=>'chains', 'action'=>$action)),
+		array('class'=>'page-title'),
+		array('escape'=>'false'));
 ?>
 		<?php
 			$orden = 0;

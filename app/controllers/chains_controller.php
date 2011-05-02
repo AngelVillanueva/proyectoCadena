@@ -36,11 +36,14 @@ $this->set('user_id',$user_id);
 
 $this->Chain->recursive = 0;
 
-$this->paginate = array('conditions' => array('Chain.approved ' => 1), 'limit' => 5);
+$this->paginate = array('conditions' => array('Chain.approved ' => 1), 'limit' => 5, 'order' => array('Chain.created' => 'desc'));
 
 $data = $this->paginate('Chain');
-$this->set(compact('data'));
+//$this->set(compact('data'));
+if(isset($this->params['requested'])) { return $data; } else { $this->set(compact('data')); }
 
+
+/*
 //array de mas visitadas
 $this->set('visited_chains', $this->Chain->find('all',array('conditions' => array('Chain.approved' => 1, 'Chain.n_hits >' => 0),'limit' => 5, 'order' => 'Chain.n_hits DESC')));
 
@@ -64,7 +67,7 @@ $this->set('pending', $this->Chain->Invitation->find('count', array('conditions'
 
 //solicitudes de participacion pendientes
 $this->set('request_invitations', $this->Chain->Invitation->find('count', array('conditions' => array('Invitation.username' => $username, 'Invitation.pending' => 1, 'Invitation.active' => 0))));
-
+*/
 }
 
 
@@ -207,8 +210,8 @@ $this->set('username',$username);
 
 $this->paginate = array('conditions' => array('Chain.approved' => 1, 'Chain.n_comments >' => 0), 'limit' => 10, 'order' => 'Chain.n_comments DESC');
 $data = $this->paginate('Chain');
-$this->set(compact('data'));
-
+//$this->set(compact('data'));
+if(isset($this->params['requested'])) { return $data; } else { $this->set(compact('data')); }
 }
 
 
@@ -270,7 +273,8 @@ $this->set('username',$username);
 
 $this->paginate = array('conditions' => array('Chain.approved' => 1, 'Chain.n_items >' => 0), 'limit' => 10, 'order' => 'Chain.n_items DESC');
 $data = $this->paginate('Chain');
-$this->set(compact('data'));
+//$this->set(compact('data'));
+if(isset($this->params['requested'])) { return $data; } else { $this->set(compact('data')); }
 
 }
 
@@ -289,7 +293,8 @@ if(empty($account_id))
 $this->set('tittle', 'Cadenas en las que has participado');
 $this->paginate = array('conditions' => array('Chain.approved' => 1, 'Item.user_id LIKE' => $user_id), 'limit' => 10, 'order' => 'Chain.id ASC');
 $data = $this->paginate('Item');
-$this->set(compact('data'));
+//$this->set(compact('data'));
+if(isset($this->params['requested'])) { return $data; } else { $this->set(compact('data')); }
 }
 
 else
@@ -299,8 +304,8 @@ $account_name = $this->Chain->User->field('username');
 $this->set('tittle', 'Cadenas en las que '.$account_name.' ha participado');
 $this->paginate = array('conditions' => array('Chain.approved' => 1, 'Item.user_id LIKE' => $account_id), 'limit' => 10, 'order' => 'Chain.id ASC');
 $data = $this->paginate('Item');
-$this->set(compact('data'));
-
+//$this->set(compact('data'));
+if(isset($this->params['requested'])) { return $data; } else { $this->set(compact('data')); }
 }
 
 }
@@ -322,7 +327,8 @@ if(empty($account_id))
 $this->set('tittle', 'Tus cadenas');
 $this->paginate = array('conditions' => array('Chain.approved' => 1, 'Chain.user_id LIKE' => $user_id), 'limit' => 10, 'order' => 'Chain.id ASC');
 $data = $this->paginate('Chain');
-$this->set(compact('data'));
+//$this->set(compact('data'));
+if(isset($this->params['requested'])) { return $data; } else { $this->set(compact('data')); }
 }
 
 else
@@ -332,8 +338,8 @@ $account_name = $this->Chain->User->field('username');
 $this->set('tittle', 'Cadenas de '.$account_name);
 $this->paginate = array('conditions' => array('Chain.approved' => 1, 'Chain.user_id LIKE' => $account_id), 'limit' => 10, 'order' => 'Chain.id ASC');
 $data = $this->paginate('Chain');
-$this->set(compact('data'));
-
+//$this->set(compact('data'));
+if(isset($this->params['requested'])) { return $data; } else { $this->set(compact('data')); }
 
 }
 
@@ -348,8 +354,8 @@ $this->set('username',$username);
 
 $this->paginate = array('conditions' => array('Chain.approved' => 1, 'Chain.n_votes >' => 0), 'limit' => 10, 'order' => 'Chain.n_votes DESC');
 $data = $this->paginate('Chain');
-$this->set(compact('data'));
-
+//$this->set(compact('data'));
+if(isset($this->params['requested'])) { return $data; } else { $this->set(compact('data')); }
 }
 
 function visitedChains()
@@ -359,8 +365,8 @@ $this->set('username',$username);
 
 $this->paginate = array('conditions' => array('Chain.approved' => 1, 'Chain.n_hits >' => 0), 'limit' => 10, 'order' => 'Chain.n_hits DESC');
 $data = $this->paginate('Chain');
-$this->set(compact('data'));
-
+//$this->set(compact('data'));
+if(isset($this->params['requested'])) { return $data; } else { $this->set(compact('data')); }
 }
 
 function view($id = null)
