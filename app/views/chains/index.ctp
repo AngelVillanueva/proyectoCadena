@@ -6,15 +6,8 @@
 
 ?>
 		<?php
-			echo $this->element('section-chains', array('chains'=>$data, 'heading'=>__('Last Chains', true), 'action'=>'allChains'));
-		?>
-		
-		<?php
-			echo $this->element('section-chains', array('chains'=>$visited_chains, 'heading'=>__('Popular Chains', true), 'action'=>'visitedChains'));
-		?>
-		
-		<?php
-			echo $this->element('section-chains', array('chains'=>$item_chains, 'heading'=>__('Longer Chains', true), 'action'=>'itemChains'));
+
+			echo $this->element('section-chains', array('chains'=>$data, 'heading'=>__('Last Chains', true), 'action'=>'index'));
 		?>
 		
 	</div>

@@ -91,7 +91,7 @@ URL: http://stuffandnonsense.co.uk/projects/320andup
 <body>
 	<div id="pagewrap">
 		<header role="banner">
-			<?php echo $this->element('header', array('username'=>$username, 'user_mail'=>$user_mail)); ?>
+			<?php echo $this->element('header', array('username'=>$username, 'user_mail'=>$user_mail, 'modelo'=>$this->params['controller'])); ?>
 		</header>
 		<div id="body" role="main" class="clearfix">
 			

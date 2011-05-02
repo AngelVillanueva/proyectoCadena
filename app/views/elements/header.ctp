@@ -5,7 +5,7 @@
 <?php
 	echo $this->Html->link(
 		$this->Html->image('logo-camelidus.png', array('alt'=>'Camelidus logo', 'title'=>'Camelidus')),
-		array('controller' => 'chains', 'action' => 'index'),
+		array('controller'=>'pages', 'action'=>'index'),
 		array('escape'=>false)
 	);
 ?>
@@ -144,7 +144,10 @@
 
 <!-- ***  SEARCHER *** -->
 <?php
-echo $this->Form->create('', array('action'=>'search'));
+
+if($modelo == 'pages') { $modelo = 'Chain'; } else { $modelo = ''; }
+
+echo $this->Form->create($modelo, array('action'=>'search'));
 echo $this->Form->input('search', array('type'=>'text', 'id'=>'searchinput', 'label'=>__('Search...',true)));
 echo $this->Form->end(__('Search...',true));
 ?>
