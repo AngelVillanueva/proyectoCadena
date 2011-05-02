@@ -5,7 +5,7 @@
 <?php
 	echo $this->Html->link(
 		$this->Html->image('logo-camelidus.png', array('alt'=>'Camelidus logo', 'title'=>'Camelidus')),
-		array('controller' => 'chains', 'action' => 'index'),
+		array('controller'=>'pages', 'action'=>'index'),
 		array('escape'=>false)
 	);
 ?>
