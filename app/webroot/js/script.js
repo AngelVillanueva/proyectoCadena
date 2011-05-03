@@ -7,15 +7,20 @@ var textoInterior = $('header form .input label').text();
 createValueLabel($('header form #searchinput'), textoInterior);
 /* End of Search Form */
 
-/* First:n post */
-if($('div.postear').size()) {
-	$('div.post:nth-child(4n+1)').css('margin-left','0');
-}
-/* End of First:n post */
+/* Chain slider init */
+$('.slides').css('height', 'auto').jcarousel({
+	wrap: 'circular',
+	scroll: 1,
+	animation: 500,
+	initCallback: carousel_callback
+});
+$('.slides li').css('width', '197px');
+/* End of Chain slider init */
 
 /* FUNCTIONS
    Common functions
 */
+// function to set a default value in an input field
 function createValueLabel (selector, defaultValue){
   //assign the default value to the form selector
   $(selector).data("default", defaultValue);
@@ -35,6 +40,36 @@ function createValueLabel (selector, defaultValue){
   });
   //invoke the events to initialize the default value
     $(selector).trigger("focus").trigger("blur");
+}
+
+// callback function for the slider
+function carousel_callback(carousel) {
+	// Disable autoscrolling if the user clicks the prev or next button.
+	carousel.buttonNext.bind('click', function() {
+		carousel.startAuto(0);
+	});
+	
+	carousel.buttonPrev.bind('click', function() {
+		carousel.startAuto(0);
+	});
+	
+	// Pause autoscrolling if the user moves with the cursor over the clip.
+	carousel.clip.hover(function() {
+		carousel.stopAuto();
+	}, function() {
+		carousel.startAuto();
+	});
+	
+	$('.next-slide').bind('click', function() {
+		carousel.next();
+		return false;
+	});
+	
+	$('.prev-slide').bind('click', function() {
+		carousel.prev();
+		return false;
+	});
+	
 }
 
 

@@ -116,6 +116,7 @@ URL: http://stuffandnonsense.co.uk/projects/320andup
 
   <!-- scripts concatenated and minified via ant build script-->
   <?php echo $this->Html->script('plugins'); ?>
+  <?php echo $scripts_for_layout; ?>
   <?php echo $this->Html->script('script'); ?>
   <!-- end scripts-->
 
@@ -139,8 +140,6 @@ URL: http://stuffandnonsense.co.uk/projects/320andup
     g.src=("https:"==location.protocol?"//ssl":"//www")+".google-analytics.com/ga.js";
     s.parentNode.insertBefore(g,s)}(document,"script"));
   </script>
-  
-  <?php echo $scripts_for_layout; ?>
   
 </body>
 </html>

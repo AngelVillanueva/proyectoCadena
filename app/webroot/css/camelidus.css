@@ -559,6 +559,76 @@ SUB NAVIGATION
 }
 
 /************************************************************************************
+SLIDER
+*************************************************************************************/
+#header-slider {
+	margin: 0;
+	padding: 20px 25px 5px 45px;
+	overflow: hidden;
+	border-bottom: solid 1px #000;
+	clear: both;
+	position: relative;
+}
+.slides {
+	margin: 0 ;
+	padding: 0;
+	overflow: hidden;
+	/* hide slider and then expand by js */
+	height: 0;
+	overflow: hidden;
+}
+.slides li {
+	margin: 0 30px 20px 0;
+	padding: 0;
+	list-style: none;
+	float: left;
+	text-align: center;
+}
+.slides h3 {
+	font: normal 90%/120% "Times New Roman", Times, serif;
+	margin: 4px 0 4px;
+	padding: 0 10px;
+	text-align: center;
+}
+.slides .slide-post-title a {
+	text-decoration: none;
+}
+.slides .slide-post-title a:hover {
+	text-decoration: underline;
+}
+.slides .slide-excerpt {
+	font-size: 80%;
+	line-height: 130%;
+}
+
+/* slide nav */
+.slider-nav a {
+	background: url(images/slide-next-prev.png) no-repeat;
+	width: 28px;
+	height: 48px;
+	display: block;
+	text-indent: -900%;
+	position: absolute;
+	top: 45%;
+	margin-top: -24px;
+}
+.slider-nav .prev-slide {
+	left: 0;
+}
+.slider-nav .next-slide {
+	right: 0;
+	background-position: 0 -46px;
+}
+
+/* sinapse */
+
+.slides img {
+	height: 140px;
+	width: 195px;
+}
+
+
+/************************************************************************************
 PAGE TITLE
 *************************************************************************************/
 .page-title {
