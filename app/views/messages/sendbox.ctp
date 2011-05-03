@@ -35,7 +35,7 @@ else
 		
 		<tr>
 			<td><?php echo $message['Receiver']['username']; ?> </td>
-			<td><?php echo $message['Message']['subject']; ?> </td>
+			<td><?php echo $html->link($message['Message']['subject'],array('controller' => 'messages', 'action' => 'read',$message['Message']['user_id'], $message['Message']['conv_id'])); ?></td>
 			<td><?php echo $message['Message']['text']; ?> </td>
 			<td><?php echo $message['Message']['created']; ?> </td>
 			<td><?php echo $message['Message']['read']; ?> </td>

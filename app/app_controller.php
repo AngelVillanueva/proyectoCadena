@@ -109,6 +109,8 @@ class AppController extends Controller {
 			
 		$this->Session->setFlash('Cadenas');
 		break;
+		
+
 	
 	}
 	

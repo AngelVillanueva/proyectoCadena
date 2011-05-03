@@ -66,7 +66,7 @@ $this->Message->saveField('read', 1);
 
 }
 
-$this->paginate = array('conditions' => array('Message.conv_id' => $conv_id), 'limit' => 5, 'order' => 'Message.created ASC');
+$this->paginate = array('conditions' => array('Message.conv_id' => $conv_id), 'limit' => 10, 'order' => 'Message.created ASC');
 $data = $this->paginate('Message');
 $this->set(compact('data'));
 
@@ -95,6 +95,8 @@ $this->set(compact('data'));
 
 
 }
+
+
 
 
 function write($receiver_id = null, $conv_id = null)

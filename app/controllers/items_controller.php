@@ -178,8 +178,33 @@ if (!empty($this->data)) {
 				$n_miles = $this->Item->Chain->field('miles');
 			
 				$this->Item->Chain->saveField('miles', $n_miles + $item_miles);
-			
-			
+				
+				//Si la meta se ha alcanzado
+				
+				$next_objetive = $this->Item->Chain->field('next_objetive');
+				
+				if($this->Item->Chain->field('miles') >= $next_objetive)
+				{
+				
+				$objetive = $this->Item->Chain->Objetive->find('first', array('conditions' => array('Objetive.chain_id' => $chain_id, 'Objetive.miles' => $next_objetive)));
+				
+				$this->Item->Chain->Objetive->id = $objetive['Objetive']['id'];
+				$this->Item->Chain->Objetive->saveField('complete', 1);
+				
+				//AQUI HABRIA QUE PONER LA PARTE QUE CAMBIA LA META (CAMBIAR NEXT_OBJETIVE DE CHAIN AL NUEVO VALOR Y CREAR UN NUEVO OBJETIVO).
+				
+				//Ahora mismo al pasar una meta se añaden 100 millas mas como nuevo objetivo, creando un objetivo en la bbdd.
+				
+				$this->Item->Chain->saveField('next_objetive', $next_objetive + 100);
+				
+				$this->data['Objetive']['id'] = '';
+				$this->data['Objetive']['chain_id'] = $chain_id;
+				$this->data['Objetive']['miles'] = $next_objetive + 100;
+				
+				
+				$this->Item->Chain->Objetive->save($this->data);
+				
+				}
 	
 				$item_id = $this->Item->id; 
 				$user_mail = $this->Session->read('Auth.User.mail'); 
@@ -266,17 +291,50 @@ switch($item_type)
 {
 
 case 1:
-$this->Item->Chain->saveField('miles', $n_miles - 10);
+$miles = 10;
 break;
 
 case 2:
-$this->Item->Chain->saveField('miles', $n_miles - 20);
+$miles = 20;
 break;
 
 case 3:
-$this->Item->Chain->saveField('miles', $n_miles - 30);
+$miles = 30;
 break;
 
+
+}
+
+//Se restan las millas por borrar el item
+
+$this->Item->Chain->saveField('miles', $n_miles - $miles);
+
+//Ultima meta alcanzada
+
+$last_objetive_complete = $this->Item->Chain->Objetive->find('first', array('conditions' => array('Objetive.chain_id' => $chain_id, 'Objetive.complete' => 1), 'order' => 'Objetive.created DESC'));
+
+$last_objetive_created = $this->Item->Chain->Objetive->find('first', array('conditions' => array('Objetive.chain_id' => $chain_id, 'Objetive.complete' => 0), 'order' => 'Objetive.created DESC'));
+
+$last_objetive_id = $last_objetive_complete['Objetive']['id'];
+$last_objetive_created_id = $last_objetive_created['Objetive']['id'];
+
+$last_miles_complete = $last_objetive_complete['Objetive']['miles'];
+
+//Si con este item vuelve a la meta anterior se vuelve a poner Objetive.compete a 0, y Chain.next_objevite a la meta anterior.
+
+if($last_miles_complete <= ($this->Item->Chain->field('miles') + $miles))
+
+{
+
+
+$this->Item->Chain->Objetive->id = $last_objetive_id;
+
+$this->Item->Chain->Objetive->saveField('complete', 0);
+$this->Item->Chain->saveField('next_objetive', $last_miles_complete);
+
+//Se borra la meta creada cuando se añadió el item
+
+$this->Item->Chain->Objetive->delete($last_objetive_created_id);
 
 }
 
