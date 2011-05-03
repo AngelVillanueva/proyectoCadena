@@ -1244,3 +1244,4 @@
 2011-05-03 16:59:40 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/views/items/view.ctp, line 110]
 2011-05-03 17:03:00 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/views/items/view.ctp, line 110]
 2011-05-03 17:06:27 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/app/views/items/view.ctp, line 110]
+2011-05-03 17:32:20 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1062: Duplicate entry '' for key 1</span> in [/var/www/vhosts/sinapsescopio.es/httpdocs/proyectoCadena/cake/libs/model/datasources/dbo_source.php, line 684]
