@@ -105,7 +105,7 @@ URL: http://stuffandnonsense.co.uk/projects/320andup
 		</footer>
 	</div><!--! end of #pagewrap -->
 	
-	<!--<?php echo $this->element('sql_dump'); ?>-->
+	<?php echo $this->element('sql_dump'); ?>
 	
 	<!-- JavaScript at the bottom for fast page loading -->
 

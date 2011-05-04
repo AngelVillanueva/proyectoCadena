@@ -93,8 +93,8 @@
 			$new_messages = $this->requestAction('users/getNewMessages');
 			
 			if($pending || $requests || $new_messages) {
-				echo $this->Html->tag('li', null, array('class'=>'bubble-inv'));
-					echo $this->Html->link(__($pending + $requests + $new_messages,true), '#');
+				echo $this->Html->tag('li', null);
+					echo $this->Html->link(__($pending + $requests + $new_messages,true), '#', array('class'=>'bubble'));
 					echo $this->Html->tag('ul', null);
 						if($pending) {
 						echo $this->Html->tag('li', null);
