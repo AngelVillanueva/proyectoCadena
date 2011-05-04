@@ -10,8 +10,8 @@
 			foreach($chains as $chain) {
 				
 				$lastitemimage = $this->requestAction('chains/getImage/'.$chain['Chain']['id']);
-				if($lastitemimage) { $urllastitemimage = $this->webroot.'../attachments/items/avatar/'.$lastitemimage;} else { $urllastitemimage = 'default-chain-image.png'; }
-				if(!$chain['Chain']['chain_file_path']) {$urlchainimage = 'default-chain-image.png'; } else { $urlchainimage = $this->webroot.'../attachments/chains/avatar/'.$chain['Chain']['chain_file_path']; }
+				if($lastitemimage) { $urllastitemimage = '/attachments/img.php?src=items/avatar/'.$lastitemimage.'&w=53&h=35';} else { $urllastitemimage = 'default-chain-image.png'; }
+				if(!$chain['Chain']['chain_file_path']) {$urlchainimage = 'default-chain-image.png'; } else { $urlchainimage = '/attachments/img.php?src=chains/avatar/'.$chain['Chain']['chain_file_path'].'&w=212&h=140'; }
 				$orden = $orden + 1;
 				if($orden == 1 || $orden % 5 == 0) { $divclases = 'post nomargin'; } else { $divclases = 'post';}
 				if($orden > 4) { break; }

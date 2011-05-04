@@ -8,14 +8,20 @@
 
 	echo $this->Html->tag('ul', null, array('class'=>'slides clearfix'));
 		foreach($items as $item) {
-			$urlimage = $this->webroot.'../attachments/items/avatar/'.$item['Item']['item_file_path'];
+			$urlimage = '/attachments/img.php?src=items/avatar/'.$item['Item']['item_file_path'].'&w=195&h=140';
 			echo $this->Html->tag('li',
 				$this->Html->div('slide-feature-image',
 					$this->Html->link(
 						$this->Html->image($urlimage, array('class'=>'feature-img', 'alt'=>$item['Item']['name'], 'title'=>$item['Item']['name'], 'width'=>'195', 'height'=>'140')),
-						'#',
+						array('controller'=>'items', 'action'=>'view', $item['Item']['id']),
 					array('escape'=>false)),
-				array('escape'=>false)),
+				array('escape'=>false)).
+				$this->Html->div('slide-content-wrap',
+					$this->Html->tag('h3',
+						$this->Html->link($item['Item']['name'], array('controller'=>'items', 'action'=>'view', $item['Item']['id'])),
+						array('escape'=>false)),
+					array('escape'=>false)
+				),
 			array('escape'=>false));
 		}							
 	echo '</ul>';

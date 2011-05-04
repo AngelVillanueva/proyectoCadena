@@ -532,14 +532,15 @@ MAIN NAVIGATION
 
 /* bubbles */
 
-#main-nav li.bubble-inv {
-	background: transparent url('images/bub-invitations.png') 0 0 no-repeat;
-}
-#main-nav li.bubble-req {
-	background: transparent url('images/bub-requests.png') 0 0 no-repeat;
-}
-#main-nav li.bubble-mes {
-	background: transparent url('images/bub-messages.png') 0 0 no-repeat;
+#main-nav a.bubble {
+	background: none repeat scroll 0 0 orange;
+    border-radius: 10em 10em 10em 10em;
+    color: black;
+    display: inline-block;
+    margin-left: -10px;
+    margin-top: -5px;
+    padding: 4px 7px;
+    vertical-align: middle;
 }
 
 /************************************************************************************
@@ -625,6 +626,40 @@ SLIDER
 .slides img {
 	height: 140px;
 	width: 195px;
+}
+
+/************************************************************************************
+PAGE NAVIGATION
+*************************************************************************************/
+.pagenav {
+	clear: both;
+	text-align: right;
+	padding: 7px 5px 0;
+	margin: 10px 0 30px;
+}
+.pagenav a, .pagenav span {
+	padding: 1px 7px;
+	vertical-align: middle;
+	display: inline-block;
+	zoom:1;
+	*display:inline;
+	-webkit-border-radius: 10em;
+	-moz-border-radius: 10em;
+	border-radius: 10em;
+}
+.pagenav a {
+	background: #a11c22;
+	color: #fff;
+	text-decoration: none;
+}
+.pagenav a:hover {
+	text-decoration: none;
+	background: #000;
+}
+.pagenav .current {
+	background: #fff;
+	color: #666;
+	border: solid 1px #ddd;
 }
 
 
