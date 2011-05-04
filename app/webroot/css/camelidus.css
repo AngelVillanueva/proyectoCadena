@@ -612,7 +612,7 @@ SLIDER
 }
 
 /* slide nav */
-.slider-nav a {
+.jcarousel-prev, .jcarousel-next {
 	background: url(images/slide-next-prev.png) no-repeat;
 	width: 28px;
 	height: 48px;
@@ -620,15 +620,20 @@ SLIDER
 	text-indent: -900%;
 	position: absolute;
 	top: 45%;
-	margin-top: -24px;
+	margin-top: -33px;
 }
-.slider-nav .prev-slide {
-	left: 0;
+.jcarousel-prev {
+	left: -45px;
 }
-.slider-nav .next-slide {
-	right: 0;
+.jcarousel-next {
+	right: -25px;
 	background-position: 0 -46px;
 }
+
+.jcarousel-prev-disabled, .jcarousel-next-disabled {
+	visibility: hidden;
+}
+
 
 /* sinapse */
 

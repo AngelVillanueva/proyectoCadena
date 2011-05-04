@@ -82,13 +82,6 @@
 
 ?>
 
-<?php
-
-	echo $this->Html->div('slider-nav',
-		$this->Html->link('<<', '#', array('class'=>'prev-slide')).$this->Html->link('>>', '#', array('class'=>'next-slide')),
-		array('escape'=>false));
-?>
-
 </div>
 
 

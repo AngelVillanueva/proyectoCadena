@@ -9,7 +9,7 @@ createValueLabel($('header form #searchinput'), textoInterior);
 
 /* Chain slider init */
 $('.slides').css('height', 'auto').jcarousel({
-	wrap: 'circular',
+	//wrap: 'circular',
 	scroll: 1,
 	animation: 500,
 	initCallback: carousel_callback
