@@ -59,17 +59,20 @@ URL: http://stuffandnonsense.co.uk/projects/320andup
 	
   <!-- stylesheets -->	
 	<!-- For less capable mobile browsers -->
-	<?php echo $this->Html->css('handheld.css?v=1', null, array('media'=>'handheld')); ?>
+	<!--<?php echo $this->Html->css('handheld.css?v=1', null, array('media'=>'handheld')); ?>-->
 	
 	<!-- For all browsers -->
 	<?php echo $this->Html->css('style.css?v=1', null, array('media'=>'screen')); ?>
+	
 	<!-- For progressively larger displays -->
-	<?php echo $this->Html->css('480.css?v=1', null,array('media'=>'only screen and (min-width: 480px)')); ?>
-	<?php echo $this->Html->css('768.css?v=1', null, array('media'=>'only screen and (min-width: 768px)')); ?>
-	<?php echo $this->Html->css('camelidus.css?v=1', null, array('media'=>'only screen and (min-width: 992px)')); ?>
-	<?php echo $this->Html->css('camelidus.css?v=1', null, array('media'=>'only screen and (min-width: 1382px)')); ?>
+	<!--<?php echo $this->Html->css('480.css?v=1', null,array('media'=>'only screen and (min-width: 480px)')); ?>-->
+	<!--<?php echo $this->Html->css('768.css?v=1', null, array('media'=>'only screen and (min-width: 768px)')); ?>-->
+	<!--<?php echo $this->Html->css('camelidus.css?v=1', null, array('media'=>'only screen and (min-width: 992px)')); ?>-->
+	<!--<?php echo $this->Html->css('camelidus.css?v=1', null, array('media'=>'only screen and (min-width: 1382px)')); ?>-->
 	<!-- For Retina displays -->
-	<?php echo $this->Html->css('2x.css?v=1', null, array('media'=>'only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2)')); ?>
+	<!--<?php echo $this->Html->css('2x.css?v=1', null, array('media'=>'only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2)')); ?>-->
+	
+	<?php echo $this->Html->css('camelidus.css?v=1', null, array('media'=>'screen')); ?><!-- luego quitar -->
 
   <!-- All JavaScript at the bottom, except for Modernizr which enables HTML5 elements & feature detects -->
 	<?php echo $this->Html->script('/js/libs/modernizr-1.7.min'); ?>
@@ -104,8 +107,10 @@ URL: http://stuffandnonsense.co.uk/projects/320andup
 			<?php echo $this->element('footer'); ?>
 		</footer>
 	</div><!--! end of #pagewrap -->
+	<div id="bottompage">
+	</div><!--! end of #bottompage -->
 	
-	<?php echo $this->element('sql_dump'); ?>
+	<!--<?php echo $this->element('sql_dump'); ?>-->
 	
 	<!-- JavaScript at the bottom for fast page loading -->
 

@@ -83,19 +83,15 @@
 	</li>
 	<?php
 		if($username) {
-			echo $this->Html->tag('li', null);
-				echo $this->Html->link(__('My Account',true),array('controller' => 'users', 'action' => 'account'));
-			echo '</li>';
 			
 			$pending = $this->requestAction('chains/getPending');
 			$requests = $this->requestAction('chains/getRequestInvitations');
 			$messages = $this->requestAction('users/getMessages');
 			$new_messages = $this->requestAction('users/getNewMessages');
 			
-			if($pending || $requests || $new_messages) {
-				echo $this->Html->tag('li', null);
-					echo $this->Html->link(__($pending + $requests + $new_messages,true), '#', array('class'=>'bubble'));
-					echo $this->Html->tag('ul', null);
+			echo $this->Html->tag('li', null);
+				echo $this->Html->link(__('My Account',true),array('controller' => 'users', 'action' => 'account'));
+				echo $this->Html->tag('ul', null);
 						if($pending) {
 						echo $this->Html->tag('li', null);
 							echo $this->Html->link($pending.__(' pending invitations', true), array('controller' => 'invitations', 'action' => 'view'));
@@ -112,6 +108,11 @@
 						echo '</li>';
 						}
 					echo '</ul>';
+			echo '</li>';
+			
+			if($pending || $requests || $new_messages) {
+				echo $this->Html->tag('li', null);
+					echo $this->Html->link(__($pending + $requests + $new_messages,true), array('controller' => 'users', 'action' => 'account'), array('class'=>'bubble'));
 				echo '</li>';
 			}
 			echo $this->Html->tag('li',null, array('class'=>'logout'));

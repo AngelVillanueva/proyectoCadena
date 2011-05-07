@@ -8,18 +8,28 @@ createValueLabel($('header form #searchinput'), textoInterior);
 /* End of Search Form */
 
 /* Chain slider init */
-$('.slides').css('height', 'auto').jcarousel({
-	//wrap: 'circular',
-	scroll: 1,
-	animation: 500,
-	initCallback: carousel_callback
-});
-$('.slides li').css('width', '197px');
+if($('.slides').size()) {
+	$('.slides').css('height', 'auto').jcarousel({
+		scroll: 1,
+		animation: 500,
+		initCallback: carousel_callback
+	});
+	$('.slides li').css('width', '197px');
+	$('.jcarousel-prev, .jcarousel-next').css('cursor', 'pointer');
+}
 /* End of Chain slider init */
+
+/* Trigger hover state on bubble if mouseover My Account */
+$('#main-nav li').bind('mouseover', function() {if($(this).next().children().attr('class') == 'bubble') {$(this).next().addClass('hover');} });
+$('#main-nav li ul li').bind('mouseover', function() {if($(this).parent().parent().next().children().attr('class') == 'bubble') {$(this).parent().parent().next().addClass('nohover');} });
+$('#main-nav li, #main-nav li ul li').bind('mouseout', function() {$('li.hover').removeClass('hover'); $('li.nohover').removeClass('nohover');});
+/* End of Trigger hover state on bubble */
 
 /* FUNCTIONS
    Common functions
 */
+
+/*   ***   */
 // function to set a default value in an input field
 function createValueLabel (selector, defaultValue){
   //assign the default value to the form selector
@@ -42,6 +52,7 @@ function createValueLabel (selector, defaultValue){
     $(selector).trigger("focus").trigger("blur");
 }
 
+/*   ***   */
 // callback function for the slider
 function carousel_callback(carousel) {
 	// Disable autoscrolling if the user clicks the prev or next button.
@@ -72,6 +83,8 @@ function carousel_callback(carousel) {
 	
 }
 
+/*   ***   */
+// function to 
 
 
 
