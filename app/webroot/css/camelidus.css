@@ -326,7 +326,7 @@ header {
 	position: absolute;
 	top: 90px;
 	width: 400px;
-	font: italic 14px/120% "Times New Roman", Times, serif;
+	font: italic 12px/120% Georgia, "Times New Roman", Times, serif;
 	color: #999;
 }
 /* header widget */
@@ -553,7 +553,7 @@ SUB NAVIGATION
 	margin: 0;
 	padding: 0;
 	position: absolute;
-	bottom: 15px;
+	/*bottom: 15px;*/
 	list-style: none;
 	font: bold 12px/100% sans-serif;
 	letter-spacing: .05em;
@@ -1049,6 +1049,13 @@ body {
 	background: none;
 	width: 100%;
 }
+header {
+	border-color: #D7E4DB;
+	height:160px;
+}
+header form {
+	bottom: 80px;
+}
 #body {
 	min-height: 100px;
 }
@@ -1064,6 +1071,9 @@ a {
 	color: #30333A;
 	text-shadow: 0 1px 2px rgba(0,0,0,0.2);
 }
+.post-title a:hover {
+	
+}
 .post-meta {
 	color: #434751;
 	border-color: #fff;
@@ -1076,7 +1086,7 @@ a {
 	top: 115px;
 }
 #main-nav {
-	bottom: 30px;
+	bottom: 20px;
 }
 #main-nav a {
 	/*background: #a6abb2;*/
@@ -1144,11 +1154,14 @@ a {
 	color: maroon;
 }
 #sub-nav {
-	bottom: -25px;
-	color: #6a6a6c;
-	font-family: Georgia;
+	color: white;
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 12px;
 	font-style: italic;
-	right: 0;
+	font-weight: normal;
+	right: 120px;
+	text-transform: capitalize;
+	top: 15px;
 }
 .post-content p {
 	height: 33px;
