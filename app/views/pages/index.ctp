@@ -12,15 +12,18 @@
 
 ?>
 		<?php
-			echo $this->element('section-chains', array('chains'=>$data, 'heading'=>__('Last Chains', true), 'action'=>'index'));
+			$subheading = __("Descubre aquí las últimas cadenas añadidas y decide a cuál quieres unirte. ¡Hay para todos los gustos!", true);
+			echo $this->element('section-chains-home', array('chains'=>$data, 'heading'=>__('The Last Chains', true), 'subheading'=>$subheading, 'max'=>'3', 'action'=>'index'));
 		?>
 		
 		<?php
-			echo $this->element('section-chains', array('chains'=>$visited_chains, 'heading'=>__('Popular Chains', true), 'action'=>'visitedChains'));
+			$subheading = __("Descubre aquí las cadenas más visitadas y decide a cuál quieres unirte. ¡Hay para todos los gustos!", true);
+			echo $this->element('section-chains-home', array('chains'=>$visited_chains, 'heading'=>__('The Popular Chains', true), 'subheading'=>$subheading, 'max'=>'3', 'action'=>'visitedChains'));
 		?>
 		
 		<?php
-			echo $this->element('section-chains', array('chains'=>$item_chains, 'heading'=>__('Longer Chains', true), 'action'=>'itemChains'));
+			$subheading = __("Descubre aquí las cadenas más largas y decide a cuál quieres unirte. ¡Hay para todos los gustos!", true);
+			echo $this->element('section-chains-home', array('chains'=>$item_chains, 'heading'=>__('The Longer Chains', true), 'subheading'=>$subheading, 'max'=>'3', 'action'=>'itemChains'));
 		?>
 		
 	</div>

@@ -1150,4 +1150,8 @@ a {
 	font-style: italic;
 	right: 0;
 }
+.post-content p {
+	height: 33px;
+	overflow: hidden;
+}
 	
