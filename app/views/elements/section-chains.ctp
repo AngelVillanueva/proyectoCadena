@@ -14,7 +14,7 @@
 				if(!$chain['Chain']['chain_file_path']) {$urlchainimage = 'default-chain-image.jpg'; } else { $urlchainimage = '/attachments/img.php?src=chains/avatar/'.$chain['Chain']['chain_file_path'].'&w=212&h=140'; }
 				$orden = $orden + 1;
 				if($orden == 1 || $orden % 5 == 0) { $divclases = 'post nomargin'; } else { $divclases = 'post';}
-				if($orden > 4) { break; }
+				if($max !=0 && $orden > $max) { break; }
 
 				echo $this->Html->div($divclases, null);
 					echo $this->Html->div('post-image', null);
