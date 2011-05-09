@@ -16,7 +16,7 @@
 					echo $this->Html->div('post-image', null);
 						echo $this->Html->link(
 							$this->Html->image($urlchainimage, array('alt'=>$chain['Chain']['name'], 'title'=>$chain['Chain']['name'])).
-							$this->Html->image($urllastitemimage, array('alt'=>$chain['Chain']['name'], 'title'=>$chain['Chain']['name'], 'class'=>'mini')),
+							$this->Html->image($urllastitemimage, array('alt'=>$chain['Chain']['name'], 'title'=>$chain['Chain']['name'], 'class'=>'mini', 'style'=>'display:none;')),
 							array('controller' => 'chains', 'action' => 'view', $chain['Chain']['id']),
 							array('escape'=>false)
 						);
@@ -29,7 +29,7 @@
 								array('controller' => 'chains', 'action' => 'view', $chain['Chain']['id']));
 						echo '</h2>';
 						echo $this->Html->para('', $this->Text->truncate($chain['Chain']['description'], 69, array('ending'=>'...', 'exact'=>'true')));
-						echo $this->Html->para('post-meta', null);
+						echo $this->Html->para('post-meta', null, array('style'=>'display:none;'));
 							echo $this->Html->tag('span', '<em>By </em>'.$chain['Chain']['username'], array('class'=>'post-author'), array('escape'=>'false'));
 							echo $this->Html->tag(
 								'span',

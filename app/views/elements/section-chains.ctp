@@ -32,7 +32,7 @@
 								$this->Text->truncate($chain['Chain']['name'], 30, array('ending'=>'...', 'exact'=>'true')),
 								array('controller' => 'chains', 'action' => 'view', $chain['Chain']['id']));
 						echo '</h2>';
-						echo $this->Html->para('', $chain['Chain']['description']);
+						echo $this->Html->para('', $this->Text->truncate($chain['Chain']['description'], 69, array('ending'=>'...', 'exact'=>'true')));
 						echo $this->Html->para('post-meta', null);
 							echo $this->Html->tag('span', '<em>By </em>'.$chain['Chain']['username'], array('class'=>'post-author'), array('escape'=>'false'));
 							echo $this->Html->tag(

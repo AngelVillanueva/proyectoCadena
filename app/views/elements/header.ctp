@@ -22,18 +22,27 @@
 		echo $this->Html->div('widget', null);
 			echo $this->Html->tag('ul', null);
 ?>
+				<?php
+					if(!empty($username))
+						{
+							echo $this->Html->tag('li',
+								$this->Html->tag('span', __('Welcome,', true).' '.$session->read('Auth.User.username')),
+							array('escape'=>false)
+							);
+						}
+				?>
 				<?php 
 					echo $this->Html->tag('li', null);
 						echo $this->Html->link(
 							$this->Html->image('facebook.png', array('alt'=>'Facebook', 'title'=>'Camelidus Facebook')),
-							'http://www.facebook.com/camelidus',
+							'http://www.facebook.com/camelidusweb',
 							array('escape'=>false)
 						);
 					echo '</li>';
 					echo $this->Html->tag('li', null);
 						echo $this->Html->link(
 							$this->Html->image('twitter.png', array('alt'=>'Twitter', 'title'=>'Camelidus Twitter')),
-							'http://www.twitter.com/camelidus',
+							'http://www.twitter.com/camelidusweb',
 							array('escape'=>false)
 						);
 					echo $this->Html->tag('li', null);
@@ -50,7 +59,7 @@
 
 <!-- ***  MAIN NAV *** -->
 <?php
-	echo $this->Html->tag('ul', null, array('id'=>'main-nav', 'class'=>'clearfix'));
+	echo $this->Html->tag('nav', null, array('id'=>'main-nav', 'class'=>'clearfix', 'role'=>'navigation'));
 ?>
 	<?php if($username == 'admin')
 		{
@@ -78,7 +87,7 @@
 	</li>
 	<?php
 		echo $this->Html->tag('li', null, array('class'=>'new'));
-			echo $this->Html->link(__('New Chain',true),array('controller' => 'chains', 'action' => 'add'));
+			echo $this->Html->link(__('New Chain',true), array('controller' => 'chains', 'action' => 'add'), array('class'=>'new'));
 	?>
 	</li>
 	<?php
@@ -116,7 +125,7 @@
 				echo '</li>';
 			}
 			echo $this->Html->tag('li',null, array('class'=>'logout'));
-			echo $this->Html->link(__('Logout',true), array('controller' => 'users', 'action' => 'logout'));
+			echo $this->Html->link(__('Logout',true), array('controller' => 'users', 'action' => 'logout'), array('class'=>'logout'));
 			echo '</li>';
 			
 		}
@@ -126,22 +135,7 @@
 			echo '</li>';
 		}
 	?>
-</ul>
-
-<!-- ***  SUB NAV *** -->
-<?php
-	echo $this->Html->tag('ul', null, array('id'=>'sub-nav', 'class'=>'clearfix'));
-?>
-	<?php
-		if(!empty($username))
-			{
-				echo $this->Html->tag('li',null);
-				echo __('Welcome,').' '.$session->read('Auth.User.username');
-				echo '</li>';
-			}
-	?>
-	</li>
-</ul>
+</nav>
 
 <!-- ***  SEARCHER *** -->
 <?php
