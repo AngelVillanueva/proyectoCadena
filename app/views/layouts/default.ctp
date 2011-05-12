@@ -107,8 +107,6 @@ URL: http://stuffandnonsense.co.uk/projects/320andup
 			<?php echo $this->element('footer'); ?>
 		</footer>
 	</div><!--! end of #pagewrap -->
-	<div id="bottompage">
-	</div><!--! end of #bottompage -->
 	
 	<!--<?php echo $this->element('sql_dump'); ?>-->
 	

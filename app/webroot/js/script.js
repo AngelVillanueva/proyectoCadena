@@ -7,6 +7,23 @@ var textoInterior = $('header form .input label').text();
 createValueLabel($('header form #searchinput'), textoInterior);
 /* End of Search Form */
 
+/* Home slider init */
+if($('#slider-home').size()) {
+	
+	$('#slider-home .slidesh')
+		.after('<div class="slide-nav-wrap"><a class="next-prev-slide-button prev-slide" href="#">&lt;</a><span class="slide-nav"></span><a class="next-prev-slide-button next-slide" href="#">&gt;</a> </div>')
+		.cycle({
+            fx:     'scrollHorz', 
+            speed:   200, 
+            timeout: 0, 
+            pause: 1,
+            pager: '#slider-home .slide-nav',
+             next: '#slider-home .next-slide', 
+             prev: '#slider-home .prev-slide'
+        });
+}
+/* End of Home slider init */
+
 /* Chain slider init */
 if($('.slides').size()) {
 	$('.slides').css('height', 'auto').jcarousel({

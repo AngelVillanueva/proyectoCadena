@@ -142,7 +142,7 @@
 
 if($modelo == 'pages') { $modelo = 'Chain'; } else { $modelo = ''; }
 
-echo $this->Form->create($modelo, array('action'=>'search'));
+echo $this->Form->create($modelo, array('action'=>'search', 'class'=>'searchform'));
 echo $this->Form->input('search', array('type'=>'text', 'id'=>'searchinput', 'label'=>__('Search...',true)));
 echo $this->Form->end(__('Search...',true));
 ?>

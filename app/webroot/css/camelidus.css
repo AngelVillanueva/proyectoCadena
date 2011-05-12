@@ -70,8 +70,10 @@ html {
 	background: #a4ddee url('images/html-bg-nubes.jpg') no-repeat scroll center -2%;
 }
 body {
-	font: 15px/140% sans-serif;
+	background: transparent url('images/bottom-bg-nonubes.jpg') no-repeat bottom center;
 	color: #5f5f5f;
+	font: 15px/140% sans-serif;
+	min-height: 600px;
 	width: 100%;
 }
 p {
@@ -269,7 +271,7 @@ STRUCTURE
 	margin: 0 auto;
 }
 #body {
-	min-height: 100px;
+	/*min-height: 700px;*/
 	padding-bottom: 40px;
 }
 
@@ -302,12 +304,6 @@ STRUCTURE
 	width: 100%;
 }
 
-/* bottompage */
-#bottompage {
-	background: transparent url('images/bottom-bg-nonubes.jpg') no-repeat bottom center;
-	height: 600px;
-	margin: auto;
-}
 
 /************************************************************************************
 HEADER
@@ -408,19 +404,19 @@ header {
 /************************************************************************************
 SEARCH FORM
 *************************************************************************************/
-header form {
+.searchform {
 	position: absolute;
 	bottom: 80px;
 	right: 0;
 }
-header form label, header form div.submit {
+.searchform label, .searchform div.submit {
 	display: none;
 }
-header form #searchinput {
+.searchform #searchinput {
 	font: italic 14px/100% sans-serif;
 	width: 206px;
 }
-header form #searchinput:focus {
+.searchform #searchinput:focus {
 	font-style: normal;
 }
 
@@ -590,19 +586,121 @@ nav li.nohover a.bubble {
 }
 
 /************************************************************************************
-SUB NAVIGATION
+WELCOME MESSAGE
 *************************************************************************************/
 
-#sub-nav {
-	color: white;
-	font-family: Georgia, "Times New Roman", Times, serif;
-	font-size: 12px;
-	font-style: italic;
-	font-weight: normal;
-	right: 120px;
-	text-transform: capitalize;
-	top: 15px;
+#welcome {
+	font: italic 36px/140% Georgia,serif;
+    margin: 0 0 1em;
+    text-align: center;
 }
+
+/************************************************************************************
+SLIDER-HOME
+*************************************************************************************/
+#slider-home {
+	position: relative;
+	margin-bottom: 1em;
+	overflow: hidden;
+}
+#slider-home .slidesh {
+	margin: 0;
+	padding: 0;
+	/* hide slider and then expand by js */
+	min-width: 5000px;
+	height: 0;
+	overflow: hidden;
+}
+#slider-home .slidesh li {
+	position: relative;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	overflow: hidden;
+	min-height: 430px;
+	float: left;
+}
+#slider-home .slidesh img {
+	background: #fff;
+	vertical-align: bottom;
+	padding: 4px;
+	border: solid 1px #ccc;
+	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+#slider-home .slidesh .details {
+	position: absolute;
+	bottom: 0;
+	background: url(images/slide-description-bg.png);
+	color: #ccc;
+	padding: 10px 2%;
+	/*width: 96%;*/
+	width: 100%;
+	-moz-border-radius-bottomleft: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+#slider-home .slidesh h3 {
+	color: #fff;
+	margin: 0;
+	font: bold 16px/120% Arial, Helvetica, sans-serif;
+}
+#slider-home .slidesh p {
+	margin: 0;
+}
+#slider-home .slide-nav-wrap {
+	text-align: center;
+	display: block;
+	margin: 15px 0 0;
+	width: 100%;
+}
+#slider-home .slide-nav a {
+	display: inline-block;
+	background: url(images/slide-nav.png) no-repeat -40px 0;
+	width: 10px;
+	height: 11px;
+	padding: 2px;
+	margin: 0 2px 1px;
+	text-indent: -25px;
+	overflow: hidden;
+}
+#slider-home .slide-nav a:hover {
+	background-position: -20px 0;
+}
+#slider-home .slide-nav a.activeSlide {
+	background-position: 0 0;
+}
+#slider-home .next-prev-slide-button {
+	display: inline-block;
+	background: url(images/slide-next-prev.png) no-repeat;
+	width: 8px;
+	height: 13px;
+	padding: 2px;
+	text-indent: -25px;
+	overflow: hidden;
+}
+#slider-home .prev-slide {
+	background-position: 0 0;
+	margin-right: 5px;
+}
+#slider-home .prev-slide:hover {
+	background-position: 0 -27px;
+}
+#slider-home .next-slide {
+	background-position: -30px 0;
+	margin-left: 5px;
+}
+#slider-home .next-slide:hover {
+	background-position: -30px -27px;
+}
+
 
 /************************************************************************************
 ACTIONS MENU
@@ -657,7 +755,7 @@ SLIDER
 
 /* slide nav */
 .jcarousel-prev, .jcarousel-next {
-	background: url(images/slide-next-prev.png) no-repeat;
+	background: url(images/carousel-next-prev.png) no-repeat;
 	width: 28px;
 	height: 48px;
 	display: block;
@@ -825,6 +923,8 @@ POST
 }
 .post-meta span {
 	margin: 0 5px 0 0;
+	background: url('images/comment.png') no-repeat;
+	padding: 0 0 0 16px;
 }
 .post-meta a {
 	color: #8F7510;
@@ -965,9 +1065,10 @@ POST
 FOOTER
 *************************************************************************************/
 footer {
+	border-top: solid 1px #ccc;
 	clear: both;
 	font-size: 90%;
-	border-top: solid 1px #ccc;
+	min-height: 300px;
 	padding: 20px 0 40px;
 }
 #footer-nav {
