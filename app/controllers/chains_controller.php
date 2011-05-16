@@ -13,7 +13,7 @@ var $paginate = array('fields' => array('Chain.id', 'Chain.name','Chain.user_id'
 
 function beforeFilter() {
     
-     $this->Auth->allow('index', 'view', 'search', 'getImage', 'commentChains', 'itemChains', 'joinChains','userChains', 'visitedChains', 'votedChains');
+     $this->Auth->allow('index', 'view', 'search', 'selectLang', 'getImage', 'commentChains', 'itemChains', 'joinChains','userChains', 'visitedChains', 'votedChains');
      
      }
 
@@ -79,6 +79,7 @@ if (!empty($this->data)) {
 			$this->data['Chain']['username'] = $username;
 			$this->data['Chain']['approved'] = 1;
 			$this->data['Chain']['denounced'] = 0;
+			$this->data['Chain']['slug'] = $this->Chain->createSlug($this->data['Chain']['name']);
 	
 			$file_path = $this->Attachment->upload($this->data['Chain']);
 	
@@ -106,7 +107,7 @@ if (!empty($this->data)) {
 }
 
 	$this->set('mathCaptcha', $this->MathCaptcha->generateEquation());
-
+	
 }
 
 function approve($id = null)
@@ -335,7 +336,7 @@ $data = $this->paginate('Chain');
 if(isset($this->params['requested'])) { return $data; } else { $this->set(compact('data')); }
 }
 
-function view($id = null)
+function view($slug = null)
 {
 $username = $this->Session->read('Auth.User.username');
 $this->set('username',$username);
@@ -347,6 +348,23 @@ $user_id = $this->Session->read('Auth.User.id');
 $this->set('user_mail',$user_id);
 
 $user_role = $this->Session->read('Auth.User.role');
+
+
+$chain = $this->Chain->findBySlug($slug);
+
+$check_slug = $this->Chain->find('count', array('conditions' => array('Chain.approved' => 1, 'Chain.slug' => $slug)));
+
+if($check_slug == 0)
+{
+
+$this->Session->setFlash('La cadena que quiere ver no existe');
+$this->cakeError('error404');
+
+}
+
+$chain = $this->Chain->findBySlug($slug);
+
+$id = $chain['Chain']['id'];
 
 $this->Chain->id = $id;
 $this->set('chain', $this->Chain->read());

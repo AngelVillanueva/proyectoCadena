@@ -1,5 +1,6 @@
 <!-- Archivo: /app/views/chains/view.ctp -->
 
+
 <?php $this->Html->script('/js/libs/jcarousel', array('inline'=>false)); ?>
 
 <?php
@@ -24,6 +25,8 @@
 	);
 
 ?>
+
+
 
 <?php
 
@@ -143,6 +146,6 @@ echo $form->end('Denunciar comentario');
 <?php
 echo $form->create('Comment', array('controller' => 'comments', 'action' => 'add/'.$id.'/c'));
 echo $form->hidden('id');
-echo $form->textarea('text');
+echo $form->input('text', array('type' => 'textarea'));
 echo $form->end('Comentar'); 
 ?>

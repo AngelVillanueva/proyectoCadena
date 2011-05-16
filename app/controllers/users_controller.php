@@ -12,7 +12,7 @@ class UsersController extends AppController {
 	
 	function beforeFilter() {
 	
-	      $this->Auth->allow('login', 'logout', 'forgotPass', 'search', 'account');
+	      $this->Auth->allow('login', 'logout', 'forgotPass', 'search', 'selectLang');
 	      
 	    }
 	
@@ -40,10 +40,13 @@ class UsersController extends AppController {
 	$account_mail = $this->Session->read('Auth.User.mail');
 	$this->set('account_mail',$account_mail);
 	
+
 	
 	if($account_user != $user)
 	{
+	
 	$account_id = $this->User->field('id', array('User.username' => $account_user));
+	
 	
 	}
 	
@@ -52,6 +55,19 @@ class UsersController extends AppController {
 	
 	if(!empty($account_id))
 	{
+	
+	
+	
+	$check_account = $this->User->find('count', array('conditions' => array('User.username' => $account_user)));
+	
+	if($check_account == 0)
+	
+	{
+	
+		$this->Session->setFlash('El usuario que quiere ver no existe');
+		$this->cakeError('error404');
+		
+	}
 	
 	$this->User->id = $account_id;
 	$this->set('account_id', $account_id);

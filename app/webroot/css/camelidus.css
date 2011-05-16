@@ -395,22 +395,28 @@ header {
 /************************************************************************************
 SEARCH FORM
 *************************************************************************************/
-header form {
+.searchform {
 	position: absolute;
 	bottom: 90px;
 	right: 0;
 }
-header form label, header form div.submit {
+.searchform label, .searchform div.submit {
 	display: none;
 }
-header form #searchinput {
+.searchform #searchinput {
 	font: italic 14px/100% sans-serif;
 	width: 206px;
 }
-header form #searchinput:focus {
+.searchform #searchinput:focus {
 	font-style: normal;
 }
 
+/************************************************************************************
+LANG FORM
+*************************************************************************************/
+#selectLangForm {
+	float:left;
+}
 /************************************************************************************
 MAIN NAVIGATION
 *************************************************************************************/

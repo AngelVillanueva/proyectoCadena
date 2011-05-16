@@ -10,6 +10,6 @@
 <?php echo $form->hidden('user_id', array('value' => $user_id));;?>
 <?php echo $form->hidden('receiver_id', array('value' => $receiver_id));;?>
 <?php echo $form->input('subject');?>
-<?php echo $form->input('text');?>
+<?php echo $form->input('text', array('type' => 'textarea'));?>
 <?php echo $form->end('Enviar'); ?>
 
