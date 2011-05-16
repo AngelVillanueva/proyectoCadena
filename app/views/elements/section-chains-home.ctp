@@ -1,5 +1,5 @@
 <?php
-	echo $this->Html->tag('section', null, array('class'=>'category-section clearfix'));
+	echo $this->Html->tag('section', null, array('class'=>'home category-section clearfix'));
 ?>
 		<?php
 			$orden = 0;
@@ -17,7 +17,7 @@
 						echo $this->Html->link(
 							$this->Html->image($urlchainimage, array('alt'=>$chain['Chain']['name'], 'title'=>$chain['Chain']['name'])).
 							$this->Html->image($urllastitemimage, array('alt'=>$chain['Chain']['name'], 'title'=>$chain['Chain']['name'], 'class'=>'mini', 'style'=>'display:none;')),
-							array('controller' => 'chains', 'action' => 'view', $chain['Chain']['id']),
+							array('controller' => 'chains', 'action' => 'view', $chain['Chain']['slug']),
 							array('escape'=>false)
 						);
 						echo $this->Html->para('post-date', 'Items: '.$chain['Chain']['n_items']);
@@ -26,14 +26,14 @@
 						echo $this->Html->tag('h2', null, array('class'=>'post-title'));
 							echo $this->Html->link(
 								$this->Text->truncate($chain['Chain']['name'], 29, array('ending'=>'...', 'exact'=>'true')),
-								array('controller' => 'chains', 'action' => 'view', $chain['Chain']['id']));
+								array('controller' => 'chains', 'action' => 'view', $chain['Chain']['slug']));
 						echo '</h2>';
 						echo $this->Html->para('', $this->Text->truncate($chain['Chain']['description'], 69, array('ending'=>'...', 'exact'=>'true')));
 						echo $this->Html->para('post-meta', null, array('style'=>'display:none;'));
 							echo $this->Html->tag('span', '<em>By </em>'.$chain['Chain']['username'], array('class'=>'post-author'), array('escape'=>'false'));
 							echo $this->Html->tag(
 								'span',
-								'<em>Comments: </em>'.$this->Html->link($chain['Chain']['n_comments'], array('controller'=>'chains', 'action'=>'view', $chain['Chain']['id'])),
+								'<em>Comments: </em>'.$this->Html->link($chain['Chain']['n_comments'], array('controller'=>'chains', 'action'=>'view', $chain['Chain']['slug'])),
 									array('class'=>'post-category'), array('escape'=>'false')
 								);
 						echo '</p>';

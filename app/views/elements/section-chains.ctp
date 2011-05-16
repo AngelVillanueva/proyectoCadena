@@ -21,7 +21,7 @@
 						echo $this->Html->link(
 							$this->Html->image($urlchainimage, array('alt'=>$chain['Chain']['name'], 'title'=>$chain['Chain']['name'])).
 							$this->Html->image($urllastitemimage, array('alt'=>$chain['Chain']['name'], 'title'=>$chain['Chain']['name'], 'class'=>'mini')),
-							array('controller' => 'chains', 'action' => 'view', $chain['Chain']['id']),
+							array('controller' => 'chains', 'action' => 'view', $chain['Chain']['slug']),
 							array('escape'=>false)
 						);
 						echo $this->Html->para('post-date', 'Items: '.$chain['Chain']['n_items']);
@@ -37,7 +37,7 @@
 							echo $this->Html->tag('span', '<em>By </em>'.$chain['Chain']['username'], array('class'=>'post-author'), array('escape'=>'false'));
 							echo $this->Html->tag(
 								'span',
-								'<em>Comments: </em>'.$this->Html->link($chain['Chain']['n_comments'], array('controller'=>'chains', 'action'=>'view', $chain['Chain']['id'])),
+								'<em>Comments: </em>'.$this->Html->link($chain['Chain']['n_comments'], array('controller'=>'chains', 'action'=>'view', $chain['Chain']['slug'])),
 									array('class'=>'post-category'), array('escape'=>'false')
 								);
 						echo '</p>';

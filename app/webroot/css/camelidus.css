@@ -831,29 +831,29 @@ PAGE TITLE
 }
 
 /************************************************************************************
-POST
+HOME THUMBS
 *************************************************************************************/
 /* post */
-.post {
+.home .post {
 	margin-bottom: 40px;
 }
 
 /* post image */
-.post-image {
+.home .post-image {
 	margin: 0 0 5px;
 	position: relative;
 	min-width: 100px;
 	min-height: 20px;
 }
-.post-image.left {
+.home .post-image.left {
 	margin: 0 20px 10px 0;
 }
-.post-image.right {
+.home .post-image.right {
 	margin: 0 0 10px 20px;
 }
 
 /* post date */
-.post-date {
+.home .post-date {
 	font: 80%/100% sans-serif;
 	text-transform: uppercase;
 	background: rgba(255,165,0,0.9);
@@ -864,73 +864,73 @@ POST
 }
 
 /* post title */
-.post-title {
+.home .post-title {
 	font: normal 24px/120% sans-serif;
 	margin: 0 0 3px;
 	padding: 0;
 }
-.post-title sup a {
+.home .post-title sup a {
 	margin: 0 1px;
 }
-.post-title a {
+.home .post-title a {
 	/*color: #603913;
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.7);
 	text-decoration: none;*/
 }
 
 /* post category */
-.post-category {
+.home .post-category {
 	float: right;
 }
 
 /* post comment */
-.post-comment {
+.home .post-comment {
 	font-size: 65%;
 	line-height: 100%;
 	color: #ccc;
 }
-.post-content {
+.home .post-content {
 	padding: 0 1px;
 }
-.post-content p {
+.home .post-content p {
 	height: 33px;
 	overflow: hidden;
 }
 
 /* single post image */
-.single-post-img {
+.home .single-post-img {
 	float: right;
 	margin-bottom: 30px;
 	margin-left: 30px;
 }
-.single-post-img.left {
+.home .single-post-img.left {
 	margin-left: 0;
 	margin-right: 30px;
 }
 
 /* post meta */
-.post-meta {
+.home .post-meta {
 	font-size: 90%;
 	line-height: 130%;
 	margin: 8px 0 15px;
 	padding: 5px 0 0;
 	border-top: solid 1px #D7E4DB;
 }
-.post-meta em {
+.home .post-meta em {
 	text-transform: uppercase;
 	font-style: normal;
 	font-size: 80%;
 }
-.post-meta span {
+.home .post-meta span {
 	margin: 0 5px 0 0;
 	background: url('images/comment.png') no-repeat;
 	padding: 0 0 0 16px;
 }
-.post-meta a {
+.home .post-meta a {
 	color: #8F7510;
 	text-decoration: none;
 }
-.post-meta a:hover {
+.home .post-meta a:hover {
 	color: #000;
 	text-decoration: none;
 }
@@ -1062,6 +1062,77 @@ POST
 }
 
 /************************************************************************************
+POST (BLOGFOLIO)
+*************************************************************************************/
+.post {
+	margin-bottom: 40px;
+}
+
+/* post title */
+.post-title {
+	font: bold 20px/110% Arial, Helvetica, sans-serif;
+	margin: 0 0 4px;
+}
+.post-title a {
+	color: #30333a;
+}
+.post-title a:hover {
+	color: #F30;
+}
+
+/* post image */
+.post-image {
+	margin: 0 0 10px;
+}
+.post-image.left {
+	margin-right: 20px;
+}
+.post-image.right {
+	margin-left: 20px;
+}
+
+/* post meta */
+.post-meta {
+	font-size: 95%;
+	line-height: 160%;
+	margin: 0 0 10px;
+	color: #898989;
+}
+.post-meta a {
+	color: #898989;
+}
+.post-meta a:hover {
+	color: #F63;
+}
+.post-meta span {
+	margin-right: 8px;
+}
+.post-meta .post-category {
+	background: url(images/folder.png) no-repeat 0 center;
+	padding: 0 0 0 16px;
+}
+.post-meta .post-author {
+	background: url(images/user.png) no-repeat 0 center;
+	padding: 0 0 0 16px;
+}
+.post-meta .post-tags {
+	background: url(images/tag.png) no-repeat 0 center;
+	padding: 0 0 0 16px;
+}
+.post-meta .post-comment {
+	background: url(images/comment.png) no-repeat 0 center;
+	padding: 0 0 0 16px;
+}
+
+/* post date */
+.post-date {
+	display: block;
+	font-weight: bold;
+	margin: 0 0 3px;
+	color: #898989;
+}
+
+/************************************************************************************
 FOOTER
 *************************************************************************************/
 footer {
@@ -1151,7 +1222,7 @@ CLEAR & ALIGNMENT
 /************************************************************************************
 IMAGE STYLES
 *************************************************************************************/
-.post-image img {
+.home .post-image img {
 	height: 140px;
 	position: relative;
 	width: 212px;
@@ -1185,5 +1256,7 @@ img.alignleft, img.aligncenter, img.alignright, img.alignnone, .wp-caption img,
 	border-radius: 4px;
 }
 
-/**********ANOCHE **************/
-
+/********** TESTS **************/
+img.badge {
+	width: 50px!important;
+}
