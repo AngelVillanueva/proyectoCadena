@@ -1,0 +1,617 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2011-05-11 01:45+0200\n"
+"PO-Revision-Date: 2011-05-11 17:48+0100\n"
+"Last-Translator: Javi <javi.villa9@gmail.com>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: /controllers/chains_controller.php:101
+#: /controllers/items_controller.php:239
+#: /controllers/users_controller.php:270
+msgid "Please enter the correct answer to the math question."
+msgstr ""
+
+#: /controllers/pages_controller.php:25
+msgid "Camelidus"
+msgstr ""
+
+#: /views/chains/0_view.ctp:13
+msgid "Chain:"
+msgstr ""
+
+#: /views/chains/0_view.ctp:20
+msgid "Chain ID"
+msgstr ""
+
+#: /views/chains/0_view.ctp:21
+#: /views/chains/admin.ctp:39
+#: /views/chains/comment_chains.ctp:28
+#: /views/chains/find.ctp:30
+#: /views/chains/item_chains.ctp:28
+#: /views/chains/join_chains.ctp:28
+#: /views/chains/last.ctp:10
+#: /views/chains/search.ctp:21;58;96
+#: /views/chains/user_chains.ctp:29
+#: /views/chains/visited_chains.ctp:29
+#: /views/chains/voted_chains.ctp:28
+#: /views/items/admin.ctp:33
+#: /views/items/last.ctp:9
+#: /views/items/search.ctp:21;58;96
+#: /views/items/view.ctp:13
+#: /views/pages/search.ctp:21;58;96
+#: /views/users/account.ctp:47;73;100;126
+#: /views/users/last.ctp:57
+#: /views/users/search.ctp:21;76
+#: /views/users/view.ctp:27
+msgid "Name"
+msgstr ""
+
+#: /views/chains/0_view.ctp:22
+#: /views/items/view.ctp:16;21
+msgid "Description"
+msgstr ""
+
+#: /views/chains/0_view.ctp:23;152
+#: /views/chains/admin.ctp:40
+#: /views/chains/comment_chains.ctp:29
+#: /views/chains/item_chains.ctp:29
+#: /views/chains/join_chains.ctp:29
+#: /views/chains/search.ctp:22;59
+#: /views/chains/user_chains.ctp:30
+#: /views/chains/view.ctp:113
+#: /views/chains/visited_chains.ctp:30
+#: /views/chains/voted_chains.ctp:29
+#: /views/items/admin.ctp:34
+#: /views/items/search.ctp:22;59
+#: /views/items/view.ctp:14;104
+#: /views/pages/search.ctp:22;59
+#: /views/users/account.ctp:46;72;99
+#: /views/users/last.ctp:56;84
+#: /views/users/search.ctp:22
+msgid "Author"
+msgstr ""
+
+#: /views/chains/0_view.ctp:24
+#: /views/users/admin.ctp:43
+msgid "Image"
+msgstr ""
+
+#: /views/chains/0_view.ctp:25;27
+#: /views/chains/admin.ctp:44
+#: /views/chains/search.ctp:26
+#: /views/items/search.ctp:26
+#: /views/pages/search.ctp:26
+#: /views/users/last.ctp:58
+#: /views/users/search.ctp:26
+msgid "Items"
+msgstr ""
+
+#: /views/chains/0_view.ctp:26
+msgid "Players"
+msgstr ""
+
+#: /views/chains/0_view.ctp:28
+msgid "Position Item"
+msgstr ""
+
+#: /views/chains/0_view.ctp:29
+#: /views/chains/admin.ctp:42
+#: /views/chains/comment_chains.ctp:31
+#: /views/chains/item_chains.ctp:31
+#: /views/chains/join_chains.ctp:31
+#: /views/chains/search.ctp:24;61
+#: /views/chains/user_chains.ctp:32
+#: /views/chains/visited_chains.ctp:32
+#: /views/chains/voted_chains.ctp:31
+#: /views/items/admin.ctp:36
+#: /views/items/search.ctp:24;61
+#: /views/items/view.ctp:17
+#: /views/pages/search.ctp:24;61
+#: /views/users/search.ctp:24
+msgid "Votes"
+msgstr ""
+
+#: /views/chains/0_view.ctp:30
+msgid "Miles"
+msgstr ""
+
+#: /views/chains/0_view.ctp:31
+msgid "Metas"
+msgstr ""
+
+#: /views/chains/0_view.ctp:32
+msgid "Next Meta"
+msgstr ""
+
+#: /views/chains/0_view.ctp:33
+#: /views/chains/admin.ctp:47
+msgid "Aprobada"
+msgstr ""
+
+#: /views/chains/0_view.ctp:151
+#: /views/chains/view.ctp:112
+#: /views/items/view.ctp:103
+msgid "Comentario"
+msgstr ""
+
+#: /views/chains/0_view.ctp:153
+#: /views/chains/view.ctp:114
+#: /views/comments/admin.ctp:37
+#: /views/comments/last.ctp:13
+#: /views/items/view.ctp:105
+#: /views/messages/inbox.ctp:28
+#: /views/messages/read.ctp:28
+#: /views/messages/sendbox.ctp:27
+msgid "Text"
+msgstr ""
+
+#: /views/chains/0_view.ctp:154
+#: /views/chains/view.ctp:115
+#: /views/items/view.ctp:106
+msgid "Denounce"
+msgstr ""
+
+#: /views/chains/admin.ctp:38
+#: /views/chains/comment_chains.ctp:27
+#: /views/chains/find.ctp:29
+#: /views/chains/item_chains.ctp:27
+#: /views/chains/join_chains.ctp:27
+#: /views/chains/last.ctp:9;55
+#: /views/chains/search.ctp:20;57;95
+#: /views/chains/user_chains.ctp:28
+#: /views/chains/visited_chains.ctp:28
+#: /views/chains/voted_chains.ctp:27
+#: /views/comments/admin.ctp:32
+#: /views/comments/last.ctp:8
+#: /views/invitations/admin.ctp:32
+#: /views/invitations/view.ctp:7
+#: /views/invitations/view_request.ctp:7
+#: /views/items/admin.ctp:32
+#: /views/items/last.ctp:8
+#: /views/items/search.ctp:20;57;95
+#: /views/pages/search.ctp:20;57;95
+#: /views/users/account.ctp:45;71;98
+#: /views/users/admin.ctp:38
+#: /views/users/last.ctp:9;55;83;110;137
+#: /views/users/search.ctp:20;75
+#: /views/users/view.ctp:26
+msgid "Id"
+msgstr ""
+
+#: /views/chains/admin.ctp:41
+#: /views/chains/comment_chains.ctp:30
+#: /views/chains/item_chains.ctp:30
+#: /views/chains/join_chains.ctp:30
+#: /views/chains/search.ctp:23;60
+#: /views/chains/user_chains.ctp:31
+#: /views/chains/visited_chains.ctp:31
+#: /views/chains/voted_chains.ctp:30
+#: /views/items/admin.ctp:35
+#: /views/items/search.ctp:23;60
+#: /views/items/view.ctp:18
+#: /views/pages/search.ctp:23;60
+#: /views/users/search.ctp:23
+msgid "Hits"
+msgstr ""
+
+#: /views/chains/admin.ctp:43
+#: /views/chains/comment_chains.ctp:32
+#: /views/chains/item_chains.ctp:32
+#: /views/chains/join_chains.ctp:32
+#: /views/chains/search.ctp:25;62
+#: /views/chains/user_chains.ctp:33
+#: /views/chains/visited_chains.ctp:33
+#: /views/chains/voted_chains.ctp:32
+#: /views/items/admin.ctp:37
+#: /views/items/search.ctp:25;62
+#: /views/pages/search.ctp:25;62
+#: /views/users/search.ctp:25
+msgid "Comments"
+msgstr ""
+
+#: /views/chains/admin.ctp:45
+#: /views/chains/last.ctp:56
+#: /views/chains/search.ctp:27
+#: /views/items/search.ctp:27
+#: /views/pages/search.ctp:27
+#: /views/users/search.ctp:27
+msgid "Millas"
+msgstr ""
+
+#: /views/chains/admin.ctp:46
+msgid "Denunciada"
+msgstr ""
+
+#: /views/chains/admin.ctp:48
+#: /views/items/view.ctp:24
+msgid "Aprobar"
+msgstr ""
+
+#: /views/chains/admin.ctp:86
+#: /views/chains/comment_chains.ctp:61
+#: /views/chains/find.ctp:61
+#: /views/chains/item_chains.ctp:61
+#: /views/chains/join_chains.ctp:61
+#: /views/chains/last.ctp:37
+#: /views/chains/search.ctp:123
+#: /views/chains/user_chains.ctp:62
+#: /views/chains/visited_chains.ctp:62
+#: /views/chains/voted_chains.ctp:61
+#: /views/comments/admin.ctp:74
+#: /views/comments/last.ctp:43
+#: /views/invitations/admin.ctp:74
+#: /views/items/admin.ctp:88
+#: /views/items/last.ctp:36
+#: /views/items/search.ctp:123
+#: /views/messages/inbox.ctp:65
+#: /views/messages/read.ctp:65
+#: /views/messages/sendbox.ctp:59
+#: /views/pages/search.ctp:123
+#: /views/users/admin.ctp:80
+#: /views/users/last.ctp:37
+#: /views/users/view.ctp:66
+msgid "<< Prev "
+msgstr ""
+
+#: /views/chains/admin.ctp:87
+#: /views/chains/comment_chains.ctp:62
+#: /views/chains/find.ctp:62
+#: /views/chains/item_chains.ctp:62
+#: /views/chains/join_chains.ctp:62
+#: /views/chains/last.ctp:38
+#: /views/chains/search.ctp:124
+#: /views/chains/user_chains.ctp:63
+#: /views/chains/visited_chains.ctp:63
+#: /views/chains/voted_chains.ctp:62
+#: /views/comments/admin.ctp:75
+#: /views/comments/last.ctp:44
+#: /views/invitations/admin.ctp:75
+#: /views/items/admin.ctp:89
+#: /views/items/last.ctp:37
+#: /views/items/search.ctp:124
+#: /views/messages/inbox.ctp:66
+#: /views/messages/read.ctp:66
+#: /views/messages/sendbox.ctp:60
+#: /views/pages/search.ctp:124
+#: /views/users/admin.ctp:81
+#: /views/users/last.ctp:38
+#: /views/users/view.ctp:67
+msgid " Next >>"
+msgstr ""
+
+#: /views/chains/find.ctp:10;19
+msgid "Search"
+msgstr ""
+
+#: /views/chains/find.ctp:31
+#: /views/chains/last.ctp:11
+#: /views/chains/search.ctp:63
+#: /views/comments/admin.ctp:36
+#: /views/comments/last.ctp:12
+#: /views/invitations/admin.ctp:37
+#: /views/items/last.ctp:10
+#: /views/items/search.ctp:63
+#: /views/messages/inbox.ctp:29
+#: /views/messages/read.ctp:29
+#: /views/messages/sendbox.ctp:28
+#: /views/pages/search.ctp:63
+#: /views/users/admin.ctp:40
+#: /views/users/last.ctp:11
+#: /views/users/view.ctp:28
+msgid "Created"
+msgstr ""
+
+#: /views/chains/index.ctp:10
+#: /views/pages/index.ctp:15
+msgid "Last Chains"
+msgstr "Ultimas Cadenas"
+
+#: /views/chains/last.ctp:57
+msgid "Ultimo item"
+msgstr ""
+
+#: /views/chains/last.ctp:58
+msgid "Ultimo participante"
+msgstr ""
+
+#: /views/chains/search.ctp:28
+#: /views/items/search.ctp:28
+#: /views/pages/search.ctp:28
+#: /views/users/search.ctp:28
+msgid "Meta"
+msgstr ""
+
+#: /views/chains/view.ctp:20
+msgid "Votes: "
+msgstr ""
+
+#: /views/chains/view.ctp:21
+msgid "Miles: "
+msgstr ""
+
+#: /views/chains/view.ctp:22
+msgid "Goals: "
+msgstr ""
+
+#: /views/chains/view.ctp:23
+msgid "Next Goal: "
+msgstr ""
+
+#: /views/chains/view.ctp:31
+msgid "New Item"
+msgstr ""
+
+#: /views/chains/view.ctp:35
+msgid "Add to favorites"
+msgstr ""
+
+#: /views/chains/view.ctp:39
+msgid "Delete chain"
+msgstr ""
+
+#: /views/chains/view.ctp:43
+msgid "Send invitation"
+msgstr ""
+
+#: /views/chains/view.ctp:47
+msgid "Send a request to join"
+msgstr ""
+
+#: /views/chains/view.ctp:52
+msgid "Vote"
+msgstr ""
+
+#: /views/chains/view.ctp:53
+msgid "Report abuse"
+msgstr ""
+
+#: /views/comments/admin.ctp:33
+#: /views/comments/last.ctp:9
+#: /views/invitations/admin.ctp:34
+#: /views/users/account.ctp:125
+#: /views/users/last.ctp:10
+msgid "User"
+msgstr ""
+
+#: /views/comments/admin.ctp:34
+#: /views/comments/last.ctp:10
+#: /views/items/admin.ctp:38
+msgid "Chain"
+msgstr ""
+
+#: /views/comments/admin.ctp:35
+#: /views/comments/last.ctp:11
+msgid "Item"
+msgstr ""
+
+#: /views/comments/admin.ctp:38
+#: /views/items/admin.ctp:43
+msgid "Denounced"
+msgstr ""
+
+#: /views/comments/admin.ctp:39
+#: /views/items/admin.ctp:44
+msgid "Approved"
+msgstr ""
+
+#: /views/comments/admin.ctp:40
+msgid "Approve/Disapprove"
+msgstr ""
+
+#: /views/elements/header.ctp:15
+msgid "Trata de arrancarlo, Carlos..."
+msgstr ""
+
+#: /views/elements/header.ctp:58
+msgid "Admin Menu"
+msgstr ""
+
+#: /views/elements/header.ctp:81
+msgid "New Chain"
+msgstr ""
+
+#: /views/elements/header.ctp:87
+msgid "My Account"
+msgstr ""
+
+#: /views/elements/header.ctp:101
+msgid " pending invitations"
+msgstr ""
+
+#: /views/elements/header.ctp:106
+msgid " pending requests"
+msgstr ""
+
+#: /views/elements/header.ctp:111
+msgid "new messages"
+msgstr ""
+
+#: /views/elements/header.ctp:118
+msgid "Logout"
+msgstr ""
+
+#: /views/elements/header.ctp:124
+msgid "Login / Register"
+msgstr "Login / Registrarse"
+
+#: /views/elements/header.ctp:138
+msgid "Welcome,"
+msgstr "Bienvenido,"
+
+#: /views/elements/header.ctp:151;152
+msgid "Search..."
+msgstr "Buscar..."
+
+#: /views/invitations/admin.ctp:33
+msgid "Chain_id"
+msgstr ""
+
+#: /views/invitations/admin.ctp:35
+msgid "Guest"
+msgstr ""
+
+#: /views/invitations/admin.ctp:36
+msgid "Guest Mail"
+msgstr ""
+
+#: /views/invitations/admin.ctp:38
+msgid "Pending"
+msgstr ""
+
+#: /views/invitations/admin.ctp:39
+#: /views/users/admin.ctp:44
+msgid "Active"
+msgstr ""
+
+#: /views/invitations/admin.ctp:40
+#: /views/items/admin.ctp:45
+#: /views/messages/inbox.ctp:32
+#: /views/messages/read.ctp:32
+msgid "Delete"
+msgstr ""
+
+#: /views/invitations/view.ctp:3
+#: /views/invitations/view_request.ctp:3
+msgid "Invitationes pendientes:"
+msgstr ""
+
+#: /views/invitations/view.ctp:8
+#: /views/invitations/view_request.ctp:8
+msgid "Cadena"
+msgstr ""
+
+#: /views/invitations/view.ctp:9
+msgid "Nombre Cadena:"
+msgstr ""
+
+#: /views/invitations/view.ctp:10
+msgid "Te invita:"
+msgstr ""
+
+#: /views/invitations/view_request.ctp:9
+msgid "Solicitante"
+msgstr ""
+
+#: /views/invitations/view_request.ctp:10
+msgid "Aceptar"
+msgstr ""
+
+#: /views/items/admin.ctp:39
+msgid "Type"
+msgstr ""
+
+#: /views/items/admin.ctp:40
+msgid "Position"
+msgstr ""
+
+#: /views/items/admin.ctp:41
+msgid "Path"
+msgstr ""
+
+#: /views/items/admin.ctp:42
+msgid "Size"
+msgstr ""
+
+#: /views/items/view.ctp:7
+msgid "Item:"
+msgstr ""
+
+#: /views/items/view.ctp:12
+msgid "Item ID"
+msgstr ""
+
+#: /views/items/view.ctp:15
+msgid "Pertenece a cadena:"
+msgstr ""
+
+#: /views/items/view.ctp:19
+msgid "Position/Total"
+msgstr ""
+
+#: /views/items/view.ctp:20
+msgid "Imagen"
+msgstr ""
+
+#: /views/items/view.ctp:22
+msgid "Aprobado"
+msgstr ""
+
+#: /views/items/view.ctp:23
+msgid "Denunciar"
+msgstr ""
+
+#: /views/messages/inbox.ctp:26
+#: /views/messages/read.ctp:26
+msgid "From"
+msgstr ""
+
+#: /views/messages/inbox.ctp:27
+#: /views/messages/read.ctp:27
+#: /views/messages/sendbox.ctp:26
+msgid "Subject"
+msgstr ""
+
+#: /views/messages/inbox.ctp:30
+#: /views/messages/read.ctp:30
+#: /views/messages/sendbox.ctp:29
+msgid "Read"
+msgstr ""
+
+#: /views/messages/inbox.ctp:31
+#: /views/messages/read.ctp:31
+#: /views/messages/sendbox.ctp:30
+msgid "Deleted"
+msgstr ""
+
+#: /views/messages/sendbox.ctp:25
+msgid "To"
+msgstr ""
+
+#: /views/pages/index.ctp:19
+msgid "Popular Chains"
+msgstr ""
+
+#: /views/pages/index.ctp:23
+msgid "Longer Chains"
+msgstr ""
+
+#: /views/users/admin.ctp:39
+msgid "Username"
+msgstr ""
+
+#: /views/users/admin.ctp:41
+msgid "Role"
+msgstr ""
+
+#: /views/users/admin.ctp:42
+msgid "Mail"
+msgstr ""
+
+#: /views/users/admin.ctp:45
+msgid "Activar"
+msgstr ""
+
+#: /views/users/last.ctp:111;138
+msgid "Fav ID"
+msgstr ""
+
+#: /views/users/view.ctp:29
+msgid "Activar usuario"
+msgstr ""
+
+#: /views/users/view.ctp:30
+msgid "Eliminar usuario"
+msgstr ""
+
+#: /webroot/test.php:88
+msgid "Debug setting does not allow access to this url."
+msgstr ""
+

@@ -11,7 +11,7 @@ var $paginate = array('fields' => array('Item.id', 'Item.name','Item.user_id', '
 
 function beforeFilter(){
 
- $this->Auth->allow('view', 'search');
+ $this->Auth->allow('view', 'search', 'selectLang');
  
 }
 
@@ -39,10 +39,11 @@ $this->set('item_type', $item_type);
 
 if (!empty($this->data)) {
 
-		$chain_id = $this->data['Item']['chain_id'];
+		
 
 		if($this->MathCaptcha->validates($this->data['Item']['security_code']))
 		{
+				$chain_id = $this->data['Item']['chain_id'];
 		
 
 				$item_type = $this->data['Item']['type'];
@@ -58,6 +59,7 @@ if (!empty($this->data)) {
 				$this->data['Item']['denounced'] = 0;
 				$this->data['Item']['approved'] = 1;
 				$this->data['Item']['deleted'] = 0;
+				$this->data['Item']['slug'] = $this->Item->createSlug($this->data['Item']['name']);
 	
 	//Comprobaciones según el tipo de item que se añade
 				switch($item_type)
@@ -406,22 +408,27 @@ if (!empty($this->data)) {
 
 }
 
-function view($id = null) 
+function view($slug = null) 
 {
 
 // REDIRECCIONAR A UNA PAGINA DE ERROR ????
 
-$check_id = $this->Item->find('count', array('conditions' => array('Item.approved' => 1, 'Item.id' => $id)));
+$check_slug = $this->Item->find('count', array('conditions' => array('Item.approved' => 1, 'Item.slug' => $slug)));
 
-if($check_id == 0)
+if($check_slug == 0)
 {
 
 $this->Session->setFlash('El item que quiere ver no existe');
+$this->cakeError('error404');
 
 }
 
 else
 {
+
+$item = $this->Item->findBySlug($slug);
+
+$id = $item['Item']['id'];
 
 $this->Item->id = $id;
 $chain_id = $this->Item->field('chain_id');

@@ -133,7 +133,7 @@ echo $form->end('Denunciar comentario');
 <?php
 echo $form->create('Comment', array('controller' => 'comments', 'action' => 'add/'.$id.'/i'));
 echo $form->hidden('id');
-echo $form->textarea('text');
+echo $form->input('text', array('type' => 'textarea'));
 echo $form->end('Comentar'); 
 ?>
 

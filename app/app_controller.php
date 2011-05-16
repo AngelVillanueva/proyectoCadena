@@ -27,9 +27,13 @@ class AppController extends Controller {
 	
 	
 	
+	
 	}
 	
 	function beforeRender(){
+	
+	
+	Configure::write('Config.language', $this->Session->read('Lang'));
 	
 	$username = $this->Session->read('Auth.User.username');
 	$this->set('username',$username);
@@ -203,16 +207,43 @@ class AppController extends Controller {
 	$b_items = $this->paginate('Item');
 	$this->set(compact('b_items'));
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	}
+	
+	
+	
+function selectLang($lang = null, $action = null, $pass = null)
+	
+{
+	
+
+
+$this->Session->write('Lang', $lang);
+
+//$this->autoRender = null;
+
+//$this->autoRender = 'false';
+
+if($this->modelClass == 'Page')
+
+{
+
+$this->redirect(array('controller' => 'pages', 'action' => 'index'));
+
+}
+
+else
+{
+
+$this->redirect(array('controller' => $this->modelClass.'s', 'action' => $action, $pass));
+
+}
+
+
+
+	
+}
+
+
 
 }
 
