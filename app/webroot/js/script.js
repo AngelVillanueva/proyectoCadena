@@ -31,7 +31,7 @@ if($('.slides').size()) {
 		animation: 500,
 		initCallback: carousel_callback
 	});
-	$('.slides li').css('width', '197px');
+	$('.slides li').css('width', '52px');
 	$('.jcarousel-prev, .jcarousel-next').css('cursor', 'pointer');
 }
 /* End of Chain slider init */

@@ -70,11 +70,15 @@ html {
 	background: #a4ddee url('images/html-bg-nubes.jpg') no-repeat scroll center -2%;
 }
 body {
-	background: transparent url('images/bottom-bg-nonubes.jpg') no-repeat bottom center;
+	/*background: transparent url('images/bottom-bg-nonubes.jpg') no-repeat bottom center;*/
 	color: #5f5f5f;
 	font: 15px/140% sans-serif;
 	min-height: 600px;
 	width: 100%;
+}
+#pagebottom {
+	background: transparent url('images/bottom-bg-nonubes.jpg') no-repeat bottom center;
+	height: 600px;
 }
 p {
 	margin: 0 0 1.25em;
@@ -721,7 +725,7 @@ SLIDER
 *************************************************************************************/
 #header-slider {
 	margin: 0;
-	padding: 20px 25px 5px 45px;
+	padding: 20px 26px 5px 45px;
 	overflow: hidden;
 	/*border-bottom: solid 1px #A9A99D;*/
 	clear: both;
@@ -774,7 +778,7 @@ SLIDER
 	left: -45px;
 }
 .jcarousel-next {
-	right: -25px;
+	right: -24px;
 	background-position: 0 -46px;
 }
 
@@ -788,8 +792,8 @@ SLIDER
 /* sinapse */
 
 .slides img {
-	height: 140px;
-	width: 195px;
+	/*height: 140px;
+	width: 195px;*/
 }
 
 /************************************************************************************
@@ -1145,7 +1149,7 @@ footer {
 	border-top: solid 1px #ccc;
 	clear: both;
 	font-size: 90%;
-	min-height: 300px;
+	min-height: 63px;
 	padding: 20px 0 40px;
 }
 #footer-nav {
@@ -1265,4 +1269,9 @@ img.alignleft, img.aligncenter, img.alignright, img.alignnone, .wp-caption img,
 /********** TESTS **************/
 img.badge {
 	width: 50px!important;
+}
+.slides img {
+	-webkit-border-radius: 30px;
+	-moz-border-radius: 30px;
+	border-radius: 30px;
 }

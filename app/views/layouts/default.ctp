@@ -109,7 +109,7 @@ URL: http://stuffandnonsense.co.uk/projects/320andup
 			<?php echo $this->element('footer'); ?>
 		</footer>
 	</div><!--! end of #pagewrap -->
-	
+	<div id="pagebottom"></div>
 	<!--<?php echo $this->element('sql_dump'); ?>-->
 	
 	<!-- JavaScript at the bottom for fast page loading -->
